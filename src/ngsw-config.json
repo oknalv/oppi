@@ -1,18 +1,18 @@
 {
-  "index": "/index.html",
+  "index": "index.html",
   "assetGroups": [{
     "name": "oppi",
     "installMode": "prefetch",
     "resources": {
       "files": [
-        "/favicon.ico",
-        "/index.html",
-        "/manifest.json"
+        "favicon.ico",
+        "index.html",
+        "manifest.json"
       ],
       "versionedFiles": [
-        "/*.bundle.css",
-        "/*.bundle.js",
-        "/*.chunk.js"
+        "*.bundle.css",
+        "*.bundle.js",
+        "*.chunk.js"
       ]
     }
   }, {
@@ -21,7 +21,7 @@
     "updateMode": "prefetch",
     "resources": {
       "files": [
-        "/assets/**"
+        "assets/**"
       ]
     }
   }]
