@@ -1,0 +1,14 @@
+{
+  "name": "oppi",
+  "short_name": "oppi",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "description": "Learn finnish declination",
+  "theme_color": "#6EDA68",
+  "icons": [{
+    "src": "./assets/oppi-logo.svg",
+    "type": "image/xml+svg",
+    "sizes": "195x195 512x512"
+  }]
+}

@@ -1,0 +1,36 @@
+/* You can add global styles to this file, and also import other style files */
+@import './app/module/ui/css/ui.css';
+@import '../node_modules/font-awesome/css/font-awesome.css';
+
+* {
+    --red: #FD797C;
+    --light-red: #FFE6E6;
+    --green: #6EDA68;
+    --light-green: #E5FDE4;
+    --body-width: 600px;
+}
+
+body {
+    padding: 5px;
+    max-width: var(--body-width);
+    margin: 0 auto;
+}
+
+button, select, button *, select *  {
+    --color: white;
+    --button-background-color: var(--green);
+    --all-background-color: var(--green);
+}
+
+select, select * {
+    font-weight: bold;
+}
+
+table {
+    --thead-background-color: var(--light-green);
+}
+
+modal * {
+    --modal-width: var(--body-width);
+    --modal-header-footer-background-color: var(--light-green);
+}

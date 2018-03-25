@@ -1,0 +1,16 @@
+:host {
+    background-color: var(--modal-header-footer-background-color);
+    color: var(--modal-header-footer-text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+:host > div {
+    font-size: 1.5em;
+}
+
+.button-icon {
+    padding: 5px;
+    cursor: pointer;
+}

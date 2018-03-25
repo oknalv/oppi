@@ -1,0 +1,10 @@
+<div class='grid h-between'>
+  <img [src]='"assets/oppi.svg"'>
+  <span>
+    <label for='langSelect' title='{{ "language" | i18n }}'><i class='fa fa-language big-icon'></i></label>&nbsp;
+    <select id='langSelect' [(ngModel)]='currentLanguageKey' (change)='changeLanguage()'>
+      <option *ngFor='let lang of languageKeys' value='{{lang}}'>{{languages[lang]}}</option>
+    </select>
+  </span>
+</div>
+<decline></decline>

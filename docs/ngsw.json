@@ -1,0 +1,53 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "oppi",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/favicon.ico",
+        "/index.html",
+        "/manifest.json",
+        "/inline.a8e280a10d7f8ec4d627.bundle.js",
+        "/main.a0af4d506ec1a15486e6.bundle.js",
+        "/polyfills.f20484b2fa4642e0dca8.bundle.js",
+        "/styles.23798b63acd24260f816.bundle.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/oppi-logo.svg",
+        "/assets/oppi.svg",
+        "/assets/i18n/en.json",
+        "/assets/i18n/es.json",
+        "/assets/i18n/fi.json",
+        "/assets/i18n/gl.json",
+        "/assets/i18n/pt.json"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/inline.a8e280a10d7f8ec4d627.bundle.js": "6812168561dcdb4fec346252c0ffe67190b51b05",
+    "/assets/oppi-logo.svg": "14529aa8fe7ac2dec1253d3f407e492ca8cb2532",
+    "/main.a0af4d506ec1a15486e6.bundle.js": "fbec2be9ba036abdd36c311e1969d2c73e78dcf6",
+    "/assets/oppi.svg": "f05edc87ebf8a0865f0c540b8782aae57a9f6d70",
+    "/polyfills.f20484b2fa4642e0dca8.bundle.js": "0b0af365e031b7cbba789493d311e94192720c68",
+    "/assets/i18n/en.json": "ce4a832fdef723c06d765c952a7d7acd218a492a",
+    "/styles.23798b63acd24260f816.bundle.css": "d8b6157b7f0125dfe10e2a899ff52a2884257119",
+    "/assets/i18n/es.json": "3f9abd0f3a2575e112bc8af82fed0425db7b3681",
+    "/favicon.ico": "5562a7d8acca1dcc20a663c4e3315adda1272038",
+    "/assets/i18n/fi.json": "f8d0060ed94a75391c814f22aa4e3222f4b6bfef",
+    "/index.html": "08063243c2ab64f2d779b4d80d44e77fc407828c",
+    "/assets/i18n/gl.json": "7b80a145b17c64c4a23cef9111aab4717a706043",
+    "/manifest.json": "73c69ed5f2c47b6f3c877f831842525151b8a0ed",
+    "/assets/i18n/pt.json": "a5f2651bbf41d618d33e4ead2b32e01dce141c3d"
+  }
+}

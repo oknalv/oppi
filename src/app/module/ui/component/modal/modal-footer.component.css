@@ -1,0 +1,4 @@
+:host {
+    background-color: var(--modal-header-footer-background-color);
+    color: var(--modal-header-footer-text-color);
+}

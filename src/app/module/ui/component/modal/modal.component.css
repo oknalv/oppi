@@ -1,0 +1,33 @@
+:host {
+    --modal-shade-background-color: rgba(0,0,0,.25);
+    --modal-width: 50%;
+    --modal-body-background-color: var(--white);
+    --modal-header-footer-background-color: var(--gray);
+    --modal-header-footer-text-color: var(--color);
+}
+
+.modal-container {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    background-color: var(--modal-shade-background-color);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    cursor: pointer;
+    justify-content: center;
+    padding: 10px;
+}
+  
+[hidden] {
+    display: none;
+}
+  
+.modal {
+    margin: 0 auto;
+    cursor: initial;
+    flex-basis: var(--modal-width);
+    height: 0;
+}

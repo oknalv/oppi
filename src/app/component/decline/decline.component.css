@@ -1,0 +1,56 @@
+.red {
+    --input-border-color: var(--red);
+    --input-background-color: var(--light-red);
+}
+
+.red::placeholder{
+    --placeholder-color: var(--red);
+}
+
+.green {
+    --input-border-color: var(--green);
+    --input-background-color: var(--light-green);
+}
+
+table:not(:last-child){
+    margin-bottom: 10px;
+}
+
+table tbody tr td {
+    padding: 5px 5px;
+}
+
+table thead tr th {
+    padding: 5px 5px;
+    text-align: center; 
+}
+
+input {
+    width: 100%;
+}
+
+#searchDeclesion {
+    margin-bottom: 10px;
+}
+
+#searchDeclesion > * {
+    padding: 5px;
+}
+
+
+table thead.search tr th{
+    text-align: left;
+}
+
+.clickable-icon {
+    --color: var(--green);
+    font-size: .5em;
+}
+
+.action-paragraph > span{
+    padding: 5px;
+}
+
+.action-paragraph:not(:last-child){
+    border-bottom: 1px solid var(--gray);
+}
