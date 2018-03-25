@@ -26,7 +26,7 @@ import { UiModule } from './module/ui/ui';
     FormsModule,
     HttpClientModule,
     UiModule,
-    I18nModule.forRoot('/assets/i18n/', 'en', {'en': 'English', 'es': 'español', 'fi': 'suomi', 'pt': 'português', 'gl': 'galego'})
+    I18nModule.forRoot('assets/i18n/', 'en', {'en': 'English', 'es': 'español', 'fi': 'suomi', 'pt': 'português', 'gl': 'galego'})
   ],
   providers: [DeclesionService, WordInfoService],
   bootstrap: [OppiComponent]
