@@ -10,8 +10,8 @@
         "/oppi/favicon.ico",
         "/oppi/index.html",
         "/oppi/manifest.json",
-        "/oppi/inline.e83f7b6209c10b1f9321.bundle.js",
-        "/oppi/main.9c03011efe499930f376.bundle.js",
+        "/oppi/inline.0393e11bf1c98e77f39f.bundle.js",
+        "/oppi/main.6575de36537ebf867223.bundle.js",
         "/oppi/polyfills.f20484b2fa4642e0dca8.bundle.js",
         "/oppi/styles.23798b63acd24260f816.bundle.css"
       ],
@@ -35,9 +35,9 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/oppi/inline.e83f7b6209c10b1f9321.bundle.js": "e8b97d9bd336314784b3f5e33b6a5faabaf558c7",
+    "/oppi/inline.0393e11bf1c98e77f39f.bundle.js": "f2aa53625848eee1b8a3dc41504af82785d4fc9b",
     "/oppi/assets/oppi-logo.svg": "14529aa8fe7ac2dec1253d3f407e492ca8cb2532",
-    "/oppi/main.9c03011efe499930f376.bundle.js": "5ba7507ab4a0af1f06fcb1811982d9caea557bf5",
+    "/oppi/main.6575de36537ebf867223.bundle.js": "623d39f2ae1cd9ac50bebab73566d6cbf907ca3e",
     "/oppi/assets/oppi.svg": "f05edc87ebf8a0865f0c540b8782aae57a9f6d70",
     "/oppi/polyfills.f20484b2fa4642e0dca8.bundle.js": "0b0af365e031b7cbba789493d311e94192720c68",
     "/oppi/assets/i18n/en.json": "ce4a832fdef723c06d765c952a7d7acd218a492a",
@@ -45,7 +45,7 @@
     "/oppi/assets/i18n/es.json": "3f9abd0f3a2575e112bc8af82fed0425db7b3681",
     "/oppi/favicon.ico": "5562a7d8acca1dcc20a663c4e3315adda1272038",
     "/oppi/assets/i18n/fi.json": "f8d0060ed94a75391c814f22aa4e3222f4b6bfef",
-    "/oppi/index.html": "4c5c57a3f6981136eaa8fd877b827c81aad7c47e",
+    "/oppi/index.html": "2f3bb145b01380d10ec25bee08d87be6bb37b068",
     "/oppi/assets/i18n/gl.json": "7b80a145b17c64c4a23cef9111aab4717a706043",
     "/oppi/manifest.json": "73c69ed5f2c47b6f3c877f831842525151b8a0ed",
     "/oppi/assets/i18n/pt.json": "a5f2651bbf41d618d33e4ead2b32e01dce141c3d"
