@@ -242,7 +242,7 @@ input:focus {
 button, select {
     --button-background-color: var(--gray);
     --padding-top-button: 5px;
-    --padding-left-button: 20px;
+    --padding-left-button: 10px;
     --button-font-size: 1em;
     --button-before-height: 100px;
     --button-before-width: 100px;

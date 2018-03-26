@@ -54,9 +54,3 @@ table thead.search tr th{
 .action-paragraph:not(:last-child){
     border-bottom: 1px solid var(--gray);
 }
-
-@media screen and (max-width: 450px){
-    button.icon{
-        --padding-left-button: 10px;
-    }
-}
