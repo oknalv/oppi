@@ -19,17 +19,23 @@ export class DeclesionService {
         return this.decline(noun.split('toista')[0]).map((declesions: Declesion[]) => {
           return declesions.map(function(declesion: Declesion){
             Object.keys(declesion.singular).forEach(function(key){
-              if(['instructive', 'comitative'].indexOf(key) == -1){
+              if(key != 'instructive' && key != 'comitative'){
                 declesion.singular[key] = declesion.singular[key].map(function(word){
                   return word + 'toista';
                 }.bind(this))
               }
             }.bind(this));
             Object.keys(declesion.plural).forEach(function(key){
-              if(['nominativeGenitive'].indexOf(key) == -1){
-                declesion.plural[key] = declesion.plural[key].map(function(word){
-                  return word + 'toista';
-                }.bind(this))
+              if(key != 'nominativeGenitive'){
+                if(key == 'comitative'){
+                  declesion.plural[key] = declesion.plural[key].map(function(word){
+                    return this.removeLastN(word, 2) + 'toista';
+                  }.bind(this));
+                } else {
+                  declesion.plural[key] = declesion.plural[key].map(function(word){
+                    return word + 'toista';
+                  }.bind(this));
+                }
               }
             }.bind(this));
             return declesion;
@@ -110,34 +116,35 @@ export class DeclesionService {
   private getSingularPartitives(noun: string, strongStem: string, a: string, wordType: number): string[] {
     let partitives: string[] = [];
     //stem
-    let stem = strongStem; //1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 25, 26, 35
+    let stem = strongStem; //types 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 25, 26, 35
     if(this.isOfType(wordType, [32, 33, 34, 35, 36, 37, 39, 41, 42, 43, 44, 46, 47])){
       stem = noun;
     }
     if(this.isOfType(wordType, [23, 24, 26, 27, 28, 31, 38, 40])){
       stem = this.removeLastN(strongStem, 1);
     }
-    if(this.isOfType(wordType, [29, 30])){
+    if(wordType == 29 || wordType == 30){
       stem = this.removeLastN(noun, 3) + 's';
     }
-    if(this.isOfType(wordType, [45])){
+    if(wordType == 45){
       stem = this.removeLastN(noun, 1) + 't';
     }
-    if(this.isOfType(wordType, [48])){
+    if(wordType == 48){
       stem = noun + 't';
     }
     //partitives
-    if(this.isOfType(wordType, [3, 15, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48])){
+    //types 3, 15, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48
+    if(!this.isOfType(wordType, [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 25, 31])){
       partitives.push(stem + 't' + a);
     }
     if(this.isOfType(wordType, [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 25, 31])) {
       partitives.push(stem + a);
     }
     //partitives with different stems
-    if(this.isOfType(wordType, [25])){
+    if(wordType == 25){
       partitives.push(this.removeLastN(noun, 2) + 'nt' + a);
     }
-    if(this.isOfType(wordType, [37])){
+    if(wordType == 37){
       partitives.push(strongStem + a);
     }
     return partitives.sort();
@@ -153,31 +160,33 @@ export class DeclesionService {
 
   private getSingularIllatives(strongStem: string, wordType: number): string[] {
     let illatives: string[] = [];
-    if(this.isOfType(wordType, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 45, 46])){
+    //types 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 45, 46
+    if(!this.isOfType(wordType, [17, 18, 19, 20, 21, 22, 41, 44, 47, 48])){
       illatives.push(strongStem + strongStem[strongStem.length -1] + 'n');
-    }
-    if(this.isOfType(wordType, [17, 20, 41, 44, 47, 48])){
-      illatives.push(strongStem + 'seen');
-    }
-    if(this.isOfType(wordType, [18, 19, 20, 21, 22])){
-      let vowel: string = strongStem[strongStem.length - 1];
-      //this is for loan words of type 21 and 22
-      vowel = vowel == 'é' ? 'e' : vowel;
-      if(wordType == 22){
-        let lastVowels: string = strongStem.match(this.type22EndingRegExp)[0];
-        lastVowels = lastVowels.substr(0, lastVowels.length - 2);
-        vowel = lastVowels[lastVowels.length - 1];
-        if(lastVowels == 'eau'){
-          vowel = 'o';
-        }
-        if(lastVowels == 'ai'){
-          vowel = 'e';
-        }
-        if(lastVowels.endsWith('ou') || lastVowels.endsWith('oû')){
-          vowel = 'u';
-        }
+    } else {
+      if(this.isOfType(wordType, [17, 20, 41, 44, 47, 48])){
+        illatives.push(strongStem + 'seen');
       }
-      illatives.push(strongStem + 'h' + vowel + 'n');
+      if(this.isOfType(wordType, [18, 19, 20, 21, 22])){
+        let vowel: string = strongStem[strongStem.length - 1];
+        //this is for loan words of type 21 and 22
+        vowel = vowel == 'é' ? 'e' : vowel;
+        if(wordType == 22){
+          let lastVowels: string = strongStem.match(this.type22EndingRegExp)[0];
+          lastVowels = lastVowels.substr(0, lastVowels.length - 2);
+          vowel = lastVowels[lastVowels.length - 1];
+          if(lastVowels == 'eau'){
+            vowel = 'o';
+          }
+          if(lastVowels == 'ai'){
+            vowel = 'e';
+          }
+          if(lastVowels.endsWith('ou') || lastVowels.endsWith('oû')){
+            vowel = 'u';
+          }
+        }
+        illatives.push(strongStem + 'h' + vowel + 'n');
+      }
     }
     return illatives.sort();
   }
@@ -222,10 +231,7 @@ export class DeclesionService {
       genitives.push(stem + 'en');
     }
     if(this.isOfType(wordType, [2, 3, 4, 6, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 41, 43, 44, 47, 48])){
-      genitives.push(stem + 'den');
-    }
-    if(this.isOfType(wordType, [2, 3, 4, 6, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22, 41, 43, 44, 47, 48])){
-      genitives.push(stem + 'tten');
+      genitives.push(stem + 'den', stem + 'tten');
     }
     //genitives with different stems
     if(this.isOfType(wordType, [32, 33, 34, 36, 37, 39, 42])){
@@ -237,22 +243,22 @@ export class DeclesionService {
     if(this.isOfType(wordType, [8, 9, 10, 11, 12, 13, 14, 15, 16, 35, 36, 37])){
       genitives.push(singularStrongStem + 'in')
     }
-    if(this.isOfType(wordType, [29, 30])){
+    if(wordType == 29 || wordType == 30){
       genitives.push(this.removeLastN(pluralStrongStem, 3) + 'sten')
     }
-    if(this.isOfType(wordType, [25])){
+    if(wordType == 25){
       genitives.push(this.removeLastN(pluralStrongStem, 2) + 'nten')
     }
     if(this.isOfType(wordType, [1, 2, 4, 8, 9, 11, 13, 14])){
       genitives.push(this.removeLastN(pluralStrongStem, 1) + 'jen')
     }
-    if(this.isOfType(wordType, [5, 11])){
+    if(wordType == 5 || wordType == 11){
       genitives.push(this.removeLastN(singularStrongStem, 1) + 'ien')
     }
-    if(this.isOfType(wordType, [6])){
+    if(wordType == 6){
       genitives.push(singularStrongStem + 'en')
     }
-    if(this.isOfType(wordType, [46])){
+    if(wordType == 46){
       genitives.push(singularStrongStem + 'n')
     }
     return genitives.sort();
@@ -262,7 +268,7 @@ export class DeclesionService {
     let partitives: string[] = [];
     //stem
     let stem = pluralStrongStem;
-    if(this.isOfType(wordType, [4, 14])){
+    if(wordType == 4 || wordType == 14){
       stem = pluralWeakStem;
     }
     //partitives
@@ -276,7 +282,7 @@ export class DeclesionService {
     if(this.isOfType(wordType, [1, 2, 4, 5, 6, 8, 9, 11, 13, 14])){
       partitives.push(this.removeLastN(pluralStrongStem, 1) + 'j' + a);
     }
-    if(this.isOfType(wordType, [11])){
+    if(wordType == 11){
       partitives.push(this.removeLastN(singularStrongStem, 1) + 'i' + a);
     }
     return partitives.sort();
@@ -285,7 +291,7 @@ export class DeclesionService {
   private getCommonPluralFormingCases(weakStem : string, ending: string, wordType: number){
     let stem =  weakStem;
     let cases: string [] = [stem + ending];
-    if(this.isOfType(wordType, [11])){
+    if(wordType == 11){
       cases.push(this.removeLastN(weakStem, 2) + 'i' + ending);
     }
     return cases.sort();
@@ -314,10 +320,10 @@ export class DeclesionService {
       illatives.push(stem + 'siin');
     }
     //illatives with different stems
-    if(this.isOfType(wordType, [4, 14])){
+    if(wordType == 4 || wordType == 14){
       illatives.push(weakStem + 'hin');
     }
-    if(this.isOfType(wordType, [11])){
+    if(wordType == 11){
       illatives.push(this.removeLastN(weakStem, 2) + 'iin');
     }
     return illatives.sort();
@@ -352,7 +358,7 @@ export class DeclesionService {
   }
 
   private getPluralComitatives(strongStem: string, wordType): string[] {
-    return this.getCommonPluralFormingCases(strongStem, 'ne', wordType);
+    return this.getCommonPluralFormingCases(strongStem, 'neen', wordType);
   }
 
   private inverseGradate(noun: string, wordType: number, wordGradation: string): string {
@@ -397,61 +403,61 @@ export class DeclesionService {
       stem = this.inverseGradate(stem, wordType, wordGradation);
     }
     //form stem
-    if(this.isOfType(wordType, [5, 6]) && !this.isVowel(stem[stem.length - 1])){
+    if((wordType == 5 || wordType == 6) && !this.isVowel(stem[stem.length - 1])){
       return stem + 'i';
     }
     if(this.isOfType(wordType, [7, 23, 24, 25, 26, 29, 30, 43])){
       return this.removeLastN(stem, 1) + 'e';
     }
-    if(this.isOfType(wordType, [10]) && noun.endsWith('n')){
+    if(wordType == 10 && noun.endsWith('n')){
       return stem.substr(0, stem.length - 1);
     }
-    if(this.isOfType(wordType, [16])){
+    if(wordType == 16){
       return this.removeLastN(stem, 1) + a;
     }
-    if(this.isOfType(wordType, [22])){
+    if(wordType == 22){
       return stem + '\'';
     }
-    if(this.isOfType(wordType, [27, 28])){
+    if(wordType == 27 || wordType == 28){
       return this.removeLastN(stem, 2) + 'te';
     }
-    if(this.isOfType(wordType, [31])){
+    if(wordType == 31){
       return this.removeLastN(stem, 3) + 'hte';
     }
-    if(this.isOfType(wordType, [32, 48])){
+    if(wordType == 32 || wordType == 48){
       return stem + 'e';
     }
-    if(this.isOfType(wordType, [33])){
+    if(wordType == 33){
       return this.removeLastN(stem, 1) + 'me';
     }
-    if(this.isOfType(wordType, [34])){
+    if(wordType == 34){
       return this.removeLastN(stem, 2) + 't' + stem[stem.length - 2] + 'm' + a;
     }
-    if(this.isOfType(wordType, [35])){
+    if(wordType == 35){
       return this.removeLastN(stem, 3) + 'pim' + a;
     }
-    if(this.isOfType(wordType, [36, 37])){
+    if(wordType == 36 || wordType == 37){
       return this.removeLastN(stem, 1) + 'mp' + a;
     }
-    if(this.isOfType(wordType, [38])){
+    if(wordType == 38){
       return this.removeLastN(stem, 3) + 'se';
     }
-    if(this.isOfType(wordType, [39])){
+    if(wordType == 39){
       return this.removeLastN(stem, 1) + 'kse';
     }
-    if(this.isOfType(wordType, [40])){
+    if(wordType == 40){
       return this.removeLastN(stem, 1) + 'te';
     }
-    if(this.isOfType(wordType, [41, 44])){
+    if(wordType == 41 || wordType == 44){
       return this.removeLastN(stem, 1) + stem[stem.length - 2];
     }
-    if(this.isOfType(wordType, [42])){
+    if(wordType == 42){
       return this.removeLastN(stem, 1) + 'he';
     }
-    if(this.isOfType(wordType, [45, 46])){
+    if(wordType == 45 || wordType == 46){
       return this.removeLastN(stem, 1) + 'nte';
     }
-    if(this.isOfType(wordType, [47])){
+    if(wordType == 47){
       return this.removeLastN(stem, 2) + 'ee';
     }
     return stem;
@@ -471,13 +477,13 @@ export class DeclesionService {
     if(this.isOfType(wordType, [10, 15, 16, 17, 18, 20, 32, 33, 34, 35, 36, 37, 38, 39, 41, 42, 43, 44, 47, 48])){
       return this.removeLastN(stem, 1) + 'i';
     }
-    if(this.isOfType(wordType, [19])){
+    if(wordType == 19){
       return this.removeLastN(stem, 2) + stem[stem.length -1] + 'i';
     }
-    if(this.isOfType(wordType, [40])){
+    if(wordType == 40){
       return this.removeLastN(noun, 1) + 'ksi';
     }
-    if(this.isOfType(wordType, [45, 46])){
+    if(wordType == 45 || wordType == 46){
       return this.removeLastN(noun, 1) + 'nsi';
     }
     return stem + 'i';
@@ -488,7 +494,7 @@ export class DeclesionService {
     if(this.isOfType(wordType, [1, 4, 5, 7, 8, 9, 10, 14, 16, 27, 28, 31, 36, 37, 40, 45, 46]) && wordGradation != null){
       stem = this.gradate(stem, wordGradation);
     }
-    if(this.isOfType(wordType, [41, 44])){
+    if(wordType == 41 || wordType == 44){
       return this.removeLastN(stem, 1) + stem[stem.length - 2];
     }
     return stem;
@@ -497,16 +503,17 @@ export class DeclesionService {
 
   private getPluralWeakStem(singularWeakStem: string, pluralStrongStem: string, o: string, wordType: number): string {
     let stem = singularWeakStem;
-    if(this.isOfType(wordType, [2, 3, 6, 11, 12, 13, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 38, 39, 40, 42, 43, 44, 45, 46, 47, 48])){
+    //types 2, 3, 6, 11, 12, 13, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 38, 39, 40, 42, 43, 44, 45, 46, 47, 48
+    if(!this.isOfType(wordType, [1, 4, 5, 7, 8, 9, 10, 14, 16, 36, 37, 41])){
       return pluralStrongStem;
     }
-    if(this.isOfType(wordType, [5])){
+    if(wordType == 5){
       return this.removeLastN(stem, 1) + 'ei';
     }
     if(this.isOfType(wordType, [7, 10, 16, 18, 36, 37, 41])){
       return this.removeLastN(stem, 1) + 'i';
     }
-    if(this.isOfType(wordType, [9, 14])){
+    if(wordType == 9 || wordType == 14){
       return this.removeLastN(stem, 1) + o + 'i';
     }
     return stem + 'i';

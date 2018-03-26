@@ -49,7 +49,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('valoiksi');
     declesions[0].plural.instructive.push('valoin');
     declesions[0].plural.abessive.push('valoitta');
-    declesions[0].plural.comitative.push('valoine');
+    declesions[0].plural.comitative.push('valoineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('riekko');
@@ -80,7 +80,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('riekoiksi');
     declesions[1].plural.instructive.push('riekoin');
     declesions[1].plural.abessive.push('riekoitta');
-    declesions[1].plural.comitative.push('riekkoine');
+    declesions[1].plural.comitative.push('riekkoineen');
 
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('kippo');
@@ -111,7 +111,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('kipoiksi');
     declesions[2].plural.instructive.push('kipoin');
     declesions[2].plural.abessive.push('kipoitta');
-    declesions[2].plural.comitative.push('kippoine');
+    declesions[2].plural.comitative.push('kippoineen');
 
     declesions.push(new Declesion());
     declesions[3].singular.nominative.push('katto');
@@ -142,7 +142,7 @@ describe('DeclesionService', () => {
     declesions[3].plural.translative.push('katoiksi');
     declesions[3].plural.instructive.push('katoin');
     declesions[3].plural.abessive.push('katoitta');
-    declesions[3].plural.comitative.push('kattoine');
+    declesions[3].plural.comitative.push('kattoineen');
 
     declesions.push(new Declesion());
     declesions[4].singular.nominative.push('jako');
@@ -173,7 +173,7 @@ describe('DeclesionService', () => {
     declesions[4].plural.translative.push('jaoiksi');
     declesions[4].plural.instructive.push('jaoin');
     declesions[4].plural.abessive.push('jaoitta');
-    declesions[4].plural.comitative.push('jakoine');
+    declesions[4].plural.comitative.push('jakoineen');
 
     declesions.push(new Declesion());
     declesions[5].singular.nominative.push('orpo');
@@ -204,7 +204,7 @@ describe('DeclesionService', () => {
     declesions[5].plural.translative.push('orvoiksi');
     declesions[5].plural.instructive.push('orvoin');
     declesions[5].plural.abessive.push('orvoitta');
-    declesions[5].plural.comitative.push('orpoine');
+    declesions[5].plural.comitative.push('orpoineen');
 
     declesions.push(new Declesion());
     declesions[6].singular.nominative.push('katu');
@@ -235,7 +235,7 @@ describe('DeclesionService', () => {
     declesions[6].plural.translative.push('kaduiksi');
     declesions[6].plural.instructive.push('kaduin');
     declesions[6].plural.abessive.push('kaduitta');
-    declesions[6].plural.comitative.push('katuine');
+    declesions[6].plural.comitative.push('katuineen');
 
     declesions.push(new Declesion());
     declesions[7].singular.nominative.push('sanko');
@@ -266,7 +266,7 @@ describe('DeclesionService', () => {
     declesions[7].plural.translative.push('sangoiksi');
     declesions[7].plural.instructive.push('sangoin');
     declesions[7].plural.abessive.push('sangoitta');
-    declesions[7].plural.comitative.push('sankoine');
+    declesions[7].plural.comitative.push('sankoineen');
 
     declesions.push(new Declesion());
     declesions[8].singular.nominative.push('ampu');
@@ -297,7 +297,7 @@ describe('DeclesionService', () => {
     declesions[8].plural.translative.push('ampuiksi');
     declesions[8].plural.instructive.push('ampuin');
     declesions[8].plural.abessive.push('ampuitta');
-    declesions[8].plural.comitative.push('ampuine');
+    declesions[8].plural.comitative.push('ampuineen');
 
     declesions.push(new Declesion());
     declesions[9].singular.nominative.push('kuultu');
@@ -328,7 +328,7 @@ describe('DeclesionService', () => {
     declesions[9].plural.translative.push('kuulluiksi');
     declesions[9].plural.instructive.push('kuulluin');
     declesions[9].plural.abessive.push('kuulluitta');
-    declesions[9].plural.comitative.push('kuultuine');
+    declesions[9].plural.comitative.push('kuultuineen');
 
     declesions.push(new Declesion());
     declesions[10].singular.nominative.push('lento');
@@ -359,7 +359,7 @@ describe('DeclesionService', () => {
     declesions[10].plural.translative.push('lennoiksi');
     declesions[10].plural.instructive.push('lennoin');
     declesions[10].plural.abessive.push('lennoitta');
-    declesions[10].plural.comitative.push('lentoine');
+    declesions[10].plural.comitative.push('lentoineen');
 
     declesions.push(new Declesion());
     declesions[11].singular.nominative.push('saarto');
@@ -390,7 +390,7 @@ describe('DeclesionService', () => {
     declesions[11].plural.translative.push('saarroiksi');
     declesions[11].plural.instructive.push('saarroin');
     declesions[11].plural.abessive.push('saarroitta');
-    declesions[11].plural.comitative.push('saartoine');
+    declesions[11].plural.comitative.push('saartoineen');
 
     declesions.push(new Declesion());
     declesions[12].singular.nominative.push('hylky');
@@ -421,7 +421,7 @@ describe('DeclesionService', () => {
     declesions[12].plural.translative.push('hylyiksi');
     declesions[12].plural.instructive.push('hylyin');
     declesions[12].plural.abessive.push('hylyittä');
-    declesions[12].plural.comitative.push('hylkyine');
+    declesions[12].plural.comitative.push('hylkyineen');
     //alternative
     declesions.push(new Declesion());
     declesions[13].singular.nominative.push('hylky');
@@ -452,7 +452,7 @@ describe('DeclesionService', () => {
     declesions[13].plural.translative.push('hyljyiksi');
     declesions[13].plural.instructive.push('hyljyin');
     declesions[13].plural.abessive.push('hyljyittä');
-    declesions[13].plural.comitative.push('hylkyine');
+    declesions[13].plural.comitative.push('hylkyineen');
 
     declesions.push(new Declesion());
     declesions[14].singular.nominative.push('luku');
@@ -483,7 +483,7 @@ describe('DeclesionService', () => {
     declesions[14].plural.translative.push('luvuiksi');
     declesions[14].plural.instructive.push('luvuin');
     declesions[14].plural.abessive.push('luvuitta');
-    declesions[14].plural.comitative.push('lukuine');
+    declesions[14].plural.comitative.push('lukuineen');
 
     declesions.push(new Declesion());
     declesions[15].singular.nominative.push('sampo');
@@ -514,7 +514,7 @@ describe('DeclesionService', () => {
     declesions[15].plural.translative.push('sammoiksi');
     declesions[15].plural.instructive.push('sammoin');
     declesions[15].plural.abessive.push('sammoitta');
-    declesions[15].plural.comitative.push('sampoine');
+    declesions[15].plural.comitative.push('sampoineen');
 
     declesions.push(new Declesion());
     declesions[16].singular.nominative.push('lyhennetty');
@@ -545,7 +545,7 @@ describe('DeclesionService', () => {
     declesions[16].plural.translative.push('lyhenneyyiksi');
     declesions[16].plural.instructive.push('lyhenneyyin');
     declesions[16].plural.abessive.push('lyhenneyyittä');
-    declesions[16].plural.comitative.push('lyhennettyine');
+    declesions[16].plural.comitative.push('lyhennettyineen');
     
     service.decline('valo').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -627,7 +627,7 @@ describe('DeclesionService', () => {
     declesion.plural.translative.push('palveluiksi');
     declesion.plural.instructive.push('palveluin');
     declesion.plural.abessive.push('palveluitta');
-    declesion.plural.comitative.push('palveluine');
+    declesion.plural.comitative.push('palveluineen');
 
     service.decline('palvelu').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesion]);
@@ -665,7 +665,7 @@ describe('DeclesionService', () => {
     declesion.plural.translative.push('valtioiksi');
     declesion.plural.instructive.push('valtioin');
     declesion.plural.abessive.push('valtioitta');
-    declesion.plural.comitative.push('valtioine');
+    declesion.plural.comitative.push('valtioineen');
 
     service.decline('valtio').subscribe((serviceDeclesions) => { 
       expect(serviceDeclesions).toEqual([declesion]);
@@ -703,7 +703,7 @@ describe('DeclesionService', () => {
     declesion.plural.translative.push('laatikoiksi');
     declesion.plural.instructive.push('laatikoin');
     declesion.plural.abessive.push('laatikoitta');
-    declesion.plural.comitative.push('laatikkoine');
+    declesion.plural.comitative.push('laatikkoineen');
 
     service.decline('laatikko').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesion]);
@@ -742,7 +742,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('risteiksi');
     declesions[0].plural.instructive.push('ristein');
     declesions[0].plural.abessive.push('risteittä');
-    declesions[0].plural.comitative.push('risteine');
+    declesions[0].plural.comitative.push('risteineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('tukki');
@@ -773,7 +773,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('tukeiksi');
     declesions[1].plural.instructive.push('tukein');
     declesions[1].plural.abessive.push('tukeitta');
-    declesions[1].plural.comitative.push('tukkeine');
+    declesions[1].plural.comitative.push('tukkeineen');
 
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('nuppi');
@@ -804,7 +804,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('nupeiksi');
     declesions[2].plural.instructive.push('nupein');
     declesions[2].plural.abessive.push('nupeitta');
-    declesions[2].plural.comitative.push('nuppeine');
+    declesions[2].plural.comitative.push('nuppeineen');
 
     declesions.push(new Declesion());
     declesions[3].singular.nominative.push('niitti');
@@ -835,7 +835,7 @@ describe('DeclesionService', () => {
     declesions[3].plural.translative.push('niiteiksi');
     declesions[3].plural.instructive.push('niitein');
     declesions[3].plural.abessive.push('niiteittä');
-    declesions[3].plural.comitative.push('niitteine');
+    declesions[3].plural.comitative.push('niitteineen');
 
     declesions.push(new Declesion());
     declesions[4].singular.nominative.push('hupi');
@@ -866,7 +866,7 @@ describe('DeclesionService', () => {
     declesions[4].plural.translative.push('huveiksi');
     declesions[4].plural.instructive.push('huvein');
     declesions[4].plural.abessive.push('huveitta');
-    declesions[4].plural.comitative.push('hupeine');
+    declesions[4].plural.comitative.push('hupeineen');
 
     declesions.push(new Declesion());
     declesions[5].singular.nominative.push('koti');
@@ -897,7 +897,7 @@ describe('DeclesionService', () => {
     declesions[5].plural.translative.push('kodeiksi');
     declesions[5].plural.instructive.push('kodein');
     declesions[5].plural.abessive.push('kodeitta');
-    declesions[5].plural.comitative.push('koteine');
+    declesions[5].plural.comitative.push('koteineen');
 
     declesions.push(new Declesion());
     declesions[6].singular.nominative.push('vanki');
@@ -928,7 +928,7 @@ describe('DeclesionService', () => {
     declesions[6].plural.translative.push('vangeiksi');
     declesions[6].plural.instructive.push('vangein');
     declesions[6].plural.abessive.push('vangeitta');
-    declesions[6].plural.comitative.push('vankeine');
+    declesions[6].plural.comitative.push('vankeineen');
 
     declesions.push(new Declesion());
     declesions[7].singular.nominative.push('pelti');
@@ -959,7 +959,7 @@ describe('DeclesionService', () => {
     declesions[7].plural.translative.push('pelleiksi');
     declesions[7].plural.instructive.push('pellein');
     declesions[7].plural.abessive.push('pelleittä');
-    declesions[7].plural.comitative.push('pelteine');
+    declesions[7].plural.comitative.push('pelteineen');
 
     declesions.push(new Declesion());
     declesions[8].singular.nominative.push('tunti');
@@ -990,7 +990,7 @@ describe('DeclesionService', () => {
     declesions[8].plural.translative.push('tunneiksi');
     declesions[8].plural.instructive.push('tunnein');
     declesions[8].plural.abessive.push('tunneitta');
-    declesions[8].plural.comitative.push('tunteine');
+    declesions[8].plural.comitative.push('tunteineen');
 
     declesions.push(new Declesion());
     declesions[9].singular.nominative.push('kaarti');
@@ -1021,7 +1021,7 @@ describe('DeclesionService', () => {
     declesions[9].plural.translative.push('kaarteiksi');
     declesions[9].plural.instructive.push('kaartein');
     declesions[9].plural.abessive.push('kaarteitta');
-    declesions[9].plural.comitative.push('kaarteine');
+    declesions[9].plural.comitative.push('kaarteineen');
 
     declesions.push(new Declesion());
     declesions[10].singular.nominative.push('kalsium');
@@ -1052,7 +1052,7 @@ describe('DeclesionService', () => {
     declesions[10].plural.translative.push('kalsiumeiksi');
     declesions[10].plural.instructive.push('kalsiumein');
     declesions[10].plural.abessive.push('kalsiumeitta');
-    declesions[10].plural.comitative.push('kalsiumeine');
+    declesions[10].plural.comitative.push('kalsiumeineen');
 
     declesions.push(new Declesion());
     declesions[11].singular.nominative.push('preesens');
@@ -1083,7 +1083,7 @@ describe('DeclesionService', () => {
     declesions[11].plural.translative.push('preesenseiksi');
     declesions[11].plural.instructive.push('preesensein');
     declesions[11].plural.abessive.push('preesenseittä');
-    declesions[11].plural.comitative.push('preesenseine');
+    declesions[11].plural.comitative.push('preesenseineen');
 
     declesions.push(new Declesion());
     declesions[12].singular.nominative.push('amerikanbandoggi');
@@ -1114,7 +1114,7 @@ describe('DeclesionService', () => {
     declesions[12].plural.translative.push('amerikanbandoggeiksi');
     declesions[12].plural.instructive.push('amerikanbandoggein');
     declesions[12].plural.abessive.push('amerikanbandoggeitta');
-    declesions[12].plural.comitative.push('amerikanbandoggeine');
+    declesions[12].plural.comitative.push('amerikanbandoggeineen');
     declesions.push(new Declesion());
     declesions[13].singular.nominative.push('amerikanbandoggi');
     declesions[13].singular.genitive.push('amerikanbandogin');
@@ -1144,7 +1144,7 @@ describe('DeclesionService', () => {
     declesions[13].plural.translative.push('amerikanbandogeiksi');
     declesions[13].plural.instructive.push('amerikanbandogein');
     declesions[13].plural.abessive.push('amerikanbandogeitta');
-    declesions[13].plural.comitative.push('amerikanbandoggeine');
+    declesions[13].plural.comitative.push('amerikanbandoggeineen');
 
     service.decline('risti').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -1218,7 +1218,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('papereiksi');
     declesions[0].plural.instructive.push('paperein');
     declesions[0].plural.abessive.push('papereitta');
-    declesions[0].plural.comitative.push('papereine');
+    declesions[0].plural.comitative.push('papereineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('cover');
@@ -1249,7 +1249,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('covereiksi');
     declesions[1].plural.instructive.push('coverein');
     declesions[1].plural.abessive.push('covereitta');
-    declesions[1].plural.comitative.push('covereine');
+    declesions[1].plural.comitative.push('covereineen');
     
     service.decline('paperi').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -1290,7 +1290,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('oviksi');
     declesions[0].plural.instructive.push('ovin');
     declesions[0].plural.abessive.push('ovitta');
-    declesions[0].plural.comitative.push('ovine');
+    declesions[0].plural.comitative.push('ovineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('typpi');
@@ -1321,7 +1321,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('typiksi');
     declesions[1].plural.instructive.push('typin');
     declesions[1].plural.abessive.push('typittä');
-    declesions[1].plural.comitative.push('typpine');
+    declesions[1].plural.comitative.push('typpineen');
 
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('joki');
@@ -1352,7 +1352,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('joiksi');
     declesions[2].plural.instructive.push('join');
     declesions[2].plural.abessive.push('joitta');
-    declesions[2].plural.comitative.push('jokine');
+    declesions[2].plural.comitative.push('jokineen');
 
     declesions.push(new Declesion());
     declesions[3].singular.nominative.push('korpi');
@@ -1383,7 +1383,7 @@ describe('DeclesionService', () => {
     declesions[3].plural.translative.push('korviksi');
     declesions[3].plural.instructive.push('korvin');
     declesions[3].plural.abessive.push('korvitta');
-    declesions[3].plural.comitative.push('korpine');
+    declesions[3].plural.comitative.push('korpineen');
 
     declesions.push(new Declesion());
     declesions[4].singular.nominative.push('lahti');
@@ -1414,7 +1414,7 @@ describe('DeclesionService', () => {
     declesions[4].plural.translative.push('lahdiksi');
     declesions[4].plural.instructive.push('lahdin');
     declesions[4].plural.abessive.push('lahditta');
-    declesions[4].plural.comitative.push('lahtine');
+    declesions[4].plural.comitative.push('lahtineen');
     //declesion type 5
     declesions.push(new Declesion());
     declesions[5].singular.nominative.push('lahti');
@@ -1445,7 +1445,7 @@ describe('DeclesionService', () => {
     declesions[5].plural.translative.push('lahdeiksi');
     declesions[5].plural.instructive.push('lahdein');
     declesions[5].plural.abessive.push('lahdeitta');
-    declesions[5].plural.comitative.push('lahteine');
+    declesions[5].plural.comitative.push('lahteineen');
 
     declesions.push(new Declesion());
     declesions[6].singular.nominative.push('onki');
@@ -1476,7 +1476,7 @@ describe('DeclesionService', () => {
     declesions[6].plural.translative.push('ongiksi');
     declesions[6].plural.instructive.push('ongin');
     declesions[6].plural.abessive.push('ongitta');
-    declesions[6].plural.comitative.push('onkine');
+    declesions[6].plural.comitative.push('onkineen');
 
     declesions.push(new Declesion());
     declesions[7].singular.nominative.push('sampi');
@@ -1507,7 +1507,7 @@ describe('DeclesionService', () => {
     declesions[7].plural.translative.push('sammiksi');
     declesions[7].plural.instructive.push('sammin');
     declesions[7].plural.abessive.push('sammitta');
-    declesions[7].plural.comitative.push('sampine');
+    declesions[7].plural.comitative.push('sampineen');
 
     declesions.push(new Declesion());
     declesions[8].singular.nominative.push('arki');
@@ -1538,7 +1538,7 @@ describe('DeclesionService', () => {
     declesions[8].plural.translative.push('arjiksi');
     declesions[8].plural.instructive.push('arjin');
     declesions[8].plural.abessive.push('arjitta');
-    declesions[8].plural.comitative.push('arkine');
+    declesions[8].plural.comitative.push('arkineen');
     
     service.decline('ovi').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -1597,7 +1597,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('nalleiksi');
     declesions[0].plural.instructive.push('nallein');
     declesions[0].plural.abessive.push('nalleitta');
-    declesions[0].plural.comitative.push('nalleine');
+    declesions[0].plural.comitative.push('nalleineen');
     
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('nukke');
@@ -1628,7 +1628,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('nukeiksi');
     declesions[1].plural.instructive.push('nukein');
     declesions[1].plural.abessive.push('nukeitta');
-    declesions[1].plural.comitative.push('nukkeine');
+    declesions[1].plural.comitative.push('nukkeineen');
     
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('ope');
@@ -1659,7 +1659,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('opeiksi');
     declesions[2].plural.instructive.push('opein');
     declesions[2].plural.abessive.push('opeitta');
-    declesions[2].plural.comitative.push('opeine');
+    declesions[2].plural.comitative.push('opeineen');
     
     service.decline('nalle').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -1703,7 +1703,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('kaloiksi');
     declesions[0].plural.instructive.push('kaloin');
     declesions[0].plural.abessive.push('kaloitta');
-    declesions[0].plural.comitative.push('kaloine');
+    declesions[0].plural.comitative.push('kaloineen');
     
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('markka');
@@ -1734,7 +1734,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('markoiksi');
     declesions[1].plural.instructive.push('markoin');
     declesions[1].plural.abessive.push('markoitta');
-    declesions[1].plural.comitative.push('markkoine');
+    declesions[1].plural.comitative.push('markkoineen');
     
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('kauppa');
@@ -1765,7 +1765,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('kaupoiksi');
     declesions[2].plural.instructive.push('kaupoin');
     declesions[2].plural.abessive.push('kaupoitta');
-    declesions[2].plural.comitative.push('kauppoine');
+    declesions[2].plural.comitative.push('kauppoineen');
     
     declesions.push(new Declesion());
     declesions[3].singular.nominative.push('mitta');
@@ -1796,7 +1796,7 @@ describe('DeclesionService', () => {
     declesions[3].plural.translative.push('mitoiksi');
     declesions[3].plural.instructive.push('mitoin');
     declesions[3].plural.abessive.push('mitoitta');
-    declesions[3].plural.comitative.push('mittoine');
+    declesions[3].plural.comitative.push('mittoineen');
     
     declesions.push(new Declesion());
     declesions[4].singular.nominative.push('lika');
@@ -1827,7 +1827,7 @@ describe('DeclesionService', () => {
     declesions[4].plural.translative.push('lioiksi');
     declesions[4].plural.instructive.push('lioin');
     declesions[4].plural.abessive.push('lioitta');
-    declesions[4].plural.comitative.push('likoine');
+    declesions[4].plural.comitative.push('likoineen');
     
     declesions.push(new Declesion());
     declesions[5].singular.nominative.push('halpa');
@@ -1858,7 +1858,7 @@ describe('DeclesionService', () => {
     declesions[5].plural.translative.push('halvoiksi');
     declesions[5].plural.instructive.push('halvoin');
     declesions[5].plural.abessive.push('halvoitta');
-    declesions[5].plural.comitative.push('halpoine');
+    declesions[5].plural.comitative.push('halpoineen');
     
     declesions.push(new Declesion());
     declesions[6].singular.nominative.push('rauta');
@@ -1889,7 +1889,7 @@ describe('DeclesionService', () => {
     declesions[6].plural.translative.push('raudoiksi');
     declesions[6].plural.instructive.push('raudoin');
     declesions[6].plural.abessive.push('raudoitta');
-    declesions[6].plural.comitative.push('rautoine');
+    declesions[6].plural.comitative.push('rautoineen');
     
     declesions.push(new Declesion());
     declesions[7].singular.nominative.push('lanka');
@@ -1920,7 +1920,7 @@ describe('DeclesionService', () => {
     declesions[7].plural.translative.push('langoiksi');
     declesions[7].plural.instructive.push('langoin');
     declesions[7].plural.abessive.push('langoitta');
-    declesions[7].plural.comitative.push('lankoine');
+    declesions[7].plural.comitative.push('lankoineen');
     
     declesions.push(new Declesion());
     declesions[8].singular.nominative.push('kampa');
@@ -1951,7 +1951,7 @@ describe('DeclesionService', () => {
     declesions[8].plural.translative.push('kammoiksi');
     declesions[8].plural.instructive.push('kammoin');
     declesions[8].plural.abessive.push('kammoitta');
-    declesions[8].plural.comitative.push('kampoine');
+    declesions[8].plural.comitative.push('kampoineen');
     
     declesions.push(new Declesion());
     declesions[9].singular.nominative.push('ilta');
@@ -1982,7 +1982,7 @@ describe('DeclesionService', () => {
     declesions[9].plural.translative.push('illoiksi');
     declesions[9].plural.instructive.push('illoin');
     declesions[9].plural.abessive.push('illoitta');
-    declesions[9].plural.comitative.push('iltoine');
+    declesions[9].plural.comitative.push('iltoineen');
     
     declesions.push(new Declesion());
     declesions[10].singular.nominative.push('ranta');
@@ -2013,7 +2013,7 @@ describe('DeclesionService', () => {
     declesions[10].plural.translative.push('rannoiksi');
     declesions[10].plural.instructive.push('rannoin');
     declesions[10].plural.abessive.push('rannoitta');
-    declesions[10].plural.comitative.push('rantoine');
+    declesions[10].plural.comitative.push('rantoineen');
     
     declesions.push(new Declesion());
     declesions[11].singular.nominative.push('parta');
@@ -2044,7 +2044,7 @@ describe('DeclesionService', () => {
     declesions[11].plural.translative.push('parroiksi');
     declesions[11].plural.instructive.push('parroin');
     declesions[11].plural.abessive.push('parroitta');
-    declesions[11].plural.comitative.push('partoine');
+    declesions[11].plural.comitative.push('partoineen');
     
     declesions.push(new Declesion());
     declesions[12].singular.nominative.push('Vedda');
@@ -2075,7 +2075,7 @@ describe('DeclesionService', () => {
     declesions[12].plural.translative.push('Vedoiksi');
     declesions[12].plural.instructive.push('Vedoin');
     declesions[12].plural.abessive.push('Vedoitta');
-    declesions[12].plural.comitative.push('Veddoine');
+    declesions[12].plural.comitative.push('Veddoineen');
     
     declesions.push(new Declesion());
     declesions[13].singular.nominative.push('uppovaaka');
@@ -2106,7 +2106,7 @@ describe('DeclesionService', () => {
     declesions[13].plural.translative.push('uppovaa\'oiksi');
     declesions[13].plural.instructive.push('uppovaa\'oin');
     declesions[13].plural.abessive.push('uppovaa\'oitta');
-    declesions[13].plural.comitative.push('uppovaakoine');
+    declesions[13].plural.comitative.push('uppovaakoineen');
     
     service.decline('kala').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -2183,7 +2183,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('koiriksi');
     declesions[0].plural.instructive.push('koirin');
     declesions[0].plural.abessive.push('koiritta');
-    declesions[0].plural.comitative.push('koirine');
+    declesions[0].plural.comitative.push('koirineen');
     
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('seitsemän');
@@ -2214,7 +2214,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('seitsemiksi');
     declesions[1].plural.instructive.push('seitsemin');
     declesions[1].plural.abessive.push('seitsemittä');
-    declesions[1].plural.comitative.push('seitsemine');
+    declesions[1].plural.comitative.push('seitsemineen');
 
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('kahdeksan');
@@ -2245,7 +2245,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('kahdeksiksi');
     declesions[2].plural.instructive.push('kahdeksin');
     declesions[2].plural.abessive.push('kahdeksitta');
-    declesions[2].plural.comitative.push('kahdeksine');
+    declesions[2].plural.comitative.push('kahdeksineen');
     
     declesions.push(new Declesion());
     declesions[3].singular.nominative.push('yhdeksän');
@@ -2276,7 +2276,7 @@ describe('DeclesionService', () => {
     declesions[3].plural.translative.push('yhdeksiksi');
     declesions[3].plural.instructive.push('yhdeksin');
     declesions[3].plural.abessive.push('yhdeksittä');
-    declesions[3].plural.comitative.push('yhdeksine');
+    declesions[3].plural.comitative.push('yhdeksineen');
 
     declesions.push(new Declesion());
     declesions[4].singular.nominative.push('kukka');
@@ -2307,7 +2307,7 @@ describe('DeclesionService', () => {
     declesions[4].plural.translative.push('kukiksi');
     declesions[4].plural.instructive.push('kukin');
     declesions[4].plural.abessive.push('kukitta');
-    declesions[4].plural.comitative.push('kukkine');
+    declesions[4].plural.comitative.push('kukkineen');
 
     declesions.push(new Declesion());
     declesions[5].singular.nominative.push('noppa');
@@ -2338,7 +2338,7 @@ describe('DeclesionService', () => {
     declesions[5].plural.translative.push('nopiksi');
     declesions[5].plural.instructive.push('nopin');
     declesions[5].plural.abessive.push('nopitta');
-    declesions[5].plural.comitative.push('noppine');
+    declesions[5].plural.comitative.push('noppineen');
 
     declesions.push(new Declesion());
     declesions[6].singular.nominative.push('rotta');
@@ -2369,7 +2369,7 @@ describe('DeclesionService', () => {
     declesions[6].plural.translative.push('rotiksi');
     declesions[6].plural.instructive.push('rotin');
     declesions[6].plural.abessive.push('rotitta');
-    declesions[6].plural.comitative.push('rottine');
+    declesions[6].plural.comitative.push('rottineen');
 
     declesions.push(new Declesion());
     declesions[7].singular.nominative.push('sulka');
@@ -2400,7 +2400,7 @@ describe('DeclesionService', () => {
     declesions[7].plural.translative.push('suliksi');
     declesions[7].plural.instructive.push('sulin');
     declesions[7].plural.abessive.push('sulitta');
-    declesions[7].plural.comitative.push('sulkine');
+    declesions[7].plural.comitative.push('sulkineen');
 
     declesions.push(new Declesion());
     declesions[8].singular.nominative.push('leipä');
@@ -2431,7 +2431,7 @@ describe('DeclesionService', () => {
     declesions[8].plural.translative.push('leiviksi');
     declesions[8].plural.instructive.push('leivin');
     declesions[8].plural.abessive.push('leivittä');
-    declesions[8].plural.comitative.push('leipine');
+    declesions[8].plural.comitative.push('leipineen');
 
     declesions.push(new Declesion());
     declesions[9].singular.nominative.push('sota');
@@ -2462,7 +2462,7 @@ describe('DeclesionService', () => {
     declesions[9].plural.translative.push('sodiksi');
     declesions[9].plural.instructive.push('sodin');
     declesions[9].plural.abessive.push('soditta');
-    declesions[9].plural.comitative.push('sotine');
+    declesions[9].plural.comitative.push('sotineen');
 
     declesions.push(new Declesion());
     declesions[10].singular.nominative.push('kenkä');
@@ -2493,7 +2493,7 @@ describe('DeclesionService', () => {
     declesions[10].plural.translative.push('kengiksi');
     declesions[10].plural.instructive.push('kengin');
     declesions[10].plural.abessive.push('kengittä');
-    declesions[10].plural.comitative.push('kenkine');
+    declesions[10].plural.comitative.push('kenkineen');
 
     declesions.push(new Declesion());
     declesions[11].singular.nominative.push('sompa');
@@ -2524,7 +2524,7 @@ describe('DeclesionService', () => {
     declesions[11].plural.translative.push('sommiksi');
     declesions[11].plural.instructive.push('sommin');
     declesions[11].plural.abessive.push('sommitta');
-    declesions[11].plural.comitative.push('sompine');
+    declesions[11].plural.comitative.push('sompineen');
 
     declesions.push(new Declesion());
     declesions[12].singular.nominative.push('kulta');
@@ -2555,7 +2555,7 @@ describe('DeclesionService', () => {
     declesions[12].plural.translative.push('kulliksi');
     declesions[12].plural.instructive.push('kullin');
     declesions[12].plural.abessive.push('kullitta');
-    declesions[12].plural.comitative.push('kultine');
+    declesions[12].plural.comitative.push('kultineen');
 
     declesions.push(new Declesion());
     declesions[13].singular.nominative.push('kunta');
@@ -2586,7 +2586,7 @@ describe('DeclesionService', () => {
     declesions[13].plural.translative.push('kunniksi');
     declesions[13].plural.instructive.push('kunnin');
     declesions[13].plural.abessive.push('kunnitta');
-    declesions[13].plural.comitative.push('kuntine');
+    declesions[13].plural.comitative.push('kuntineen');
 
     declesions.push(new Declesion());
     declesions[14].singular.nominative.push('turta');
@@ -2617,7 +2617,7 @@ describe('DeclesionService', () => {
     declesions[14].plural.translative.push('turriksi');
     declesions[14].plural.instructive.push('turrin');
     declesions[14].plural.abessive.push('turritta');
-    declesions[14].plural.comitative.push('turtine');
+    declesions[14].plural.comitative.push('turtineen');
 
     declesions.push(new Declesion());
     declesions[15].singular.nominative.push('ylkä');
@@ -2648,7 +2648,7 @@ describe('DeclesionService', () => {
     declesions[15].plural.translative.push('yljiksi');
     declesions[15].plural.instructive.push('yljin');
     declesions[15].plural.abessive.push('yljittä');
-    declesions[15].plural.comitative.push('ylkine');
+    declesions[15].plural.comitative.push('ylkineen');
 
     declesions.push(new Declesion());
     declesions[16].singular.nominative.push('poika');
@@ -2679,7 +2679,7 @@ describe('DeclesionService', () => {
     declesions[16].plural.translative.push('pojiksi');
     declesions[16].plural.instructive.push('pojin');
     declesions[16].plural.abessive.push('pojitta');
-    declesions[16].plural.comitative.push('poikine');
+    declesions[16].plural.comitative.push('poikineen');
 
     declesions.push(new Declesion());
     declesions[17].singular.nominative.push('ruoka');
@@ -2710,7 +2710,7 @@ describe('DeclesionService', () => {
     declesions[17].plural.translative.push('ruoiksi');
     declesions[17].plural.instructive.push('ruoin');
     declesions[17].plural.abessive.push('ruoitta');
-    declesions[17].plural.comitative.push('ruokine');
+    declesions[17].plural.comitative.push('ruokineen');
     declesions.push(new Declesion());
     declesions[18].singular.nominative.push('ruoka');
     declesions[18].singular.genitive.push('ruuan');
@@ -2740,7 +2740,7 @@ describe('DeclesionService', () => {
     declesions[18].plural.translative.push('ruuiksi');
     declesions[18].plural.instructive.push('ruuin');
     declesions[18].plural.abessive.push('ruuitta');
-    declesions[18].plural.comitative.push('ruokine');
+    declesions[18].plural.comitative.push('ruokineen');
     
     service.decline('koira').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -2829,7 +2829,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative = ['omeniksi', 'omenoiksi'].sort();
     declesions[0].plural.instructive = ['omenin', 'omenoin'].sort();
     declesions[0].plural.abessive = ['omenitta', 'omenoitta'].sort();
-    declesions[0].plural.comitative = ['omenine', 'omenoine'].sort();
+    declesions[0].plural.comitative = ['omenineen', 'omenoineen'].sort();
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('päärynä');
@@ -2860,7 +2860,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative = ['pääryniksi', 'päärynöiksi'].sort();
     declesions[1].plural.instructive = ['päärynin', 'päärynöin'].sort();
     declesions[1].plural.abessive = ['päärynittä', 'päärynöittä'].sort();
-    declesions[1].plural.comitative = ['päärynine', 'päärynöine'].sort();
+    declesions[1].plural.comitative = ['päärynineen', 'päärynöineen'].sort();
 
     service.decline('omena').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -2901,7 +2901,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('kulkijoiksi');
     declesions[0].plural.instructive.push('kulkijoin');
     declesions[0].plural.abessive.push('kulkijoitta');
-    declesions[0].plural.comitative.push('kulkijoine');
+    declesions[0].plural.comitative.push('kulkijoineen');
 
     service.decline('kulkija').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -2939,7 +2939,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('katiskoiksi');
     declesions[0].plural.instructive.push('katiskoin');
     declesions[0].plural.abessive.push('katiskoitta');
-    declesions[0].plural.comitative.push('katiskoine');
+    declesions[0].plural.comitative.push('katiskoineen');
 
     service.decline('katiska').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -2977,7 +2977,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('solakoiksi');
     declesions[0].plural.instructive.push('solakoin');
     declesions[0].plural.abessive.push('solakoitta');
-    declesions[0].plural.comitative.push('solakkoine');
+    declesions[0].plural.comitative.push('solakkoineen');
 
     service.decline('solakka').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3015,7 +3015,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('korkeiksi');
     declesions[0].plural.instructive.push('korkein');
     declesions[0].plural.abessive.push('korkeitta');
-    declesions[0].plural.comitative.push('korkeine');
+    declesions[0].plural.comitative.push('korkeineen');
 
 
     declesions.push(new Declesion());
@@ -3047,7 +3047,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('tärkeiksi');
     declesions[1].plural.instructive.push('tärkein');
     declesions[1].plural.abessive.push('tärkeittä');
-    declesions[1].plural.comitative.push('tärkeine');
+    declesions[1].plural.comitative.push('tärkeineen');
 
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('ainoa');
@@ -3078,7 +3078,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('ainoiksi');
     declesions[2].plural.instructive.push('ainoin');
     declesions[2].plural.abessive.push('ainoitta');
-    declesions[2].plural.comitative.push('ainoine');
+    declesions[2].plural.comitative.push('ainoineen');
 
     service.decline('korkea').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3122,7 +3122,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('vanhemmiksi');
     declesions[0].plural.instructive.push('vanhemmin');
     declesions[0].plural.abessive.push('vanhemmitta');
-    declesions[0].plural.comitative.push('vanhempine');
+    declesions[0].plural.comitative.push('vanhempineen');
 
     service.decline('vanhempi').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3160,7 +3160,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('vapaiksi');
     declesions[0].plural.instructive.push('vapain');
     declesions[0].plural.abessive.push('vapaitta');
-    declesions[0].plural.comitative.push('vapaine');
+    declesions[0].plural.comitative.push('vapaineen');
 
     service.decline('vapaa').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3198,7 +3198,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('maiksi');
     declesions[0].plural.instructive.push('main');
     declesions[0].plural.abessive.push('maitta');
-    declesions[0].plural.comitative.push('maine');
+    declesions[0].plural.comitative.push('maineen');
     
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('pii');
@@ -3229,7 +3229,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('piiksi');
     declesions[1].plural.instructive.push('piin');
     declesions[1].plural.abessive.push('piittä');
-    declesions[1].plural.comitative.push('piine');
+    declesions[1].plural.comitative.push('piineen');
     
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('voi');
@@ -3260,7 +3260,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('voiksi');
     declesions[2].plural.instructive.push('voin');
     declesions[2].plural.abessive.push('voitta');
-    declesions[2].plural.comitative.push('voine');
+    declesions[2].plural.comitative.push('voineen');
     
     declesions.push(new Declesion());
     declesions[3].singular.nominative.push('yy');
@@ -3291,7 +3291,7 @@ describe('DeclesionService', () => {
     declesions[3].plural.translative.push('yiksi');
     declesions[3].plural.instructive.push('yin');
     declesions[3].plural.abessive.push('yittä');
-    declesions[3].plural.comitative.push('yine');
+    declesions[3].plural.comitative.push('yineen');
 
     service.decline('maa').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3338,7 +3338,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('soiksi');
     declesions[0].plural.instructive.push('soin');
     declesions[0].plural.abessive.push('soitta');
-    declesions[0].plural.comitative.push('soine');
+    declesions[0].plural.comitative.push('soineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('yö');
@@ -3369,7 +3369,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('öiksi');
     declesions[1].plural.instructive.push('öin');
     declesions[1].plural.abessive.push('öittä');
-    declesions[1].plural.comitative.push('öine');
+    declesions[1].plural.comitative.push('öineen');
 
     service.decline('suo').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3410,7 +3410,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('fileiksi');
     declesions[0].plural.instructive.push('filein');
     declesions[0].plural.abessive.push('fileittä');
-    declesions[0].plural.comitative.push('fileine');
+    declesions[0].plural.comitative.push('fileineen');
 
     service.decline('filee').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3448,7 +3448,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('roséiksi');
     declesions[0].plural.instructive.push('roséin');
     declesions[0].plural.abessive.push('roséitta');
-    declesions[0].plural.comitative.push('roséine');
+    declesions[0].plural.comitative.push('roséineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('cowboy');
@@ -3479,7 +3479,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('cowboyiksi');
     declesions[1].plural.instructive.push('cowboyin');
     declesions[1].plural.abessive.push('cowboyitta');
-    declesions[1].plural.comitative.push('cowboyine');
+    declesions[1].plural.comitative.push('cowboyineen');
 
     service.decline('rosé').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3520,7 +3520,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('parfait\'iksi');
     declesions[0].plural.instructive.push('parfait\'in');
     declesions[0].plural.abessive.push('parfait\'itta');
-    declesions[0].plural.comitative.push('parfait\'ine');
+    declesions[0].plural.comitative.push('parfait\'ineen');
 
     service.decline('parfait').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3558,7 +3558,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('tiiliksi');
     declesions[0].plural.instructive.push('tiilin');
     declesions[0].plural.abessive.push('tiilittä');
-    declesions[0].plural.comitative.push('tiiline');
+    declesions[0].plural.comitative.push('tiilineen');
     //declesion type 26
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('tiili');
@@ -3589,7 +3589,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('tiiliksi');
     declesions[1].plural.instructive.push('tiilin');
     declesions[1].plural.abessive.push('tiilittä');
-    declesions[1].plural.comitative.push('tiiline');
+    declesions[1].plural.comitative.push('tiilineen');
     service.decline('tiili').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0], declesions[1]]);
     });
@@ -3626,7 +3626,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('uniksi');
     declesions[0].plural.instructive.push('unin');
     declesions[0].plural.abessive.push('unitta');
-    declesions[0].plural.comitative.push('unine');
+    declesions[0].plural.comitative.push('unineen');
 
     service.decline('uni').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3664,7 +3664,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('toimiksi');
     declesions[0].plural.instructive.push('toimin');
     declesions[0].plural.abessive.push('toimitta');
-    declesions[0].plural.comitative.push('toimine');
+    declesions[0].plural.comitative.push('toimineen');
 
     service.decline('toimi').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3702,7 +3702,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('pieniksi');
     declesions[0].plural.instructive.push('pienin');
     declesions[0].plural.abessive.push('pienittä');
-    declesions[0].plural.comitative.push('pienine');
+    declesions[0].plural.comitative.push('pienineen');
 
     service.decline('pieni').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3740,7 +3740,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('käsiksi');
     declesions[0].plural.instructive.push('käsin');
     declesions[0].plural.abessive.push('käsittä');
-    declesions[0].plural.comitative.push('käsine');
+    declesions[0].plural.comitative.push('käsineen');
 
     service.decline('käsi').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3778,7 +3778,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('korsiksi');
     declesions[0].plural.instructive.push('korsin');
     declesions[0].plural.abessive.push('korsitta');
-    declesions[0].plural.comitative.push('korsine');
+    declesions[0].plural.comitative.push('korsineen');
 
     service.decline('korsi').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3816,7 +3816,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('lapsiksi');
     declesions[0].plural.instructive.push('lapsin');
     declesions[0].plural.abessive.push('lapsitta');
-    declesions[0].plural.comitative.push('lapsine');
+    declesions[0].plural.comitative.push('lapsineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('uksi');
@@ -3847,7 +3847,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('uksiksi');
     declesions[1].plural.instructive.push('uksin');
     declesions[1].plural.abessive.push('uksitta');
-    declesions[1].plural.comitative.push('uksine');
+    declesions[1].plural.comitative.push('uksineen');
     declesions.push(new Declesion());
     //declesion type 7
     declesions[2].singular.nominative.push('uksi');
@@ -3878,7 +3878,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('uksiksi');
     declesions[2].plural.instructive.push('uksin');
     declesions[2].plural.abessive.push('uksitta');
-    declesions[2].plural.comitative.push('uksine');
+    declesions[2].plural.comitative.push('uksineen');
 
     service.decline('lapsi').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3919,7 +3919,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('veitsiksi');
     declesions[0].plural.instructive.push('veitsin');
     declesions[0].plural.abessive.push('veitsittä');
-    declesions[0].plural.comitative.push('veitsine');
+    declesions[0].plural.comitative.push('veitsineen');
 
     service.decline('veitsi').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3957,7 +3957,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('kaksiksi');
     declesions[0].plural.instructive.push('kaksin');
     declesions[0].plural.abessive.push('kaksitta');
-    declesions[0].plural.comitative.push('kaksine');
+    declesions[0].plural.comitative.push('kaksineen');
 
     service.decline('kaksi').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -3995,7 +3995,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('sisariksi');
     declesions[0].plural.instructive.push('sisarin');
     declesions[0].plural.abessive.push('sisaritta');
-    declesions[0].plural.comitative.push('sisarine');
+    declesions[0].plural.comitative.push('sisarineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('tatar');
@@ -4026,7 +4026,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('tattariksi');
     declesions[1].plural.instructive.push('tattarin');
     declesions[1].plural.abessive.push('tattaritta');
-    declesions[1].plural.comitative.push('tattarine');
+    declesions[1].plural.comitative.push('tattarineen');
 
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('ien');
@@ -4057,7 +4057,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('ikeniksi');
     declesions[2].plural.instructive.push('ikenin');
     declesions[2].plural.abessive.push('ikenittä');
-    declesions[2].plural.comitative.push('ikenine');
+    declesions[2].plural.comitative.push('ikenineen');
 
     service.decline('sisar').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -4101,7 +4101,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('kytkimiksi');
     declesions[0].plural.instructive.push('kytkimin');
     declesions[0].plural.abessive.push('kytkimittä');
-    declesions[0].plural.comitative.push('kytkimine');
+    declesions[0].plural.comitative.push('kytkimineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('suutin');
@@ -4132,7 +4132,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('suuttimiksi');
     declesions[1].plural.instructive.push('suuttimin');
     declesions[1].plural.abessive.push('suuttimitta');
-    declesions[1].plural.comitative.push('suuttimine');
+    declesions[1].plural.comitative.push('suuttimineen');
 
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('puin');
@@ -4163,7 +4163,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('pukimiksi');
     declesions[2].plural.instructive.push('pukimin');
     declesions[2].plural.abessive.push('pukimitta');
-    declesions[2].plural.comitative.push('pukimine');
+    declesions[2].plural.comitative.push('pukimineen');
 
     declesions.push(new Declesion());
     declesions[3].singular.nominative.push('kaavin');
@@ -4194,7 +4194,7 @@ describe('DeclesionService', () => {
     declesions[3].plural.translative.push('kaavimiksi');
     declesions[3].plural.instructive.push('kaavimin');
     declesions[3].plural.abessive.push('kaavimitta');
-    declesions[3].plural.comitative.push('kaavimine');
+    declesions[3].plural.comitative.push('kaavimineen');
 
     declesions.push(new Declesion());
     declesions[4].singular.nominative.push('laidun');
@@ -4225,7 +4225,7 @@ describe('DeclesionService', () => {
     declesions[4].plural.translative.push('laitumiksi');
     declesions[4].plural.instructive.push('laitumin');
     declesions[4].plural.abessive.push('laitumitta');
-    declesions[4].plural.comitative.push('laitumine');
+    declesions[4].plural.comitative.push('laitumineen');
 
     declesions.push(new Declesion());
     declesions[5].singular.nominative.push('puhallin');
@@ -4256,7 +4256,7 @@ describe('DeclesionService', () => {
     declesions[5].plural.translative.push('puhaltimiksi');
     declesions[5].plural.instructive.push('puhaltimin');
     declesions[5].plural.abessive.push('puhaltimitta');
-    declesions[5].plural.comitative.push('puhaltimine');
+    declesions[5].plural.comitative.push('puhaltimineen');
 
     declesions.push(new Declesion());
     declesions[6].singular.nominative.push('muunnin');
@@ -4287,7 +4287,7 @@ describe('DeclesionService', () => {
     declesions[6].plural.translative.push('muuntimiksi');
     declesions[6].plural.instructive.push('muuntimin');
     declesions[6].plural.abessive.push('muuntimitta');
-    declesions[6].plural.comitative.push('muuntimine');
+    declesions[6].plural.comitative.push('muuntimineen');
 
     declesions.push(new Declesion());
     declesions[7].singular.nominative.push('kerroin');
@@ -4318,7 +4318,7 @@ describe('DeclesionService', () => {
     declesions[7].plural.translative.push('kertoimiksi');
     declesions[7].plural.instructive.push('kertoimin');
     declesions[7].plural.abessive.push('kertoimitta');
-    declesions[7].plural.comitative.push('kertoimine');
+    declesions[7].plural.comitative.push('kertoimineen');
 
     declesions.push(new Declesion());
     declesions[8].singular.nominative.push('ahdin');
@@ -4349,7 +4349,7 @@ describe('DeclesionService', () => {
     declesions[8].plural.translative.push('ahtimiksi');
     declesions[8].plural.instructive.push('ahtimin');
     declesions[8].plural.abessive.push('ahtimitta');
-    declesions[8].plural.comitative.push('ahtimine');
+    declesions[8].plural.comitative.push('ahtimineen');
 
     declesions.push(new Declesion());
     declesions[9].singular.nominative.push('istuin');
@@ -4380,7 +4380,7 @@ describe('DeclesionService', () => {
     declesions[9].plural.translative.push('istuimiksi');
     declesions[9].plural.instructive.push('istuimin');
     declesions[9].plural.abessive.push('istuimitta');
-    declesions[9].plural.comitative.push('istuimine');
+    declesions[9].plural.comitative.push('istuimineen');
 
     declesions.push(new Declesion());
     declesions[10].singular.nominative.push('poljin');
@@ -4411,7 +4411,7 @@ describe('DeclesionService', () => {
     declesions[10].plural.translative.push('polkimiksi');
     declesions[10].plural.instructive.push('polkimin');
     declesions[10].plural.abessive.push('polkimitta');
-    declesions[10].plural.comitative.push('polkimine');
+    declesions[10].plural.comitative.push('polkimineen');
 
     declesions.push(new Declesion());
     declesions[11].singular.nominative.push('särvin');
@@ -4442,7 +4442,7 @@ describe('DeclesionService', () => {
     declesions[11].plural.translative.push('särpimiksi');
     declesions[11].plural.instructive.push('särpimin');
     declesions[11].plural.abessive.push('särpimittä');
-    declesions[11].plural.comitative.push('särpimine');
+    declesions[11].plural.comitative.push('särpimineen');
 
     service.decline('kytkin').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -4513,7 +4513,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('onnettomiksi');
     declesions[0].plural.instructive.push('onnettomin');
     declesions[0].plural.abessive.push('onnettomitta');
-    declesions[0].plural.comitative.push('onnettomine');
+    declesions[0].plural.comitative.push('onnettomineen');
 
     service.decline('onneton').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -4551,7 +4551,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('lämpimiksi');
     declesions[0].plural.instructive.push('lämpimin');
     declesions[0].plural.abessive.push('lämpimittä');
-    declesions[0].plural.comitative.push('lämpimine');
+    declesions[0].plural.comitative.push('lämpimineen');
 
     service.decline('lämmin').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -4589,7 +4589,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('sisimmiksi');
     declesions[0].plural.instructive.push('sisimmin');
     declesions[0].plural.abessive.push('sisimmittä');
-    declesions[0].plural.comitative.push('sisimpine');
+    declesions[0].plural.comitative.push('sisimpineen');
 
     service.decline('sisin').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -4627,7 +4627,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('vasemmiksi');
     declesions[0].plural.instructive.push('vasemmin');
     declesions[0].plural.abessive.push('vasemmitta');
-    declesions[0].plural.comitative.push('vasempine');
+    declesions[0].plural.comitative.push('vasempineen');
 
     service.decline('vasen').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -4665,7 +4665,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('naisiksi');
     declesions[0].plural.instructive.push('naisin');
     declesions[0].plural.abessive.push('naisitta');
-    declesions[0].plural.comitative.push('naisine');
+    declesions[0].plural.comitative.push('naisineen');
 
     service.decline('nainen').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -4703,7 +4703,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('vastauksiksi');
     declesions[0].plural.instructive.push('vastauksin');
     declesions[0].plural.abessive.push('vastauksitta');
-    declesions[0].plural.comitative.push('vastauksine');
+    declesions[0].plural.comitative.push('vastauksineen');
 
     service.decline('vastaus').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -4741,7 +4741,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('kalleuksiksi');
     declesions[0].plural.instructive.push('kalleuksin');
     declesions[0].plural.abessive.push('kalleuksitta');
-    declesions[0].plural.comitative.push('kalleuksine');
+    declesions[0].plural.comitative.push('kalleuksineen');
 
     service.decline('kalleus').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -4779,7 +4779,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('vieraiksi');
     declesions[0].plural.instructive.push('vierain');
     declesions[0].plural.abessive.push('vieraitta');
-    declesions[0].plural.comitative.push('vieraine');
+    declesions[0].plural.comitative.push('vieraineen');
     
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('maukas');
@@ -4810,7 +4810,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('maukkaiksi');
     declesions[1].plural.instructive.push('maukkain');
     declesions[1].plural.abessive.push('maukkaitta');
-    declesions[1].plural.comitative.push('maukkaine');
+    declesions[1].plural.comitative.push('maukkaineen');
     
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('lipas');
@@ -4841,7 +4841,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('lippaiksi');
     declesions[2].plural.instructive.push('lippain');
     declesions[2].plural.abessive.push('lippaitta');
-    declesions[2].plural.comitative.push('lippaine');
+    declesions[2].plural.comitative.push('lippaineen');
 
     declesions.push(new Declesion());
     declesions[3].singular.nominative.push('ratas');
@@ -4872,7 +4872,7 @@ describe('DeclesionService', () => {
     declesions[3].plural.translative.push('rattaiksi');
     declesions[3].plural.instructive.push('rattain');
     declesions[3].plural.abessive.push('rattaitta');
-    declesions[3].plural.comitative.push('rattaine');
+    declesions[3].plural.comitative.push('rattaineen');
 
     declesions.push(new Declesion());
     declesions[4].singular.nominative.push('varas');
@@ -4903,7 +4903,7 @@ describe('DeclesionService', () => {
     declesions[4].plural.translative.push('varkaiksi');
     declesions[4].plural.instructive.push('varkain');
     declesions[4].plural.abessive.push('varkaitta');
-    declesions[4].plural.comitative.push('varkaine');
+    declesions[4].plural.comitative.push('varkaineen');
 
     declesions.push(new Declesion());
     declesions[5].singular.nominative.push('varvas');
@@ -4934,7 +4934,7 @@ describe('DeclesionService', () => {
     declesions[5].plural.translative.push('varpaiksi');
     declesions[5].plural.instructive.push('varpain');
     declesions[5].plural.abessive.push('varpaitta');
-    declesions[5].plural.comitative.push('varpaine');
+    declesions[5].plural.comitative.push('varpaineen');
 
     declesions.push(new Declesion());
     declesions[6].singular.nominative.push('keidas');
@@ -4965,7 +4965,7 @@ describe('DeclesionService', () => {
     declesions[6].plural.translative.push('keitaiksi');
     declesions[6].plural.instructive.push('keitain');
     declesions[6].plural.abessive.push('keitaitta');
-    declesions[6].plural.comitative.push('keitaine');
+    declesions[6].plural.comitative.push('keitaineen');
 
     declesions.push(new Declesion());
     declesions[7].singular.nominative.push('kangas');
@@ -4996,7 +4996,7 @@ describe('DeclesionService', () => {
     declesions[7].plural.translative.push('kankaiksi');
     declesions[7].plural.instructive.push('kankain');
     declesions[7].plural.abessive.push('kankaitta');
-    declesions[7].plural.comitative.push('kankaine');
+    declesions[7].plural.comitative.push('kankaineen');
 
     declesions.push(new Declesion());
     declesions[8].singular.nominative.push('hammas');
@@ -5027,7 +5027,7 @@ describe('DeclesionService', () => {
     declesions[8].plural.translative.push('hampaiksi');
     declesions[8].plural.instructive.push('hampain');
     declesions[8].plural.abessive.push('hampaitta');
-    declesions[8].plural.comitative.push('hampaine');
+    declesions[8].plural.comitative.push('hampaineen');
 
     declesions.push(new Declesion());
     declesions[9].singular.nominative.push('allas');
@@ -5058,7 +5058,7 @@ describe('DeclesionService', () => {
     declesions[9].plural.translative.push('altaiksi');
     declesions[9].plural.instructive.push('altain');
     declesions[9].plural.abessive.push('altaitta');
-    declesions[9].plural.comitative.push('altaine');
+    declesions[9].plural.comitative.push('altaineen');
 
     declesions.push(new Declesion());
     declesions[10].singular.nominative.push('rynnäs');
@@ -5089,7 +5089,7 @@ describe('DeclesionService', () => {
     declesions[10].plural.translative.push('ryntäiksi');
     declesions[10].plural.instructive.push('ryntäin');
     declesions[10].plural.abessive.push('ryntäittä');
-    declesions[10].plural.comitative.push('ryntäine');
+    declesions[10].plural.comitative.push('ryntäineen');
 
     declesions.push(new Declesion());
     declesions[11].singular.nominative.push('parras');
@@ -5120,7 +5120,7 @@ describe('DeclesionService', () => {
     declesions[11].plural.translative.push('partaiksi');
     declesions[11].plural.instructive.push('partain');
     declesions[11].plural.abessive.push('partaitta');
-    declesions[11].plural.comitative.push('partaine');
+    declesions[11].plural.comitative.push('partaineen');
 
     declesions.push(new Declesion());
     declesions[12].singular.nominative.push('paras');
@@ -5151,7 +5151,7 @@ describe('DeclesionService', () => {
     declesions[12].plural.translative.push('parhaiksi');
     declesions[12].plural.instructive.push('parhain');
     declesions[12].plural.abessive.push('parhaitta');
-    declesions[12].plural.comitative.push('parhaine');
+    declesions[12].plural.comitative.push('parhaineen');
     
     service.decline('vieras').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -5225,7 +5225,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('miehiksi');
     declesions[0].plural.instructive.push('miehin');
     declesions[0].plural.abessive.push('miehittä');
-    declesions[0].plural.comitative.push('miehine');
+    declesions[0].plural.comitative.push('miehineen');
 
     service.decline('mies').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -5263,7 +5263,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('ohuiksi');
     declesions[0].plural.instructive.push('ohuin');
     declesions[0].plural.abessive.push('ohuitta');
-    declesions[0].plural.comitative.push('ohuine');
+    declesions[0].plural.comitative.push('ohuineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('immyt');
@@ -5294,7 +5294,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('impyiksi');
     declesions[1].plural.instructive.push('impyin');
     declesions[1].plural.abessive.push('impyittä');
-    declesions[1].plural.comitative.push('impyine');
+    declesions[1].plural.comitative.push('impyineen');
 
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('neiyt');
@@ -5325,7 +5325,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('neityiksi');
     declesions[2].plural.instructive.push('neityin');
     declesions[2].plural.abessive.push('neityittä');
-    declesions[2].plural.comitative.push('neityine');
+    declesions[2].plural.comitative.push('neityineen');
 
     service.decline('ohut').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -5369,7 +5369,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('keväiksi');
     declesions[0].plural.instructive.push('keväin');
     declesions[0].plural.abessive.push('keväittä');
-    declesions[0].plural.comitative.push('keväine');
+    declesions[0].plural.comitative.push('keväineen');
 
     service.decline('kevät').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -5407,7 +5407,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('kahdeksansiksi');
     declesions[0].plural.instructive.push('kahdeksansin');
     declesions[0].plural.abessive.push('kahdeksansitta');
-    declesions[0].plural.comitative.push('kahdeksansine');
+    declesions[0].plural.comitative.push('kahdeksansineen');
 
     service.decline('kahdeksas').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -5445,7 +5445,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('tuhansiksi');
     declesions[0].plural.instructive.push('tuhansin');
     declesions[0].plural.abessive.push('tuhansitta');
-    declesions[0].plural.comitative.push('tuhansine');
+    declesions[0].plural.comitative.push('tuhansineen');
 
     service.decline('tuhat').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -5483,7 +5483,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('kuolleiksi');
     declesions[0].plural.instructive.push('kuollein');
     declesions[0].plural.abessive.push('kuolleitta');
-    declesions[0].plural.comitative.push('kuolleine');
+    declesions[0].plural.comitative.push('kuolleineen');
 
     service.decline('kuollut').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -5521,7 +5521,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('hameiksi');
     declesions[0].plural.instructive.push('hamein');
     declesions[0].plural.abessive.push('hameitta');
-    declesions[0].plural.comitative.push('hameine');
+    declesions[0].plural.comitative.push('hameineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('savuke');
@@ -5552,7 +5552,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('savukkeiksi');
     declesions[1].plural.instructive.push('savukkein');
     declesions[1].plural.abessive.push('savukkeitta');
-    declesions[1].plural.comitative.push('savukkeine');
+    declesions[1].plural.comitative.push('savukkeineen');
 
     declesions.push(new Declesion());
     declesions[2].singular.nominative.push('ape');
@@ -5583,7 +5583,7 @@ describe('DeclesionService', () => {
     declesions[2].plural.translative.push('appeiksi');
     declesions[2].plural.instructive.push('appein');
     declesions[2].plural.abessive.push('appeitta');
-    declesions[2].plural.comitative.push('appeine');
+    declesions[2].plural.comitative.push('appeineen');
 
     declesions.push(new Declesion());
     declesions[3].singular.nominative.push('peite');
@@ -5614,7 +5614,7 @@ describe('DeclesionService', () => {
     declesions[3].plural.translative.push('peitteiksi');
     declesions[3].plural.instructive.push('peittein');
     declesions[3].plural.abessive.push('peitteittä');
-    declesions[3].plural.comitative.push('peitteine');
+    declesions[3].plural.comitative.push('peitteineen');
 
     declesions.push(new Declesion());
     declesions[4].singular.nominative.push('aie');
@@ -5645,7 +5645,7 @@ describe('DeclesionService', () => {
     declesions[4].plural.translative.push('aikeiksi');
     declesions[4].plural.instructive.push('aikein');
     declesions[4].plural.abessive.push('aikeitta');
-    declesions[4].plural.comitative.push('aikeine');
+    declesions[4].plural.comitative.push('aikeineen');
 
     declesions.push(new Declesion());
     declesions[5].singular.nominative.push('taive');
@@ -5676,7 +5676,7 @@ describe('DeclesionService', () => {
     declesions[5].plural.translative.push('taipeiksi');
     declesions[5].plural.instructive.push('taipein');
     declesions[5].plural.abessive.push('taipeitta');
-    declesions[5].plural.comitative.push('taipeine');
+    declesions[5].plural.comitative.push('taipeineen');
 
     declesions.push(new Declesion());
     declesions[6].singular.nominative.push('sade');
@@ -5707,7 +5707,7 @@ describe('DeclesionService', () => {
     declesions[6].plural.translative.push('sateiksi');
     declesions[6].plural.instructive.push('satein');
     declesions[6].plural.abessive.push('sateitta');
-    declesions[6].plural.comitative.push('sateine');
+    declesions[6].plural.comitative.push('sateineen');
 
     declesions.push(new Declesion());
     declesions[7].singular.nominative.push('lumme');
@@ -5738,7 +5738,7 @@ describe('DeclesionService', () => {
     declesions[7].plural.translative.push('lumpeiksi');
     declesions[7].plural.instructive.push('lumpein');
     declesions[7].plural.abessive.push('lumpeitta');
-    declesions[7].plural.comitative.push('lumpeine');
+    declesions[7].plural.comitative.push('lumpeineen');
 
     declesions.push(new Declesion());
     declesions[8].singular.nominative.push('kimalle');
@@ -5769,7 +5769,7 @@ describe('DeclesionService', () => {
     declesions[8].plural.translative.push('kimalteiksi');
     declesions[8].plural.instructive.push('kimaltein');
     declesions[8].plural.abessive.push('kimalteitta');
-    declesions[8].plural.comitative.push('kimalteine');
+    declesions[8].plural.comitative.push('kimalteineen');
 
     declesions.push(new Declesion());
     declesions[9].singular.nominative.push('vanne');
@@ -5800,7 +5800,7 @@ describe('DeclesionService', () => {
     declesions[9].plural.translative.push('vanteiksi');
     declesions[9].plural.instructive.push('vantein');
     declesions[9].plural.abessive.push('vanteitta');
-    declesions[9].plural.comitative.push('vanteine');
+    declesions[9].plural.comitative.push('vanteineen');
 
     declesions.push(new Declesion());
     declesions[10].singular.nominative.push('aarre');
@@ -5831,7 +5831,7 @@ describe('DeclesionService', () => {
     declesions[10].plural.translative.push('aarteiksi');
     declesions[10].plural.instructive.push('aartein');
     declesions[10].plural.abessive.push('aarteitta');
-    declesions[10].plural.comitative.push('aarteine');
+    declesions[10].plural.comitative.push('aarteineen');
 
     declesions.push(new Declesion());
     declesions[11].singular.nominative.push('lahje');
@@ -5862,7 +5862,7 @@ describe('DeclesionService', () => {
     declesions[11].plural.translative.push('lahkeiksi');
     declesions[11].plural.instructive.push('lahkein');
     declesions[11].plural.abessive.push('lahkeitta');
-    declesions[11].plural.comitative.push('lahkeine');
+    declesions[11].plural.comitative.push('lahkeineen');
 
     service.decline('hame').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -5933,7 +5933,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('askeliksi');
     declesions[0].plural.instructive.push('askelin');
     declesions[0].plural.abessive.push('askelitta');
-    declesions[0].plural.comitative.push('askeline');
+    declesions[0].plural.comitative.push('askelineen');
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('askele');
     declesions[1].singular.genitive.push('askeleen');
@@ -5963,7 +5963,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('askeleiksi');
     declesions[1].plural.instructive.push('askelein');
     declesions[1].plural.abessive.push('askeleitta');
-    declesions[1].plural.comitative.push('askeleine');
+    declesions[1].plural.comitative.push('askeleineen');
 
     service.decline('askel').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
@@ -6042,7 +6042,7 @@ describe('DeclesionService', () => {
     declesions[0].plural.translative.push('isoäideiksi');
     declesions[0].plural.instructive.push('isoäidein');
     declesions[0].plural.abessive.push('isoäideittä');
-    declesions[0].plural.comitative.push('isoäiteine');
+    declesions[0].plural.comitative.push('isoäiteineen');
 
     declesions.push(new Declesion());
     declesions[1].singular.nominative.push('yliopisto');
@@ -6073,7 +6073,7 @@ describe('DeclesionService', () => {
     declesions[1].plural.translative.push('yliopistoiksi');
     declesions[1].plural.instructive.push('yliopistoin');
     declesions[1].plural.abessive.push('yliopistoitta');
-    declesions[1].plural.comitative.push('yliopistoine');
+    declesions[1].plural.comitative.push('yliopistoineen');
 
     service.decline('isoäiti').subscribe((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesions[0]]);
