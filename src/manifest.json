@@ -7,8 +7,12 @@
   "description": "Learn finnish declination",
   "theme_color": "#6EDA68",
   "icons": [{
-    "src": "./assets/oppi-logo.svg",
+    "src": "assets/oppi-logo.svg",
     "type": "image/xml+svg",
-    "sizes": "195x195 512x512"
+    "sizes": "195x195"
+  },{
+    "src": "assets/oppi-logo.png",
+    "type": "image/png",
+    "sizes": "512x512"
   }]
 }
