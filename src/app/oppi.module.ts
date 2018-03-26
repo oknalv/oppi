@@ -21,7 +21,7 @@ import { UiModule } from './module/ui/ui';
   ],
   imports: [
     BrowserModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     RoutingModule,
     FormsModule,
     HttpClientModule,
