@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
-import * as words from '../data/nominals.json';
 
 @Injectable()
 export class WordInfoService{
@@ -18,20 +18,7 @@ export class WordInfoService{
   public o: number = 1;
   public u: number = 2;
 
-  constructor() {
-    this.words = words['words'];
-    this.metadata = words['metadata'];
-    this.types = words['metadata']['types'];
-    this.type = words['metadata']['type'];
-    this.gradation = words['metadata']['gradation'];
-    this.gradationTypes = words['metadata']['gradationTypes'];
-    this.vowelHarmony = words['metadata']['vowelHarmony']
-    if(words['metadata']['vowelHarmonyTypes']['0'] == 'frontVowel'){
-      this.vowelHarmonyTypes = {0: ['ä', 'ö', 'y'], 1: ['a', 'o', 'u']};
-    } else {
-      this.vowelHarmonyTypes = {1: ['ä', 'ö', 'y'], 0: ['a', 'o', 'u']};      
-    }
-  }
+  constructor(private http: HttpClient) { }
 
   private transformWordInfo(word: string, wordInfo: object): object{
     let transformedWordInfo: object = {'types': []};
@@ -52,13 +39,37 @@ export class WordInfoService{
   }
 
   getWordInfo(word: string): Observable<object> {
-    let wordInfo = this.words[word];
-    return wordInfo != null ? of(this.transformWordInfo(word, wordInfo)) : of(null);
+    return this.getWords().map(function(){
+      let wordInfo = this.words[word];
+      return wordInfo != null ? of(this.transformWordInfo(word, wordInfo)) : of(null);
+    }.bind(this));
   }
 
   getRandomWord(): Observable<string> {
-    let words: string[] = Object.keys(this.words);
-    return of(words[Math.floor(Math.random() * words.length)]);
+    return this.getWords().map(function(){
+      let words: string[] = Object.keys(this.words);
+      return of(words[Math.floor(Math.random() * words.length)]);
+    }.bind(this));
+  }
+
+  private getWords(): Observable<any>{
+    if(!this.words){
+      return this.http.get('assets/data/nominals.json').map(function(data){
+        this.words = data['words'];
+        this.metadata = data['metadata'];
+        this.types = data['metadata']['types'];
+        this.type = data['metadata']['type'];
+        this.gradation = data['metadata']['gradation'];
+        this.gradationTypes = data['metadata']['gradationTypes'];
+        this.vowelHarmony = data['metadata']['vowelHarmony']
+        if(data['metadata']['vowelHarmonyTypes']['0'] == 'frontVowel'){
+          this.vowelHarmonyTypes = {0: ['ä', 'ö', 'y'], 1: ['a', 'o', 'u']};
+        } else {
+          this.vowelHarmonyTypes = {1: ['ä', 'ö', 'y'], 0: ['a', 'o', 'u']};      
+        }
+      });
+    }
+    return of();
   }
 
 }

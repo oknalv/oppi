@@ -1,4 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { DeclesionService } from '../app/service/declesion.service';
 import { WordInfoService } from '../app/service/word-info.service';
@@ -7,6 +8,7 @@ import { Declesion } from '../app/model/declesion';
 describe('DeclesionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [HttpClientModule],
       providers: [
         DeclesionService,
         WordInfoService
