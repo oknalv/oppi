@@ -67,7 +67,7 @@ export class WordInfoService{
         } else {
           this.vowelHarmonyTypes = {1: ['ä', 'ö', 'y'], 0: ['a', 'o', 'u']};      
         }
-      });
+      }.bind(this));
     }
     return of();
   }
