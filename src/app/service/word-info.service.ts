@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class WordInfoService{
@@ -41,14 +42,14 @@ export class WordInfoService{
   getWordInfo(word: string): Observable<object> {
     return this.getWords().map(function(){
       let wordInfo = this.words[word];
-      return wordInfo != null ? of(this.transformWordInfo(word, wordInfo)) : of(null);
+      return wordInfo != null ? this.transformWordInfo(word, wordInfo) : null;
     }.bind(this));
   }
 
   getRandomWord(): Observable<string> {
     return this.getWords().map(function(){
       let words: string[] = Object.keys(this.words);
-      return of(words[Math.floor(Math.random() * words.length)]);
+      return words[Math.floor(Math.random() * words.length)];
     }.bind(this));
   }
 
@@ -69,7 +70,7 @@ export class WordInfoService{
         }
       }.bind(this));
     }
-    return of();
+    return of({});
   }
 
 }
