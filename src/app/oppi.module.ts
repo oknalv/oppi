@@ -10,6 +10,7 @@ import { RoutingModule } from './routing.module';
 import { DeclesionService } from './service/declesion.service';
 import { WordInfoService } from './service/word-info.service';
 import { DeclineComponent } from './component/decline/decline.component';
+import { LoadingComponent } from './component/loading/loading.component';
 import { I18nModule } from './module/i18n/i18n';
 import { UiModule } from './module/ui/ui';
 
@@ -18,6 +19,7 @@ import { UiModule } from './module/ui/ui';
   declarations: [
     OppiComponent,
     DeclineComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

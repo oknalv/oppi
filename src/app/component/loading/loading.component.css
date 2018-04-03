@@ -1,0 +1,46 @@
+:host{
+    display: flex;
+    justify-content: center;
+} 
+div{
+    position: relative;
+    --earth-size: 100px;
+    --moon-size: calc(var(--earth-size) / 2 );
+    width: 240px;
+    height: var(--earth-size);
+    display: block;
+}
+
+img {
+    position: absolute;
+}
+
+img:first-child {
+    height: var(--earth-size);
+    width: var(--earth-size);
+    margin-left: calc(50% - var(--earth-size) / 2);
+}
+
+img:last-child {
+    height: var(--moon-size);
+    width: var(--moon-size);
+    /*margin-top: calc(var(--earth-size) / 2 - var(--moon-size) / 2);*/
+    animation: orbit 2s infinite ease;
+}
+
+@keyframes orbit {
+    0% {
+        z-index: 1;
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+    50% {
+        margin-left: calc(100% - var(--moon-size));
+        margin-top: calc(var(--earth-size) - var(--moon-size));
+    }
+    100% {
+        z-index: -1;
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+}

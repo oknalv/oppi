@@ -82,6 +82,9 @@
     </div>
   </div>
 </div>
+<div *ngIf='loading'>
+  <loading></loading>
+</div>
 <div *ngIf='!error'>
   <div *ngIf='test'>
     <h3>{{word}}</h3>
