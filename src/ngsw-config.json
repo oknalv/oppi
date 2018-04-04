@@ -7,7 +7,10 @@
       "files": [
         "/favicon.ico",
         "/index.html",
-        "/manifest.json"
+        "/manifest.json",
+        "/assets/i18n/en.json",
+        "/assets/oppi-logo.svg",
+        "/assets/moon.svg"
       ],
       "versionedFiles": [
         "/*.bundle.css",
