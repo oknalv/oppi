@@ -11,7 +11,9 @@ export class OppiComponent implements OnInit {
   languageKeys: string[];
   private languages: object;
 
-  constructor(private i18nService: I18nService){ }
+  constructor(private i18nService: I18nService){
+    console.log("OPPI")
+  }
 
   ngOnInit(): void {
     this.languages = this.i18nService.getLanguageKeys();

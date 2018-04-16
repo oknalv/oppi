@@ -21,17 +21,14 @@ export class DeclineComponent {
   wordToSearch: string;
   test: boolean;
   error: number;
-  loading: boolean = false;
 
   constructor(private declesionService: DeclesionService, private wordInfoService: WordInfoService) { }
 
   searchWord(wordToSearch: string, test?: boolean): void {
-    this.loading = true;
     this.word = wordToSearch;
     this.declesionToCheck = new DeclesionString();
     this.declesionErrors = null;
     this.declesionService.decline(this.word).subscribe(function(declesions: Declesion[]){
-      this.loading = false;
       this.error = null;
       this.declesions = declesions;
       this.numbers = Object.keys(this.declesions[0]);
@@ -39,7 +36,6 @@ export class DeclineComponent {
       this.declesionErrors = null;
       this.test = test == true;
     }.bind(this), function(error){
-      this.loading = false;
       this.error = error;
       this.declesions = null;
       this.cases = null;
@@ -107,13 +103,9 @@ export class DeclineComponent {
   }
 
   getRandomWord(): void {
-    this.loading = true;
     this.wordInfoService.getRandomWord().subscribe(function(word){
-      this.loading = false;
-      this.wordToSearch = word;
-      this.searchWord(word, true);
-    }.bind(this), function(){
-      this.loading = false;
+      this.wordToSearch = word.word;
+      this.searchWord(this.wordToSearch, true);
     }.bind(this));
   }
 

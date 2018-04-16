@@ -1,1 +1,51 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>oppi</title><base href="/oppi/"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#6EDA68"/><meta name="keywords" content="finnish inflection,finnish declension,finnish cases,learn finnish,progressive web app"/><meta name="description" content="Learn how to decline words in Finnish by practicing."/><link rel="icon" type="image/x-icon" href="favicon.ico"><link rel="manifest" href="manifest.json"><link href="styles.d21e6ff7e5049849189c.bundle.css" rel="stylesheet"/></head><body><oppi><noscript>Please enable JavaScript.</noscript></oppi><script type="text/javascript" src="inline.0f47dbb594736bd99270.bundle.js"></script><script type="text/javascript" src="polyfills.f20484b2fa4642e0dca8.bundle.js"></script><script type="text/javascript" src="main.f3cbeef36d419c4039a9.bundle.js"></script></body></html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>oppi</title><base href="/oppi/"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#6EDA68"/><meta name="keywords" content="finnish inflection,finnish declension,finnish cases,learn finnish,progressive web app"/><meta name="description" content="Learn how to decline words in Finnish by practicing."/><link rel="icon" type="image/x-icon" href="favicon.ico"><link rel="manifest" href="manifest.json"><link href="styles.d21e6ff7e5049849189c.bundle.css" rel="stylesheet"/></head><body><oppi><noscript>Please enable JavaScript.<style>#loadingPage{display:none;}</style></noscript><style>html, body {
+        height: 100%;
+      }
+      #loadingPage{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      } 
+      #loadingPage > div{
+        position: relative;
+        --earth-size: 100px;
+        --moon-size: calc(var(--earth-size) / 2 );
+        width: 240px;
+        height: var(--earth-size);
+        display: block;
+      }
+
+      img {
+        position: absolute;
+      }
+
+      img:first-child {
+        height: var(--earth-size);
+        width: var(--earth-size);
+        margin-left: calc(50% - var(--earth-size) / 2);
+      }
+
+      img:last-child {
+        height: var(--moon-size);
+        width: var(--moon-size);
+        /*margin-top: calc(var(--earth-size) / 2 - var(--moon-size) / 2);*/
+        animation: orbit 2s infinite ease;
+      }
+
+      @keyframes orbit {
+        0% {
+          z-index: 1;
+          margin-left: 0px;
+          margin-top: 0px;
+        }
+        50% {
+          margin-left: calc(100% - var(--moon-size));
+          margin-top: calc(var(--earth-size) - var(--moon-size));
+        }
+        100% {
+          z-index: -1;
+          margin-left: 0px;
+          margin-top: 0px;
+        }
+      }</style><div id="loadingPage"><div><img src="assets/oppi-logo.svg"/> <img src="assets/moon.svg"></div></div></oppi><script type="text/javascript" src="inline.0b5f92c1a30e197f9e5c.bundle.js"></script><script type="text/javascript" src="polyfills.f20484b2fa4642e0dca8.bundle.js"></script><script type="text/javascript" src="main.8264eff1026da7bf9f4a.bundle.js"></script></body></html>
