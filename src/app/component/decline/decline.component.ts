@@ -25,6 +25,7 @@ export class DeclineComponent {
   constructor(private declesionService: DeclesionService, private wordInfoService: WordInfoService) { }
 
   searchWord(wordToSearch: string, test?: boolean): void {
+    wordToSearch = wordToSearch ? wordToSearch : '';
     this.word = wordToSearch;
     this.declesionToCheck = new DeclesionString();
     this.declesionErrors = null;
@@ -63,9 +64,9 @@ export class DeclineComponent {
 
   private compareDeclesions(correctDeclesion: Declesion, declesionToCheck: Declesion): object {
     let declesionErrors = {'numberOfErrors': 0};
-    Object.keys(correctDeclesion).forEach(function(numberName){
+    for(let numberName in correctDeclesion){
       let numberForm: DeclesionForm = correctDeclesion[numberName];
-      Object.keys(numberForm).forEach(function(caseName){
+      for(let caseName in numberForm){
         let caseForms: string[] = numberForm[caseName];
         let checkCaseForms: string[] = declesionToCheck[numberName][caseName];
         let isContained: boolean =
@@ -84,21 +85,21 @@ export class DeclineComponent {
         else {
           declesionErrors[numberName][caseName] = false;
         }
-      }.bind(this));
-    }.bind(this));
+      };
+    };
     return declesionErrors;
   }
 
   private declesionStringToDeclesion(declesionString: DeclesionString): Declesion {
     let declesion: Declesion = new Declesion();
-    Object.keys(declesionString).forEach(function(numberName){
-      Object.keys(declesionString[numberName]).forEach(function(caseName){
+    for(let numberName in declesionString){
+      for(let caseName in declesionString[numberName]){
         declesion[numberName][caseName] =
           declesionString[numberName][caseName] != null && declesionString[numberName][caseName] != '' ?
           declesionString[numberName][caseName].split(',').map((caseForm: string) => caseForm.trim()).sort() :
           declesion[numberName][caseName];
-      }.bind(this));
-    }.bind(this));
+      };
+    };
     return declesion;
   }
 

@@ -24,7 +24,8 @@
     "updateMode": "prefetch",
     "resources": {
       "files": [
-        "/assets/**"
+        "/assets/**",
+        "/fontawesome-webfont.*"
       ]
     }
   }]
