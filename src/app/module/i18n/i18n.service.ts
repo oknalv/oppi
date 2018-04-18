@@ -41,7 +41,7 @@ export class I18nService {
 
   changeLanguage(languageKey: string): void {
     if(languageKey != this.currentLanguageKey){
-      if(Object.keys(this.languages).indexOf(languageKey) == -1){
+      if(!(languageKey in this.languages)){
         this.http.get(this.path + languageKey + '.json').subscribe(function(data){
           this.currentLanguageKey = languageKey;
           this.languages[languageKey] = data;

@@ -1,17 +1,55 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
+
 
 import { DeclesionService } from '../app/service/declesion.service';
-import { WordInfoService } from '../app/service/word-info.service';
+import { WordInfoService, initWordInfoService } from '../app/service/word-info.service';
 import { Declesion } from '../app/model/declesion';
+import { HttpClient } from 'selenium-webdriver/http';
+import * as words from '../assets/data/nominals.json';
+
+class WordInfoServiceMock extends WordInfoService {
+
+
+  getWordInfo(word: string): Observable<object> {
+    return Observable.create(function(observer: Observer<any>){
+      if(!(word in words['words'])){
+        observer.next(null);
+      } else {
+        observer.next(this.transformWordInfo(word, words['words'][word], this.getWordMetadata(words['metadata']), 0));
+      }
+      observer.complete();
+    }.bind(this));
+  }
+
+}
+
+function deleteDB(): Promise<any> {
+  return new Promise<any>((resolve, reject) => {
+    let idbConnection: IDBOpenDBRequest = window.indexedDB.deleteDatabase('words');
+    idbConnection.onsuccess = () => {
+      resolve();
+    },
+    idbConnection.onerror = () => {
+      reject();
+    }
+  });
+}
+
+let originalTimeout: number = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
 
 describe('DeclesionService', () => {
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientModule],
       providers: [
         DeclesionService,
-        WordInfoService
+        {provide: WordInfoService , useClass: WordInfoServiceMock}
       ]
     });
   });
@@ -631,9 +669,9 @@ describe('DeclesionService', () => {
     declesion.plural.abessive.push('palveluitta');
     declesion.plural.comitative.push('palveluineen');
 
-    service.decline('palvelu').subscribe((serviceDeclesions) => {
+    service.decline('palvelu').map((serviceDeclesions) => {
       expect(serviceDeclesions).toEqual([declesion]);
-    });
+    }).toPromise();
 
   }));
 

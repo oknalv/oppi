@@ -72,9 +72,9 @@ export class DeclineComponent {
           !(caseForms.length > 0 && checkCaseForms.length == 0) &&
           !(caseForms.length == 0 && checkCaseForms.length > 0) &&
           caseForms.filter(function(caseForm){
-            return checkCaseForms.indexOf(caseForm) > -1;
+            return checkCaseForms.includes(caseForm);
           }.bind(this)).length == checkCaseForms.length;
-        if(Object.keys(declesionErrors).indexOf(numberName) == -1){
+        if(!(numberName in declesionErrors)){
           declesionErrors[numberName] = {};
         }
         if(!isContained){

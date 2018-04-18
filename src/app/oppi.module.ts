@@ -8,15 +8,10 @@ import { environment } from '../environments/environment';
 import { OppiComponent } from './oppi.component';
 import { RoutingModule } from './routing.module';
 import { DeclesionService } from './service/declesion.service';
-import { WordInfoService } from './service/word-info.service';
+import { WordInfoService, initWordInfoService } from './service/word-info.service';
 import { DeclineComponent } from './component/decline/decline.component';
 import { I18nModule } from './module/i18n/i18n';
 import { UiModule } from './module/ui/ui';
-
-export function initOppi(wordInfoService: WordInfoService){
-  return () => wordInfoService.initDb();
-}
-
 
 @NgModule({
   declarations: [
@@ -32,7 +27,7 @@ export function initOppi(wordInfoService: WordInfoService){
     UiModule,
     I18nModule.forRoot('assets/i18n/', 'en', {'en': 'English', 'es': 'español', 'fi': 'suomi', 'pt': 'português', 'gl': 'galego'})
   ],
-  providers: [DeclesionService, WordInfoService, {provide: APP_INITIALIZER, useFactory: initOppi, deps: [WordInfoService], multi: true}],
+  providers: [DeclesionService, WordInfoService, {provide: APP_INITIALIZER, useFactory: initWordInfoService, deps: [WordInfoService], multi: true}],
   bootstrap: [OppiComponent]
 })
 export class OppiModule { }

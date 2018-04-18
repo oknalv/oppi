@@ -30,20 +30,11 @@ export class WordInfoService{
         reject();
       }
       dbRequest.onsuccess = function(event){
-        console.log("success");
         this.db = event.target.result;
-        console.log(event);
         if(loadData){
           this.http.get('assets/data/nominals.json').subscribe(function(data){
-            this.wordMetadata = new WordMetadata();
-            this.wordMetadata.types = data['metadata']['types'];
-            this.wordMetadata.type = data['metadata']['type'];
-            this.wordMetadata.gradation = data['metadata']['gradation']
-            this.wordMetadata.gradationTypes = data['metadata']['gradationTypes'];
-            this.wordMetadata.vowelHarmony = data['metadata']['vowelHarmony'];
-            this.wordMetadata.vowelHarmonyTypes[0] = data['metadata']['vowelHarmonyTypes']['0'] == 'frontVowel' ? ['ä', 'ö', 'y'] : ['a', 'o', 'u'];
-            this.wordMetadata.vowelHarmonyTypes[1] = data['metadata']['vowelHarmonyTypes']['0'] == 'frontVowel' ? ['a', 'o', 'u'] : ['ä', 'ö', 'y'];
-      
+            this.wordMetadata = this.getWordMetadata(data['metadata']);
+            
             let transaction = this.db.transaction(['fi'],'readwrite');
             let objectStore = transaction.objectStore('fi');
             
@@ -61,32 +52,43 @@ export class WordInfoService{
       }.bind(this);
 
       dbRequest.onupgradeneeded = function(event){
-        console.log('upgradeNeeded');
+        loadData = true;
         this.db = event.target.result;
         Array.from(this.db.objectStoreNames).forEach(function(name){
           this.db.deleteObjectStore(name);
         }.bind(this));
         let objectStore: IDBObjectStore = this.db.createObjectStore('fi', { keyPath:'id', autoIncrement: true});
         objectStore.createIndex('word', 'word', {unique: true});
-        loadData = true;
       }.bind(this);
     }.bind(this));
   }
 
-  private transformWordInfo(word: string, wordInfo: object, wordMetadata: WordMetadata, id: number): object{
+  protected getWordMetadata(metadata: object): WordMetadata {
+    let wordMetadata = new WordMetadata();
+    wordMetadata.types = metadata['types'];
+    wordMetadata.type = metadata['type'];
+    wordMetadata.gradation = metadata['gradation']
+    wordMetadata.gradationTypes = metadata['gradationTypes'];
+    wordMetadata.vowelHarmony = metadata['vowelHarmony'];
+    wordMetadata.vowelHarmonyTypes[0] = metadata['vowelHarmonyTypes']['0'] == 'frontVowel' ? ['ä', 'ö', 'y'] : ['a', 'o', 'u'];
+    wordMetadata.vowelHarmonyTypes[1] = metadata['vowelHarmonyTypes']['0'] == 'frontVowel' ? ['a', 'o', 'u'] : ['ä', 'ö', 'y'];
+    return wordMetadata
+  }
+
+  protected transformWordInfo(word: string, wordInfo: object, wordMetadata: WordMetadata, id: number): object{
     let transformedWordInfo: object = {'id': id, 'word': word, 'types': []};
     wordInfo[wordMetadata.types].forEach(function(wordType: object){
       let transformedWordType: object = {'type': wordType[wordMetadata.type]};
-      if(Object.keys(wordType).indexOf(wordMetadata.gradation) > -1){
+      if(wordMetadata.gradation in wordType){
         transformedWordType['gradation'] = wordMetadata.gradationTypes[wordType[wordMetadata.gradation]];
       }
       transformedWordInfo['types'].push(transformedWordType);
     }.bind(this));
-    if(Object.keys(wordInfo).indexOf(wordMetadata.vowelHarmony) > -1) {
+    if(wordMetadata.vowelHarmony in wordInfo) {
       transformedWordInfo['vowelHarmony'] = wordMetadata.vowelHarmonyTypes[wordInfo[wordMetadata.vowelHarmony]];
     }
     else {
-      transformedWordInfo['vowelHarmony'] = word.indexOf('a') > -1 || word.indexOf('o') > -1 || word.indexOf('u') > -1 ? ['a', 'o', 'u'] : ['ä', 'ö', 'y'];
+      transformedWordInfo['vowelHarmony'] = word.includes('a') || word.includes('o') || word.includes('u') ? ['a', 'o', 'u'] : ['ä', 'ö', 'y'];
     }
     return transformedWordInfo;
   }
@@ -113,4 +115,8 @@ export class WordInfoService{
     }.bind(this));
   }
 
+}
+
+export function initWordInfoService(wordInfoService: WordInfoService){
+  return () => wordInfoService.initDb();
 }
