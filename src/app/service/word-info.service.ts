@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs/observable/forkJoin';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import { WordMetadata } from '../model/word-metadata';
+import { FiDeclensionWordInfo, FiDeclensionType } from '../model/fi-declension-word-info';
 
 @Injectable()
 export class WordInfoService{
@@ -75,39 +76,43 @@ export class WordInfoService{
     return wordMetadata
   }
 
-  protected transformWordInfo(word: string, wordInfo: object, wordMetadata: WordMetadata, id: number): object{
-    let transformedWordInfo: object = {'id': id, 'word': word, 'types': []};
+  protected transformWordInfo(word: string, wordInfo: object, wordMetadata: WordMetadata, id: number): FiDeclensionWordInfo{
+    let transformedWordInfo: FiDeclensionWordInfo = {'id': id, 'word': word, 'types': [], vowelHarmony: null};
     wordInfo[wordMetadata.types].forEach(function(wordType: object){
-      let transformedWordType: object = {'type': wordType[wordMetadata.type]};
+      let transformedWordType: FiDeclensionType = {'type': wordType[wordMetadata.type], gradation: null};
       if(wordMetadata.gradation in wordType){
-        transformedWordType['gradation'] = wordMetadata.gradationTypes[wordType[wordMetadata.gradation]];
+        transformedWordType.gradation = wordMetadata.gradationTypes[wordType[wordMetadata.gradation]];
       }
-      transformedWordInfo['types'].push(transformedWordType);
+      transformedWordInfo.types.push(transformedWordType);
     }.bind(this));
     if(wordMetadata.vowelHarmony in wordInfo) {
-      transformedWordInfo['vowelHarmony'] = wordMetadata.vowelHarmonyTypes[wordInfo[wordMetadata.vowelHarmony]];
+      transformedWordInfo.vowelHarmony = wordMetadata.vowelHarmonyTypes[wordInfo[wordMetadata.vowelHarmony]];
     }
     else {
-      transformedWordInfo['vowelHarmony'] = word.includes('a') || word.includes('o') || word.includes('u') ? ['a', 'o', 'u'] : ['ä', 'ö', 'y'];
+      transformedWordInfo.vowelHarmony = word.includes('a') || word.includes('o') || word.includes('u') ? ['a', 'o', 'u'] : ['ä', 'ö', 'y'];
     }
     return transformedWordInfo;
   }
 
-  getWordInfo(word: string): Observable<object> {
-    return this.idbrequestToObservable(this.db.transaction(['fi']).objectStore('fi').index('word').get(word));
+  getWordInfo(word: string): Observable<FiDeclensionWordInfo> {
+    return this.idbrequestToObservable(this.db.transaction(['fi']).objectStore('fi').index('word').get(word), true);
   }
 
-  getRandomWord(): Observable<string> {
-    return this.idbrequestToObservable(this.db.transaction(['fi']).objectStore('fi').count()).flatMap(function(count: number){
-      return this.idbrequestToObservable(this.db.transaction(['fi']).objectStore('fi').get(Math.floor(Math.random() * count)));
+  getRandomWord(): Observable<FiDeclensionWordInfo> {
+    return this.idbrequestToObservable(this.db.transaction(['fi']).objectStore('fi').count(), true).flatMap(function(count: number){
+      return this.idbrequestToObservable(this.db.transaction(['fi']).objectStore('fi').get(Math.floor(Math.random() * count), true));
     }.bind(this));
   }
 
-  private idbrequestToObservable(request: IDBRequest): Observable<any> {
+  private idbrequestToObservable(request: IDBRequest, dataNeeded?: boolean): Observable<any> {
     return Observable.create(function(observer: Observer<any>){
       request.onsuccess = function(event){
-        observer.next(request.result);
-        observer.complete();
+        if(dataNeeded && !request.result){
+          observer.error(null);
+        } else {
+          observer.next(request.result);
+          observer.complete();
+        }
       }
       request.onerror = function(event){
         observer.error(null);

@@ -1,9 +1,10 @@
 {
-"declineNominals": "Decline nominals",
+"decline": "Decline '${placeholders[0]}'",
 "language": "language",
 "word": "word",
 "search": "search",
 "test": "test",
+"reset": "reset",
 "randomWord": "random word",
 "singular": "singular",
 "plural": "plural",
@@ -25,11 +26,13 @@
 "comitative": "comitative",
 "wordNotFound": "The word '${placeholders[0]}' can not be found.",
 "check": "check",
-"declineNominalsHelp": "Help: decline nominals",
+"help": "Help",
 "helpTest": "This button shows a table where you can try to decline the word you entered in the search input. This action is also triggered if you press the enter button inside the search input.",
 "helpRandomWord": "This button retrieves a random word and displays the test table.",
-"helpSearch": "This button shows a table which contains the declesions of the word you put in the input. This action is also triggered if you press the enter button having the control button pressed inside the search input.",
-"helpCheck": "This button checks if the declesions that you entered inside the test table are correct. This action is also triggered if you press the enter button inside any of the test table inputs. If the word has more than one declesion forms, it will check the correctness with the declesion that has less errors. If any of the declesion cases is correct, its input will turn green, if not, it will turn red.",
-"onlyRegularAndNotNuoripari": "This app can decline regular words with a declesion type different from nuoripari declesion type only",
-"actions": "Actions:"
+"helpSearch": "This button shows a table which contains the declensions of the word you put in the input. This action is also triggered if you press the enter button having the control button pressed inside the search input.",
+"helpCheck": "This button checks if the declensions that you entered inside the test table are correct. This action is also triggered if you press the enter button inside any of the test table inputs. If the word has more than one declension forms, it will check the correctness with the declension that has less errors. If any of the declension cases is correct, its input will turn green, if not, it will turn red.",
+"onlyRegularAndNotNuoripari": "This app can decline regular words with a declension type different from nuoripari declension type only",
+"actions": "Actions",
+"helpReset": "This button resets the test table.",
+"aboutFinnishDeclension": "About Finnish declension"
 }

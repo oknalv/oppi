@@ -4,7 +4,7 @@
   "start_url": ".",
   "display": "standalone",
   "background_color": "#FFFFFF",
-  "description": "Learn finnish declesion",
+  "description": "Learn finnish declension",
   "theme_color": "#6EDA68",
   "icons": [{
     "src": "assets/oppi-logo.svg",

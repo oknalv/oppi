@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DeclineComponent } from './component/decline/decline.component';
+import { FiSearchDeclensionComponent } from './component/fi/fi-search-declension.component';
+import { FiTestDeclensionComponent } from './component/fi/fi-test-declension.component';
 
 const routes: Routes = [
-  /*{ path: 'decline', component: DeclineComponent, }*/
+  { path: 'search/:word', component: FiSearchDeclensionComponent },
+  { path: 'test/:word', component: FiTestDeclensionComponent }
 ]
 
 @NgModule({

@@ -1,9 +1,10 @@
 {
-"declineNominals": "Declinar nominais",
+"decline": "Declinar '${placeholders[0]}'",
 "language": "idioma",
 "word": "palabra",
 "search": "buscar",
 "test": "probar",
+"reset": "reiniciar",
 "randomWord": "palabra aleatoria",
 "singular": "singular",
 "plural": "plural",
@@ -25,11 +26,13 @@
 "comitative": "comitativo",
 "wordNotFound": "Non se atopou a palabra '${placeholders[0]}'.",
 "check": "revisar",
-"declineNominalsHelp": "Axuda: declinar nominais",
+"help": "Axuda",
 "helpTest": "Este botón mostra unha táboa onde podes probar a declinar a palabra do input de busca. Esta acción tamén se lanza se premes o enter dentro do input de busca.",
 "helpRandomWord": "Este botón devolve unha palabra aleatoria e mostra a táboa de proba.",
 "helpSearch": "Este botón mostra unha táboa que contén as declinacións da palabra do input de busca. Esta acción tamén se lanza se premes o enter coa tecla de control premida dentro do input de busca.",
 "helpCheck": "Este botón comproba se as declinacións que puxeches dentro da táboa de proba son correctas. Esta acción tamén se lanza se premes o enter dentro dalgún dos inputs da táboa de proba. Se a palabra ten máis dun tipo de declinación, comprobará a corrección co tipo de declinación que teña menos erros. Se algún dos casos da decinación é correcto, o seu input volverase verde, en caso contrario, volveráse vermello.",
 "onlyRegularAndNotNuoripari": "Esta app soamente pode declinar palabras regulares cun tipo de declinación diferente do tipo de nuoripari.",
-"actions": "Accións:"
+"actions": "Accións",
+"helpReset": "Este botón reinicia a táboa de proba.",
+"aboutFinnishDeclension": "Acerca da declinación en finlandés"
 }

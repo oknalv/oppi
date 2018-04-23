@@ -7,4 +7,102 @@
     </select>
   </span>
 </div>
-<decline></decline>
+<div class='grid' id='search'>
+  <div class='f-3-8'>
+    <input [(ngModel)]='wordToSearch'
+      (keydown)='$event.key == "Enter" ? searchWord(!$event.ctrlKey) : null'
+      placeholder='{{ "word" | i18n }}'/>
+  </div>
+  <div class='f-5-8 grid h-between'>
+    <div>
+      <button (click)='searchWord(true)' title='{{ "test" | i18n }}' class='icon'>
+        <i class='fa fa-file-text-o'></i>
+      </button>
+      <button (click)='getRandomWord()' title='{{ "randomWord" | i18n }}' class='icon'>
+        <i class='fa fa-random'></i>&nbsp;<i class='fa fa-file-text-o'></i>
+      </button>
+      <button (click)='searchWord()' title='{{ "search" | i18n }}' class='icon'>
+        <i class='fa fa-search'></i>
+      </button>
+    </div>
+    <div>
+        <button (click)='help()' (click)='help()' title='{{ "help" | i18n }}' class='icon'>
+          <i class='fa fa-question-circle'></i>
+        </button>
+    </div>
+  </div>
+</div>
+<div *ngIf='wrongWord'>
+  {{ 'wordNotFound' | i18n: wrongWord }}
+</div>
+<router-outlet></router-outlet>
+<modal #helpModal>
+    <modal-header>{{ 'help' | i18n }}</modal-header>
+    <modal-body>
+      <section>
+        <h4>
+          {{ 'actions' | i18n }}
+        </h4>
+        <p class='grid no-wrap v-center action-paragraph'>
+          <span>
+            <button title='{{ "test" | i18n }}' class='icon'>
+              <i class='fa fa-file-text-o'></i>
+            </button>
+          </span>
+          <span>
+            <i>- {{ 'test' | i18n }}: </i>{{ 'helpTest' | i18n }}
+          </span>
+        </p>
+        <p class='grid no-wrap v-center action-paragraph'>
+          <span>
+            <button title='{{ "randomWord" | i18n }}' class='icon'>
+              <i class='fa fa-random'></i>&nbsp;<i class='fa fa-file-text-o'></i>
+            </button>
+          </span>
+          <span>
+            <i>- {{ 'randomWord' | i18n }}: </i>{{ 'helpRandomWord' | i18n }}
+          </span>
+        </p>
+        <p class='grid no-wrap v-center action-paragraph'>
+          <span>
+            <button title='{{ "search" | i18n }}' class='icon'>
+              <i class='fa fa-search'></i>
+            </button>
+          </span>
+          <span>
+            <i>- {{ 'search' | i18n }}: </i>{{ 'helpSearch' | i18n }}
+          </span>
+        </p>
+        <p class='grid no-wrap v-center action-paragraph'>
+          <span>
+            <button title='{{ "reset" | i18n }}' class='icon'>
+                <i class='fa fa-repeat'></i>
+            </button>
+          </span>
+          <span>
+            <i>- {{ 'reset' | i18n }}: </i>{{ 'helpReset' | i18n }}
+          </span>
+        </p>
+        <p class='grid no-wrap v-center action-paragraph'>
+          <span>
+            <button title='{{ "check" | i18n }}' class='icon'>
+              <i class='fa fa-check-square-o'></i>
+            </button>
+          </span>
+          <span>
+            <i>- {{ 'check' | i18n }}: </i>{{ 'helpCheck' | i18n }}
+          </span>
+        </p>
+      </section>
+      <section>
+        <h4>
+            {{ 'aboutFinnishDeclension' | i18n }}
+        </h4>
+        <p class='grid'>
+          <span>
+            {{ 'onlyRegularAndNotNuoripari' | i18n }}
+          </span>
+        </p>
+      </section>
+    </modal-body>
+</modal>

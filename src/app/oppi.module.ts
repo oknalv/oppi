@@ -7,16 +7,19 @@ import { environment } from '../environments/environment';
 
 import { OppiComponent } from './oppi.component';
 import { RoutingModule } from './routing.module';
-import { DeclesionService } from './service/declesion.service';
 import { WordInfoService, initWordInfoService } from './service/word-info.service';
-import { DeclineComponent } from './component/decline/decline.component';
+import { DataRouterService } from './service/data-router.service';
 import { I18nModule } from './module/i18n/i18n';
 import { UiModule } from './module/ui/ui';
+import { FiDeclensionService } from './service/fi-declension.service';
+import { FiSearchDeclensionComponent } from './component/fi/fi-search-declension.component';
+import { FiTestDeclensionComponent } from './component/fi/fi-test-declension.component';
 
 @NgModule({
   declarations: [
     OppiComponent,
-    DeclineComponent
+    FiSearchDeclensionComponent,
+    FiTestDeclensionComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,12 @@ import { UiModule } from './module/ui/ui';
     UiModule,
     I18nModule.forRoot('assets/i18n/', 'en', {'en': 'English', 'es': 'español', 'fi': 'suomi', 'pt': 'português', 'gl': 'galego'})
   ],
-  providers: [DeclesionService, WordInfoService, {provide: APP_INITIALIZER, useFactory: initWordInfoService, deps: [WordInfoService], multi: true}],
+  providers: [
+    WordInfoService,
+    {provide: APP_INITIALIZER, useFactory: initWordInfoService, deps: [WordInfoService], multi: true},
+    DataRouterService,
+    FiDeclensionService
+  ],
   bootstrap: [OppiComponent]
 })
 export class OppiModule { }

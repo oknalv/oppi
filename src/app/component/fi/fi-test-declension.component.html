@@ -1,0 +1,38 @@
+<div class='grid h-between v-center'>
+  <div class='grid v-center title'>
+    <h3>{{'decline' | i18n: word}}</h3>
+    <a target='_blank' href='https://en.wiktionary.org/wiki/{{word}}#Finnish'>
+      <i class='fa fa-external-link'></i>
+    </a>
+  </div>
+  <div id='actions'>
+    <button (click)='reset()' title='{{ "reset" | i18n }}' class='icon'>
+        <i class='fa fa-repeat'></i>
+    </button>
+    <button (click)='check()' title='{{ "check" | i18n }}' class='icon'>
+        <i class='fa fa-check-square-o'></i>
+    </button>
+  </div>
+</div>
+<table>
+  <thead>
+    <tr class='grid'>
+      <th *ngFor='let number of numbers' class='f-1-2'>
+        {{ number | i18n }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let case of cases' class='grid'>
+      <td *ngFor='let number of numbers' class='f-1-2'>
+        <div *ngIf='(number == "singular" && case != "instructive" && case != "comitative") || (number == "plural" && case != "genitiveAccusative")'>
+          <input [(ngModel)]='declensionToCheck[number][case]'
+            [ngClass]='(declensionErrors && declensionErrors[number] && declensionErrors[number][case] == true ? "red" : "") + (declensionErrors && declensionErrors[number] && declensionErrors[number][case] == false ? "green" : "")'
+            (keydown)='$event.key == "Enter" ? check() : null'
+            tabindex='{{number == "singular" ? 1 : 2}}'
+            placeholder='{{ case | i18n }}'/>
+        </div>
+      </td> 
+    </tr>
+  </tbody>
+</table>

@@ -1,9 +1,9 @@
-export class Declesion {
-    singular: DeclesionForm = new DeclesionForm();
-    plural: DeclesionForm = new DeclesionForm();
+export class Declension {
+    singular: DeclensionForm = new DeclensionForm();
+    plural: DeclensionForm = new DeclensionForm();
 }
 
-export class DeclesionForm {
+export class DeclensionForm {
     nominative: string[] = [];
     genitive: string[] = [];
     partitive: string[] = [];
@@ -22,12 +22,12 @@ export class DeclesionForm {
     comitative: string[] = [];
 }
 
-export class DeclesionString {
-    singular: DeclesionFormString = new DeclesionFormString();
-    plural: DeclesionFormString = new DeclesionFormString();
+export class DeclensionString {
+    singular: DeclensionFormString = new DeclensionFormString();
+    plural: DeclensionFormString = new DeclensionFormString();
 }
 
-export class DeclesionFormString {
+export class DeclensionFormString {
     nominative: string = null;
     genitive: string = null;
     partitive: string = null;

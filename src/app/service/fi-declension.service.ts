@@ -1,59 +1,61 @@
 import { Injectable } from '@angular/core';
-import { Declesion } from '../model/declesion';
-import { WordInfoService } from './word-info.service';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/observable/throw';
+import { Declension } from '../model/declension';
+import { FiDeclensionWordInfo } from '../model/fi-declension-word-info';
+import { FiVowelHarmony } from '../model/fi-vowel-harmony';
+
+export class InvalidWordInfoError implements Error {
+  name: string = 'InvalidWordInfoError';
+  message: string = 'Invalid word info';
+}
 
 @Injectable()
-export class DeclesionService {
+export class FiDeclensionService {
 
   private endsInDiphthongAndDoubleVowelRegExp: RegExp = /^.*(aa|ee|ii|oo|uu|ää|öö|yy|ai|ei|oi|ui|yi|äi|öi|au|eu|iu|ou|ey|iy|äy|öy|ie|uo|yö)$/;
   private type22EndingRegExp: RegExp = /[aeiouäöyû]*.{2}$/;
   private vowels: string = 'aeiouäöy';
 
-  constructor(private wordInfoService: WordInfoService) { }
+  constructor() { }
 
-  decline(noun: string): Observable<Declesion[]> {
-    if(noun != null && noun.endsWith('toista')){
-        return this.decline(noun.split('toista')[0]).map((declesions: Declesion[]) => {
-          return declesions.map(function(declesion: Declesion){
-            for(let key in declesion.singular){
-              if(key != 'instructive' && key != 'comitative'){
-                declesion.singular[key] = declesion.singular[key].map(function(word){
+  decline(wordInfo: FiDeclensionWordInfo): Declension[] {
+    try {
+      let noun: string = wordInfo.word;
+      if(noun.endsWith('toista')){
+        let fiDeclensionMetadata2: FiDeclensionWordInfo = {
+          id: wordInfo.id,
+          word: noun.split('toista')[0],
+          types: wordInfo.types,
+          vowelHarmony: wordInfo.vowelHarmony
+        };
+        return this.decline(fiDeclensionMetadata2).map((declension: Declension) => {
+          for(let key in declension.singular){
+            if(key != 'instructive' && key != 'comitative'){
+              declension.singular[key] = declension.singular[key].map(function(word){
+                return word + 'toista';
+              }.bind(this))
+            }
+          };
+          for(let key in declension.plural){
+            if(key != 'nominativeGenitive'){
+              if(key == 'comitative'){
+                declension.plural[key] = declension.plural[key].map(function(word){
+                  return this.removeLastN(word, 2) + 'toista';
+                }.bind(this));
+              } else {
+                declension.plural[key] = declension.plural[key].map(function(word){
                   return word + 'toista';
-                }.bind(this))
+                }.bind(this));
               }
-            };
-            for(let key in declesion.plural){
-              if(key != 'nominativeGenitive'){
-                if(key == 'comitative'){
-                  declesion.plural[key] = declesion.plural[key].map(function(word){
-                    return this.removeLastN(word, 2) + 'toista';
-                  }.bind(this));
-                } else {
-                  declesion.plural[key] = declesion.plural[key].map(function(word){
-                    return word + 'toista';
-                  }.bind(this));
-                }
-              }
-            };
-            return declesion;
-          }.bind(this));
-      });
-    }
-    return this.wordInfoService.getWordInfo(noun).map((wordInfo: object) => {
-      if(noun == null || noun == ''){
-        throw {errorCode: 1};
+            }
+          };
+          return declension;
+        });
       }
-      if(wordInfo == null){
-        throw {errorCode: 0};
-      }
-      let declesions: Declesion[] = [];
+      let declensions: Declension[] = [];
       let wordTypes: object[] = wordInfo['types'];
       let wordHarmonyVowels = wordInfo['vowelHarmony']
-      let a = wordHarmonyVowels[this.wordInfoService.a];
-      let o = wordHarmonyVowels[this.wordInfoService.o];
+      let a = wordHarmonyVowels[FiVowelHarmony.a];
+      let o = wordHarmonyVowels[FiVowelHarmony.o];
       wordTypes.sort((a: object, b: object): number => a['type'] - b['type']);
       wordTypes.forEach(function(type){
         let wordType = type['type'];
@@ -61,52 +63,54 @@ export class DeclesionService {
             wordType = noun.endsWith('e') ? 48 : 32;
         }
         let wordGradation = type['gradation'];
-        let declesion: Declesion = new Declesion();
+        let declension: Declension = new Declension();
         let strongStem: string = this.getStrongStem(noun, a, wordType, wordGradation);
         let weakStem: string = this.getWeakStem(strongStem, wordType, wordGradation);
-        this.declineSingular(noun, strongStem, weakStem, a, wordType, wordGradation, declesion);
-        this.declinePlural(noun, strongStem, weakStem, a, o, wordType, wordGradation, declesion);
-        declesions.push(declesion);
+        this.declineSingular(noun, strongStem, weakStem, a, wordType, wordGradation, declension);
+        this.declinePlural(noun, strongStem, weakStem, a, o, wordType, wordGradation, declension);
+        declensions.push(declension);
       }.bind(this));
-      return declesions;
-    });
+      return declensions;
+    } catch(e){
+      throw new InvalidWordInfoError();
+    }
   }
 
-  private declineSingular(noun: string, strongStem: string, weakStem:string, a: string, wordType: number, wordGradation: string, declesion: Declesion): void {
-    declesion.singular.nominative.push(noun);
-    declesion.singular.genitive.push(this.getSingularGenitive(strongStem, weakStem, wordType));
-    declesion.singular.partitive = this.getSingularPartitives(noun, strongStem, a, wordType);
-    declesion.singular.nominativeAccusative = declesion.singular.nominative;
-    declesion.singular.genitiveAccusative = declesion.singular.genitive;
-    declesion.singular.inessive.push(this.getSingularInessive(strongStem, weakStem, a, wordType));
-    declesion.singular.elative.push(this.getSingularElative(strongStem, weakStem, a, wordType));
-    declesion.singular.illative = this.getSingularIllatives(strongStem, wordType);
-    declesion.singular.adessive.push(this.getSingularAdessive(weakStem, a));
-    declesion.singular.ablative.push(this.getSingularAblative(weakStem, a));
-    declesion.singular.allative.push(this.getSingularAllative(weakStem));
-    declesion.singular.essive.push(this.getSingularEssive(strongStem, a));
-    declesion.singular.translative.push(this.getSingularTranslative(weakStem));
-    declesion.singular.abessive.push(this.getSingularAbessive(weakStem, a));
+  private declineSingular(noun: string, strongStem: string, weakStem:string, a: string, wordType: number, wordGradation: string, declension: Declension): void {
+    declension.singular.nominative.push(noun);
+    declension.singular.genitive.push(this.getSingularGenitive(strongStem, weakStem, wordType));
+    declension.singular.partitive = this.getSingularPartitives(noun, strongStem, a, wordType);
+    declension.singular.nominativeAccusative = declension.singular.nominative;
+    declension.singular.genitiveAccusative = declension.singular.genitive;
+    declension.singular.inessive.push(this.getSingularInessive(strongStem, weakStem, a, wordType));
+    declension.singular.elative.push(this.getSingularElative(strongStem, weakStem, a, wordType));
+    declension.singular.illative = this.getSingularIllatives(strongStem, wordType);
+    declension.singular.adessive.push(this.getSingularAdessive(weakStem, a));
+    declension.singular.ablative.push(this.getSingularAblative(weakStem, a));
+    declension.singular.allative.push(this.getSingularAllative(weakStem));
+    declension.singular.essive.push(this.getSingularEssive(strongStem, a));
+    declension.singular.translative.push(this.getSingularTranslative(weakStem));
+    declension.singular.abessive.push(this.getSingularAbessive(weakStem, a));
   }
 
-  private declinePlural(noun: string, singularStrongStem: string, singularWeakStem: string, a: string, o: string, wordType: number, wordGradation: string, declesion: Declesion): void {
+  private declinePlural(noun: string, singularStrongStem: string, singularWeakStem: string, a: string, o: string, wordType: number, wordGradation: string, declension: Declension): void {
     let pluralStrongStem: string = this.getPluralStrongStem(noun, singularStrongStem, o, wordType);
     let pluralWeakStem: string = this.getPluralWeakStem(singularWeakStem, pluralStrongStem, o, wordType);
-    declesion.plural.nominative.push(this.getPluralNominative(singularWeakStem));
-    declesion.plural.genitive = this.getPluralGenitives(noun, singularStrongStem, pluralStrongStem, pluralWeakStem, wordType);
-    declesion.plural.partitive = this.getPluralPartitives(singularStrongStem, pluralStrongStem, pluralWeakStem, a, wordType);
-    declesion.plural.nominativeAccusative = declesion.plural.nominative;
-    declesion.plural.inessive = this.getPluralInessives(pluralWeakStem, a, wordType);
-    declesion.plural.elative = this.getPluralElatives(pluralWeakStem, a, wordType);
-    declesion.plural.illative = this.getPluralIllatives(pluralStrongStem, pluralWeakStem, wordType);
-    declesion.plural.adessive = this.getPluralAdessives(pluralWeakStem, a, wordType);
-    declesion.plural.ablative = this.getPluralAblatives(pluralWeakStem, a, wordType);
-    declesion.plural.allative = this.getPluralAllatives(pluralWeakStem, wordType);
-    declesion.plural.essive = this.getPluralEssives(pluralStrongStem, a, wordType);
-    declesion.plural.translative = this.getPluralTranslatives(pluralWeakStem, wordType);
-    declesion.plural.instructive = this.getPluralInstructives(pluralWeakStem, wordType);
-    declesion.plural.abessive = this.getPluralAbessives(pluralWeakStem, a, wordType);
-    declesion.plural.comitative = this.getPluralComitatives(pluralStrongStem, wordType);
+    declension.plural.nominative.push(this.getPluralNominative(singularWeakStem));
+    declension.plural.genitive = this.getPluralGenitives(noun, singularStrongStem, pluralStrongStem, pluralWeakStem, wordType);
+    declension.plural.partitive = this.getPluralPartitives(singularStrongStem, pluralStrongStem, pluralWeakStem, a, wordType);
+    declension.plural.nominativeAccusative = declension.plural.nominative;
+    declension.plural.inessive = this.getPluralInessives(pluralWeakStem, a, wordType);
+    declension.plural.elative = this.getPluralElatives(pluralWeakStem, a, wordType);
+    declension.plural.illative = this.getPluralIllatives(pluralStrongStem, pluralWeakStem, wordType);
+    declension.plural.adessive = this.getPluralAdessives(pluralWeakStem, a, wordType);
+    declension.plural.ablative = this.getPluralAblatives(pluralWeakStem, a, wordType);
+    declension.plural.allative = this.getPluralAllatives(pluralWeakStem, wordType);
+    declension.plural.essive = this.getPluralEssives(pluralStrongStem, a, wordType);
+    declension.plural.translative = this.getPluralTranslatives(pluralWeakStem, wordType);
+    declension.plural.instructive = this.getPluralInstructives(pluralWeakStem, wordType);
+    declension.plural.abessive = this.getPluralAbessives(pluralWeakStem, a, wordType);
+    declension.plural.comitative = this.getPluralComitatives(pluralStrongStem, wordType);
   }
 
   private getSingularGenitive(strongStem: string, weakStem: string, wordType: number): string{

@@ -1,9 +1,10 @@
 {
-"declineNominals": "Taivuta nomineja",
+"decline": "Taivuta '${placeholders[0]}'",
 "language": "kieli",
 "word": "sana",
 "search": "hae",
 "test": "testaa",
+"reset": "palauta",
 "randomWord": "satunnainen sana",
 "singular": "yksikkö",
 "plural": "monikko",
@@ -25,5 +26,5 @@
 "comitative": "komitatiivi",
 "wordNotFound": "Sana '${placeholders[0]}' ei löydy.",
 "check": "tarkista",
-"declineNominalsHelp": "Apu: taivuttaa nomineja"
+"help": "Apu"
 }

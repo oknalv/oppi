@@ -1,9 +1,10 @@
 {
-"declineNominals": "Declinar nominais",
+"decline": "Declinar '${placeholders[0]}'",
 "language": "idioma",
 "word": "palavra",
 "search": "pesquisar",
 "test": "testar",
+"reset": "reiniciar",
 "randomWord": "palavra aleatória",
 "singular": "singular",
 "plural": "plural",
@@ -25,11 +26,13 @@
 "comitative": "comitativo",
 "wordNotFound": "A palavra '${placeholders[0]}' não foi achada.",
 "check": "checar",
-"declineNominalsHelp": "Ajuda: declinar nominais",
+"help": "Ajuda",
 "helpTest": "Este botão mostra uma tabela onde pode tentar declinar a palavra do input de busca. Esta ação também pode ser acionada se pressiona a tecla enter dentro do input de busca.",
 "helpRandomWord": "Este botão recupera uma palavra aleatória e mostra a tabela de teste.",
 "helpSearch": "Este botão mostra uma tabela que contém as declinações da palavra do input de busca. Esta ação também pode ser acionada se pressionas a tecla enter com a tecla de control pressionada dentro do input de busca.",
-"helpCheck": "Este botão checa se as declinações que pôs dentro da tabela de proba son corretas. Esta ação também pode ser acionada se pressiona a tecla enter dentro de algum dos inputs da tabela de teste. Se a palavra tem mais de um tipo de declinação, checará a correção com o tipo de declinação que tenha menos erros. Se algum dos casos da decinação é correto, o seu input voltará-se verde, caso contrario, voltará-se vermelho.",
+"helpCheck": "Este botão checa se as declinações que pôs dentro da tabela de teste son corretas. Esta ação também pode ser acionada se pressiona a tecla enter dentro de algum dos inputs da tabela de teste. Se a palavra tem mais de um tipo de declinação, checará a correção com o tipo de declinação que tenha menos erros. Se algum dos casos da decinação é correto, o seu input voltará-se verde, caso contrário, voltará-se vermelho.",
 "onlyRegularAndNotNuoripari": "Esta app somente pode declinar palavras regulares com um tipo de declinação diferente do tipo de nuoripari.",
-"actions": "Ações:"
+"actions": "Ações",
+"helpReset": "Este botão reinicia a tabela de teste.",
+"aboutFinnishDeclension": "Sobre a declinação em finlandês"
 }

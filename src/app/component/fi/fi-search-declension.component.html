@@ -1,0 +1,29 @@
+
+<div class='grid v-center title'>
+  <h3>{{word}}</h3>
+  <a target='_blank' href='https://en.wiktionary.org/wiki/{{word}}#Finnish'>
+    <i class='fa fa-external-link'></i>
+  </a>
+</div>
+<table *ngFor='let declension of declensions'>
+  <thead>
+    <tr class='grid'>
+      <th class='f-2-8'></th>
+      <th *ngFor='let number of numbers' class='f-3-8'>
+        {{ number | i18n }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor='let case of cases' class='grid'>
+      <th class='f-2-8'>
+        {{ case | i18n }}
+      </th>
+      <td *ngFor='let number of numbers' class='f-3-8'>
+        <div *ngFor='let case of declension[number][case]'>
+          <div>{{case}}</div>
+        </div>
+      </td> 
+    </tr>
+  </tbody>
+</table>

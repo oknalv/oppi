@@ -19,6 +19,11 @@
     color: var(--color);
 }
 
+a, a * {
+    --a-color: var(--dark-gray);
+    color: var(--a-color);
+}
+
 html {
     --html-background-color: var(--white);
     font-size: 100%;

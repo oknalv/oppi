@@ -5,3 +5,28 @@
 img {
     max-height: 70px;
 }
+
+#search {
+    margin: 10px 0 10px 0;
+}
+
+#search > div {
+    padding: 5px;
+}
+
+.action-paragraph > span{
+    padding: 5px;
+}
+
+.action-paragraph:not(:last-child){
+    border-bottom: 1px solid var(--gray);
+}
+
+section:not(:last-child){
+    margin-bottom: 10px;
+}
+
+h4 {
+    margin-bottom: 10px;
+    font-weight: bold;
+}

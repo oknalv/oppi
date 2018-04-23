@@ -7,6 +7,7 @@
     --light-red: #FFE6E6;
     --green: #6EDA68;
     --light-green: #E5FDE4;
+    --blue: #5E7FC6;
     --body-width: 600px;
 }
 
@@ -33,4 +34,38 @@ table {
 modal * {
     --modal-width: var(--body-width);
     --modal-header-footer-background-color: var(--light-green);
+}
+
+input.red {
+    --input-border-color: var(--red);
+    --input-background-color: var(--light-red);
+}
+
+input.red::placeholder{
+    --placeholder-color: var(--red);
+}
+
+input.green {
+    --input-border-color: var(--green);
+    --input-background-color: var(--light-green);
+}
+
+input {
+    width: 100%;
+}
+
+table:not(:last-child){
+    margin-bottom: 10px;
+}
+
+th {
+    text-align: center;
+}
+
+tr, th {
+    word-wrap: break-word;
+}
+
+a, a * {
+    color: var(--blue);
 }
