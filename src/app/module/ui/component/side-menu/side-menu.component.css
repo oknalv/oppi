@@ -1,0 +1,32 @@
+:host {
+    --side-menu-shade-background-color: rgba(0,0,0,.25);
+    --side-menu-width: 200px;
+    --side-menu-body-background-color: var(--white);
+}
+
+.side-menu-container {
+    display: block;
+    position: fixed;
+    z-index: 1;
+    background-color: var(--side-menu-shade-background-color);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.side-menu-inner-container {
+    height: 100%;
+    margin: 0 auto;
+}
+
+menu {
+    cursor: initial;
+    width: var(--side-menu-width);
+    height: 100%;
+    background-color: var(--side-menu-body-background-color);
+    padding: 5px;
+}

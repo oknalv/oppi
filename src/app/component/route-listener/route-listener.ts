@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DataRouterService } from '../../service/data-router.service';
 import { ActivatedRoute, Params } from '@angular/router';
 
-//@Component({ })
 export abstract class RouteListenerComponent<T> implements OnInit {
 
   constructor(

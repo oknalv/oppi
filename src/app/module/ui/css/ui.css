@@ -17,6 +17,7 @@
     font-size: 1rem;
     box-sizing: border-box;
     color: var(--color);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 a, a * {
@@ -30,7 +31,8 @@ html {
     background-color: var(--html-background-color);
 }
 
-body.modal-open {
+body.modal-open,
+body.side-menu-open {
     overflow: hidden;
 }
 
@@ -239,6 +241,10 @@ input:focus {
     max-width: 12.5%;
 }
 
+.grow-1 {
+    flex-grow: 1;
+}
+
 .clickable-icon {
     padding: 5px;
     cursor: pointer;
@@ -294,8 +300,37 @@ button:active:before, select:active:before {
     transition: 0s;
 }
 
-select * {
-    --all-background-color: var(--button-background-color);
-    background-color: var(--all-background-color);
+.fader {
+    --animation-time: .5s;
+    animation: fadeIn var(--animation-time) ease forwards !important;
+}
+  
+.fader.hidden {
+    display: none !important;
 }
 
+.fader.hidding {
+    animation: fadeOut var(--animation-time) ease forwards !important;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}

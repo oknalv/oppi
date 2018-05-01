@@ -3,7 +3,15 @@
 }
 
 img {
-    max-height: 70px;
+    max-height: 36px;
+}
+
+.title {
+    padding: 5px;
+}
+
+.title > button:last-child {
+    visibility: hidden;
 }
 
 #search {
@@ -29,4 +37,27 @@ section:not(:last-child){
 h4 {
     margin-bottom: 10px;
     font-weight: bold;
+}
+
+#menuOptions > * {
+    margin: 5px 0;
+}
+
+#menuOptions img {
+    cursor: pointer;
+}
+
+#optionsMenuButton, #optionsMenuButton * {
+    --color: var(--green);
+    --button-background-color: white;
+}
+
+.title i::before {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.side-menu-inner-container{
+    max-width: var(--body-width);
+    background-color: green;
 }

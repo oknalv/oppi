@@ -5,7 +5,7 @@ import { ModalComponent, ModalHeaderComponent, ModalBodyComponent } from '../../
 import { DataRouterService } from '../../service/data-router.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FiDeclensionWordInfo } from '../../model/fi-declension-word-info';
-import { RouteListenerComponent } from '../route-listener/route-listener.component';
+import { RouteListenerComponent } from '../route-listener/route-listener';
 
 @Component({
   selector: 'fi-search-declension',

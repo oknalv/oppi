@@ -9,7 +9,7 @@
 .modal-container {
     display: flex;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     background-color: var(--modal-shade-background-color);
     top: 0;
     bottom: 0;
@@ -19,10 +19,6 @@
     cursor: pointer;
     justify-content: center;
     padding: 10px;
-}
-  
-[hidden] {
-    display: none;
 }
   
 .modal {

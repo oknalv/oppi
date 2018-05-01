@@ -1,6 +1,6 @@
 
-<div class="modal-container" [hidden]="hidden" (click)="hide()">
-  <div class="modal" (click)="$event.stopPropagation()">
+<div class='modal-container fader' [ngClass]='hidden ? "hidden" : hidding ? " hidding" : ""' (click)='hide()'>
+  <div class='modal' (click)='$event.stopPropagation()'>
     <ng-content></ng-content>
   </div>
 </div>

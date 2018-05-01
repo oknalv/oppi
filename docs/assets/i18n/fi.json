@@ -26,5 +26,6 @@
 "comitative": "komitatiivi",
 "wordNotFound": "Sana '${placeholders[0]}' ei löydy.",
 "check": "tarkista",
-"help": "Apu"
+"help": "apu",
+"Help": "Apu"
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { I18nService } from './module/i18n/i18n';
-import { ModalComponent } from './module/ui/ui'
+import { ModalComponent, SideMenuComponent } from './module/ui/ui';
 import { WordInfoService } from './service/word-info.service';
 import { DataRouterService } from './service/data-router.service';
 import { FiDeclensionWordInfo } from './model/fi-declension-word-info';
@@ -16,6 +16,7 @@ export class OppiComponent implements OnInit {
   languageKeys: string[];
   private languages: object;
   @ViewChild(ModalComponent) helpModal: ModalComponent;
+  @ViewChild(SideMenuComponent) optionsMenu: SideMenuComponent;
   wrongWord: string = null;
   wordToSearch: string;
 
@@ -29,10 +30,12 @@ export class OppiComponent implements OnInit {
 
   changeLanguage(): void {
     this.i18nService.changeLanguage(this.currentLanguageKey);
+    this.optionsMenu.hide();
   }
 
   help(){
     this.helpModal.show();
+    this.optionsMenu.hide();
   }
 
   searchWord(test?: boolean): void {

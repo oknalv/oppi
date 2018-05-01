@@ -1,0 +1,7 @@
+<div class='side-menu-container fader' [ngClass]='hidden ? "hidden" : hidding ? " hidding" : ""' (click)='hide()'>
+  <div class='side-menu-inner-container'>
+    <menu (click)='$event.stopPropagation()'>
+      <ng-content></ng-content>
+    </menu>
+  </div>
+</div>

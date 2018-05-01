@@ -20,10 +20,7 @@ body {
 button, select, button *, select *  {
     --color: white;
     --button-background-color: var(--green);
-    --all-background-color: var(--green);
-}
-
-select, select * {
+    --button-before-color: white;
     font-weight: bold;
 }
 
@@ -68,4 +65,8 @@ tr, th {
 
 a, a * {
     color: var(--blue);
+}
+
+.side-menu-inner-container{
+    max-width: var(--body-width);
 }
