@@ -78,13 +78,13 @@ export class WordInfoService{
 
   protected transformWordInfo(word: string, wordInfo: object, wordMetadata: WordMetadata, id: number): FiDeclensionWordInfo{
     let transformedWordInfo: FiDeclensionWordInfo = {'id': id, 'word': word, 'types': [], vowelHarmony: null};
-    wordInfo[wordMetadata.types].forEach(function(wordType: object){
+    for(let wordType of wordInfo[wordMetadata.types]){
       let transformedWordType: FiDeclensionType = {'type': wordType[wordMetadata.type], gradation: null};
       if(wordMetadata.gradation in wordType){
         transformedWordType.gradation = wordMetadata.gradationTypes[wordType[wordMetadata.gradation]];
       }
       transformedWordInfo.types.push(transformedWordType);
-    }.bind(this));
+    }
     if(wordMetadata.vowelHarmony in wordInfo) {
       transformedWordInfo.vowelHarmony = wordMetadata.vowelHarmonyTypes[wordInfo[wordMetadata.vowelHarmony]];
     }

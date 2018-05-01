@@ -57,7 +57,7 @@ export class FiDeclensionService {
       let a = wordHarmonyVowels[FiVowelHarmony.a];
       let o = wordHarmonyVowels[FiVowelHarmony.o];
       wordTypes.sort((a: object, b: object): number => a['type'] - b['type']);
-      wordTypes.forEach(function(type){
+      for(let type of wordTypes){
         let wordType = type['type'];
         if(wordType == 49){
             wordType = noun.endsWith('e') ? 48 : 32;
@@ -69,7 +69,7 @@ export class FiDeclensionService {
         this.declineSingular(noun, strongStem, weakStem, a, wordType, wordGradation, declension);
         this.declinePlural(noun, strongStem, weakStem, a, o, wordType, wordGradation, declension);
         declensions.push(declension);
-      }.bind(this));
+      }
       return declensions;
     } catch(e){
       throw new InvalidWordInfoError();

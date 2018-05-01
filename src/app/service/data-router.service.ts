@@ -3,21 +3,20 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class DataRouterService {
-    private map: object = {};
+    private data: any = undefined;
 
     constructor(private router: Router) {}
 
     navigate(route: string[], data?: any): void {
         if(data !== undefined){
-            this.map[route.join('/')] = data;
-        } else {
-            delete this.map[route.join('/')];
+            this.data = data;
         }
-        this.router.navigate(route);
+        this.router.navigate(route, {replaceUrl: true});
     }
 
-    getData(key: string): any {
-        let dataMap: object = this.map[decodeURIComponent(this.router.url).substr(1)];
-        return dataMap ? dataMap[key] : null;
+    getData(): any {
+        let ret: any = this.data;
+        this.data = undefined;
+        return ret;
     }
 }

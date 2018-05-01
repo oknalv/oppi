@@ -40,7 +40,7 @@ export class OppiComponent implements OnInit {
     let action: string = test ? 'test' : 'search';
     this.wordInfoService.getWordInfo(this.wordToSearch).subscribe((wordData: FiDeclensionWordInfo) => {
       this.wrongWord = null;
-      this.dataRouterService.navigate([action, wordData.word], {word: wordData});
+      this.dataRouterService.navigate([action, wordData.word], wordData);
     }, (error) => {
       this.wrongWord = this.wordToSearch;
       this.dataRouterService.navigate(['/']);
@@ -51,7 +51,7 @@ export class OppiComponent implements OnInit {
     this.wordInfoService.getRandomWord().subscribe((wordData: FiDeclensionWordInfo) => {
       this.wrongWord = null;
       this.wordToSearch = wordData.word;
-      this.dataRouterService.navigate(['test', wordData.word], {word: wordData});
+      this.dataRouterService.navigate(['test', wordData.word], wordData);
     });
   }
 

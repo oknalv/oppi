@@ -13,8 +13,8 @@
         "/oppi/assets/moon.svg",
         "/oppi/assets/oppi-logo.svg",
         "/oppi/assets/i18n/en.json",
-        "/oppi/inline.379458475a0be43bfd8a.bundle.js",
-        "/oppi/main.e571e9a309e2f2afabf7.bundle.js",
+        "/oppi/inline.81686962b1ee030b9fdb.bundle.js",
+        "/oppi/main.4e87d5ad185a6c793526.bundle.js",
         "/oppi/polyfills.f20484b2fa4642e0dca8.bundle.js",
         "/oppi/styles.1479d2fb0dcb79b1ee6c.bundle.css"
       ],
@@ -43,9 +43,9 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/oppi/inline.379458475a0be43bfd8a.bundle.js": "ee62295b0265cd254afbe8eca42e76888d8b47e5",
+    "/oppi/inline.81686962b1ee030b9fdb.bundle.js": "bd4e8d90d22cd3d52262eb306f049c6c035c070a",
     "/oppi/fontawesome-webfont.674f50d287a8c48dc19b.eot": "d980c2ce873dc43af460d4d572d441304499f400",
-    "/oppi/main.e571e9a309e2f2afabf7.bundle.js": "04414199b2b793c0c073044aaaaf58312ef1b098",
+    "/oppi/main.4e87d5ad185a6c793526.bundle.js": "23cb9fb7af1545e056ebb96c2973ead36b52cb8e",
     "/oppi/fontawesome-webfont.912ec66d7572ff821749.svg": "98a8aa5cf7d62c2eff5f07ede8d844b874ef06ed",
     "/oppi/polyfills.f20484b2fa4642e0dca8.bundle.js": "0b0af365e031b7cbba789493d311e94192720c68",
     "/oppi/fontawesome-webfont.af7ae505a9eed503f8b8.woff2": "d6f48cba7d076fb6f2fd6ba993a75b9dc1ecbf0c",
@@ -53,7 +53,7 @@
     "/oppi/fontawesome-webfont.b06871f281fee6b241d6.ttf": "13b1eab65a983c7a73bc7997c479d66943f7c6cb",
     "/oppi/favicon.ico": "5562a7d8acca1dcc20a663c4e3315adda1272038",
     "/oppi/fontawesome-webfont.fee66e712a8a08eef580.woff": "28b782240b3e76db824e12c02754a9731a167527",
-    "/oppi/index.html": "61b86b41dc1890f34876619063844af170c3cf8c",
+    "/oppi/index.html": "29eb89b5e02c276bbd1386b5b630f6c54b4754e5",
     "/oppi/assets/oppi-logo.png": "18a011d3b58c8867e0c4634185e08f0f50b0e773",
     "/oppi/manifest.json": "18ff90bd654b534e76bff46916c4010331d9d8b6",
     "/oppi/assets/oppi.svg": "f05edc87ebf8a0865f0c540b8782aae57a9f6d70",
@@ -64,6 +64,6 @@
     "/oppi/assets/i18n/en.json": "b45c789e5c2722255e2abbd98cfb2efa9bd377f1",
     "/oppi/assets/i18n/fi.json": "b8b5e7b1a9ae69251eb1c5e48169d95aa47bfa4c",
     "/oppi/assets/i18n/gl.json": "df91b6ca60d5ef82ba2256b3b25946c42d3b7029",
-    "/oppi/assets/i18n/pt.json": "3b003d3e1f39ebcf367c3db5864a33f60b4e796c"
+    "/oppi/assets/i18n/pt.json": "b08a591c9e6e0584b0a4d657513772d0bc2f6819"
   }
 }

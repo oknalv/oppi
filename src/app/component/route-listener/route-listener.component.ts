@@ -17,7 +17,7 @@ export abstract class RouteListenerComponent<T> implements OnInit {
   }
 
   private load(): void {
-    let data: T = this.dataRouterService.getData('word');
+    let data: T = this.dataRouterService.getData();
     if(!data){
       this.dataRouterService.navigate(['/']);
     } else {

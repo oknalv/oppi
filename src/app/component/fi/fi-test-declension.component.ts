@@ -19,7 +19,6 @@ export class FiTestDeclensionComponent extends FiSearchDeclensionComponent {
 
   private declensionErrors: object;
   private declensionToCheck: DeclensionString = new DeclensionString();
-  word: string;
 
   constructor(
     fiDeclensionService: FiDeclensionService,
@@ -31,12 +30,12 @@ export class FiTestDeclensionComponent extends FiSearchDeclensionComponent {
 
   init(data: FiDeclensionWordInfo){
     super.init(data);
-    this.word = data.word;
+    this.reset();
   }
 
   check(): void{
     this.declensionErrors = null;
-    this.declensions.forEach(function(declension: Declension){
+    for(let declension of this.declensions){
       if(!this.declensionErrors || this.declensionErrors['numberOfErrors'] > 0){
           let declensionToCheckAux = this.declensionStringToDeclension(this.declensionToCheck);
           let declensionErrorsAux = this.compareDeclensions(declension, declensionToCheckAux);
@@ -44,7 +43,7 @@ export class FiTestDeclensionComponent extends FiSearchDeclensionComponent {
             this.declensionErrors = declensionErrorsAux;
           }
       }
-    }.bind(this));
+    }
   }
 
   reset(): void {
