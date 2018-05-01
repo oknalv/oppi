@@ -70,6 +70,8 @@ a, a * {
 .side-menu-inner-container{
     max-width: var(--body-width);
 }
+
 menu {
     --side-menu-width: 250px;
+    padding: 0 !important;
 }

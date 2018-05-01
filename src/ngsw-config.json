@@ -10,7 +10,9 @@
         "/manifest.json",
         "/assets/i18n/en.json",
         "/assets/oppi-logo.svg",
-        "/assets/moon.svg"
+        "/assets/moon.svg",
+        "/assets/oppi.svg",
+        "/assets/banner.svg"
       ],
       "versionedFiles": [
         "/*.bundle.css",
