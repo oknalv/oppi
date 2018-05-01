@@ -27,7 +27,7 @@
       <td *ngFor='let number of numbers' class='f-1-2'>
         <div *ngIf='(number == "singular" && case != "instructive" && case != "comitative") || (number == "plural" && case != "genitiveAccusative")'>
           <input [(ngModel)]='declensionToCheck[number][case]'
-            [ngClass]='(declensionErrors && declensionErrors[number] && declensionErrors[number][case] == true ? "red" : "") + (declensionErrors && declensionErrors[number] && declensionErrors[number][case] == false ? "green" : "")'
+            [ngClass]='(declensionErrors ? declensionErrors[number][case] === true ? "red" : declensionErrors[number][case] === false ? "green" : "" : "")'
             (keydown)='$event.key == "Enter" ? check() : null'
             tabindex='{{number == "singular" ? 1 : 2}}'
             placeholder='{{ case | i18n }}'/>

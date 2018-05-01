@@ -6,6 +6,7 @@ import { DataRouterService } from '../../service/data-router.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { FiDeclensionWordInfo } from '../../model/fi-declension-word-info';
 import { FiSearchDeclensionComponent } from './fi-search-declension.component';
+import { FiDeclensionErrors } from '../../model/fi-declension-errors';
 
 @Component({
   selector: 'fi-test-declension',
@@ -65,27 +66,26 @@ export class FiTestDeclensionComponent extends FiSearchDeclensionComponent {
   }
 
   private compareDeclensions(correctDeclension: Declension, declensionToCheck: Declension): object {
-    let declensionErrors = {'numberOfErrors': 0};
+    let declensionErrors: FiDeclensionErrors = new FiDeclensionErrors;
     for(let numberName in correctDeclension){
       let numberForm: DeclensionForm = correctDeclension[numberName];
       for(let caseName in numberForm){
-        let caseForms: string[] = numberForm[caseName];
         let checkCaseForms: string[] = declensionToCheck[numberName][caseName];
-        let isContained: boolean =
-          !(caseForms.length > 0 && checkCaseForms.length == 0) &&
-          !(caseForms.length == 0 && checkCaseForms.length > 0) &&
-          caseForms.filter(function(caseForm){
-            return checkCaseForms.includes(caseForm);
-          }.bind(this)).length == checkCaseForms.length;
-        if(!(numberName in declensionErrors)){
-          declensionErrors[numberName] = {};
-        }
-        if(!isContained){
-          declensionErrors['numberOfErrors']++;
-          declensionErrors[numberName][caseName] = true;
-        }
-        else {
-          declensionErrors[numberName][caseName] = false;
+        if(checkCaseForms != null && checkCaseForms.length > 0){
+          let caseForms: string[] = numberForm[caseName];
+          let isContained: boolean =
+            !(caseForms.length > 0 && checkCaseForms.length == 0) &&
+            !(caseForms.length == 0 && checkCaseForms.length > 0) &&
+            caseForms.filter(function(caseForm){
+              return checkCaseForms.includes(caseForm);
+            }.bind(this)).length == checkCaseForms.length;
+          if(!isContained){
+            declensionErrors['numberOfErrors']++;
+            declensionErrors[numberName][caseName] = true;
+          }
+          else {
+            declensionErrors[numberName][caseName] = false;
+          }
         }
       };
     };
