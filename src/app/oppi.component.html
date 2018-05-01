@@ -34,17 +34,13 @@
   <router-outlet></router-outlet>
 </div>
 <side-menu #optionsMenu>
-  <div id='menuOptions'>
+  <div id='menuOptions' class='grid vertical'>
     <img src='assets/oppi.svg' (click)='optionsMenu.hide()'>
-    <div>
-      <div>
-        <label for='langSelect' title='{{ "language" | i18n }}'><i class='fa fa-language'></i>&nbsp;{{ 'language' | i18n }}</label>
-      </div>
-      <div>
-        <select id='langSelect' [(ngModel)]='currentLanguageKey' (change)='changeLanguage()'>
-          <option *ngFor='let lang of languageKeys' value='{{lang}}'>{{languages[lang]}}</option>
-        </select>
-      </div>
+    <div class='grow-1'>
+      <label for='langSelect' title='{{ "language" | i18n }}'><i class='fa fa-language'></i>&nbsp;{{ 'language' | i18n }}</label>
+      <select id='langSelect' [(ngModel)]='currentLanguageKey' (change)='changeLanguage()'>
+        <option *ngFor='let lang of languageKeys' value='{{lang}}'>{{languages[lang]}}</option>
+      </select>
     </div>
     <button (click)='help()' title='{{ "help" | i18n }}' class='icon'>
       <i class='fa fa-question-circle'></i>&nbsp;{{ 'help' | i18n }}

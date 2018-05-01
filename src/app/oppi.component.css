@@ -39,12 +39,20 @@ h4 {
     font-weight: bold;
 }
 
+#menuOptions {
+    height: 100%;
+}
+
 #menuOptions > * {
     margin: 5px 0;
 }
 
 #menuOptions img {
     cursor: pointer;
+}
+
+#menuOptions button {
+    width: 100%;
 }
 
 #optionsMenuButton, #optionsMenuButton * {
@@ -55,9 +63,4 @@ h4 {
 .title i::before {
     font-weight: bold;
     font-size: 1.5em;
-}
-
-.side-menu-inner-container{
-    max-width: var(--body-width);
-    background-color: green;
 }

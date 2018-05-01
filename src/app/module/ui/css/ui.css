@@ -171,6 +171,11 @@ input:focus {
 .grid {
     display: flex;
     flex-wrap: wrap;
+    flex-direction: initial;
+}
+
+.grid.vertical {
+    flex-direction: column;
 }
 
 .grid.h-end {

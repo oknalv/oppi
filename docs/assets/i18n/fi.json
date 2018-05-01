@@ -27,5 +27,6 @@
 "wordNotFound": "Sana '${placeholders[0]}' ei löydy.",
 "check": "tarkista",
 "help": "apu",
-"Help": "Apu"
+"Help": "Apu",
+"options": "valikko"
 }
