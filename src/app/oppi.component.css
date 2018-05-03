@@ -67,3 +67,19 @@ h4 {
     font-weight: bold;
     font-size: 1.5em;
 }
+
+#search-input {
+    position: relative;
+}
+
+#search-input > i {
+    position: absolute;
+    padding: 6px 0px;
+    color: var(--dark-gray);
+    right: 1em;
+    cursor: pointer;
+}
+
+#search-input > i + input {
+    padding-right: calc(var(--input-left-right-padding) * 3 + 1px);
+}

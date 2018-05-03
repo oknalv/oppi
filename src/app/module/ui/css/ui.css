@@ -145,10 +145,12 @@ td, th {
 input {
     --input-border-color: var(--dark-gray);
     --input-background-color: transparent;
+    --input-top-bottom-padding: 5px;
+    --input-left-right-padding: 10px;
     border: 1px solid transparent;
     border-bottom: 1px solid var(--input-border-color);
     background-color: var(--input-background-color);
-    padding: 5px 10px;
+    padding: var(--input-top-bottom-padding) var(--input-left-right-padding);
     transition: border-color .25s ease, border-radius .25s ease .125s, background-color .25s ease;
 }
 

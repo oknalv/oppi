@@ -9,8 +9,10 @@
     </button>
   </div>
   <div class='grid' id='search'>
-    <div class='grow-1'>
+    <div class='grow-1' id='search-input'>
+      <i class='fa fa-close' *ngIf='wordToSearch' (click)='wordToSearch = ""; searchInput.focus(); searchWord()'></i>
       <input [(ngModel)]='wordToSearch'
+        #searchInput
         (keydown)='$event.key == "Enter" ? searchWord(!$event.ctrlKey) : null'
         placeholder='{{ "word" | i18n }}'/>
     </div>
