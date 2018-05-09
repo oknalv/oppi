@@ -316,7 +316,7 @@ button:active:before, select:active:before {
     display: none !important;
 }
 
-.fader.hidding {
+.fader.hiding {
     animation: fadeOut var(--animation-time) ease forwards !important;
 }
 

@@ -38,7 +38,7 @@
 <side-menu #optionsMenu>
   <div id='menuOptions' class='grid vertical'>
     <div>
-      <img src='assets/banner.svg' (click)='optionsMenu.hide()'>
+      <img [src]='"assets/" + banners[currentBanner] + ".svg"' (click)='clickBanner($event)'>
     </div>
     <div class='grow-1'>
       <label for='langSelect' title='{{ "language" | i18n }}'><i class='fa fa-language'></i>&nbsp;{{ 'language' | i18n }}</label>
