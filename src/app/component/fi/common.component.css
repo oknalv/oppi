@@ -1,0 +1,7 @@
+.title > *:not(:last-child), #actions {
+    margin: 5px;
+}
+
+th {
+    text-align: left;
+}

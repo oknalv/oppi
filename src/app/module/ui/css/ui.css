@@ -71,59 +71,41 @@ table {
     --border-width: 1px;
 }
 
-thead td, thead th{
+tr {
     border-color: var(--border-color);
     border-style: solid;
     border-width: 0px;
-    background-color: var(--thead-background-color);
-}
-
-thead tr:first-child td, thead tr:first-child th,
-tbody:first-child tr:first-child {
-    border-top-width: var(--border-width);
-}
-
-thead tr:last-child td, thead tr:last-child th{
-    border-bottom-width: var(--border-width);
-}
-
-thead tr td:first-child, thead tr th:first-child{
     border-left-width: var(--border-width);
-}
-
-thead tr td:last-child, thead tr th:last-child{
     border-right-width: var(--border-width);
 }
 
-thead tr:first-child td:first-child, thead tr:first-child th:first-child,
-tbody:first-child tr:first-child {
-    border-top-left-radius: var(--border-radius);
+thead tr {
+    background-color: var(--thead-background-color);
 }
 
-thead tr:first-child td:last-child, thead tr:first-child th:last-child,
+tr:first-child {
+    border-top-width: var(--border-width);
+}
+
+thead:last-child tr:last-child,
+tbody:last-child tr:last-child {
+    border-bottom-width: var(--border-width);
+}
+
+thead:first-child tr:first-child,
 tbody:first-child tr:first-child {
+    border-top-left-radius: var(--border-radius);
     border-top-right-radius: var(--border-radius);
 }
 
-tbody tr:last-child{
+thead:last-child tr:last-child,
+tbody:last-child tr:last-child {
     border-bottom-left-radius: var(--border-radius);
     border-bottom-right-radius: var(--border-radius);
 }
 
-th {
+th, th * {
     font-weight: bold;
-}
-
-tbody tr {
-    border-color: var(--border-color);
-    border-style: solid;
-    border-width: 0px;
-    border-right-width: var(--border-width);
-    border-left-width: var(--border-width);
-}
-
-tbody tr:last-child {
-    border-bottom-width: var(--border-width);
 }
 
 tbody tr:nth-of-type(odd){

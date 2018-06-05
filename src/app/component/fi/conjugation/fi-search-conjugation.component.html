@@ -1,0 +1,1475 @@
+<div class='grid v-center title'>
+  <h3>{{word}}</h3>
+  <a target='_blank' href='https://en.wiktionary.org/wiki/{{word}}#Finnish'>
+    <i class='fa fa-external-link'></i>
+  </a>
+</div>
+<table *ngFor="let conjugation of conjugations; let i = index">
+  <!--PERSONAL FORMS-->
+  <thead class='forms'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h4>{{'personalForms' | i18n}}</h4>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].personalForms' (click)='showTables[i].personalForms = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].personalForms' (click)='showTables[i].personalForms = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--INDICATIVE-->
+  <thead *ngIf='showTables[i].personalForms' class='mood'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'indicative' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].indicative' (click)='showTables[i].indicative = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].indicative' (click)='showTables[i].indicative = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--PRESENT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].indicative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'present' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].indicativePresent' (click)='showTables[i].indicativePresent = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].indicativePresent' (click)='showTables[i].indicativePresent = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].indicativePresent'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].indicative && showTables[i].indicativePresent'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.singular1'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.negative1'>
+          <i>en</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.singular2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.negative1'>
+          <i>et</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.singular3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.negative1'>
+          <i>ei</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.plural1'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.negative1'>
+          <i>emme</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.plural2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.negative1'>
+          <i>ette</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.plural3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.negative1'>
+          <i>eivät</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.passive'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.present.passiveNegative'>
+          <i>ei</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--PERFECT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].indicative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'perfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].indicativePerfect' (click)='showTables[i].indicativePerfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].indicativePerfect' (click)='showTables[i].indicativePerfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].indicativePerfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].indicative && showTables[i].indicativePerfect'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>olen</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>en ole</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>olet</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>et ole</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>on</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>ei ole</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olemme</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>emme ole</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olette</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>ette ole</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>ovat</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>eivät ole</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>on</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>ei ole</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--IMPERFECT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].indicative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'imperfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].indicativeImperfect' (click)='showTables[i].indicativeImperfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].indicativeImperfect' (click)='showTables[i].indicativeImperfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].indicativeImperfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].indicative && showTables[i].indicativeImperfect'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.singular1'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>en</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.singular2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>et</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.singular3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>ei</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.plural1'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>emme</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.plural2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>ette</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.plural3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>eivät</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passive'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>ei</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--PLUPERFECT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].indicative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'pluperfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].indicativePluperfect' (click)='showTables[i].indicativePluperfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].indicativePluperfect' (click)='showTables[i].indicativePluperfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].indicativePluperfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].indicative && showTables[i].indicativePluperfect'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>olin</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>en ollut</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>olit</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>et ollut</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>oli</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>ei ollut</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olimme</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>emme olleet</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olitte</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>ette olleet</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olivat</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>eivät olleet</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>oli</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>ei ollut</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--CONDITIONAL-->
+  <thead *ngIf='showTables[i].personalForms' class='mood'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'conditional' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].conditional' (click)='showTables[i].conditional = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].conditional' (click)='showTables[i].conditional = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--PRESENT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].conditional'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'present' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].conditionalPresent' (click)='showTables[i].conditionalPresent = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].conditionalPresent' (click)='showTables[i].conditionalPresent = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].conditionalPresent'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].conditional && showTables[i].conditionalPresent'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.singular1'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.negative1'>
+          <i>en</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.singular2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.negative1'>
+          <i>et</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.singular3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.negative1'>
+          <i>ei</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.plural1'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.negative1'>
+          <i>emme</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.plural2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.negative1'>
+          <i>ette</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.plural3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.negative1'>
+          <i>eivät</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.passive'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.conditional.present.passiveNegative'>
+          <i>ei</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--PERFECT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].conditional'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'perfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].conditionalPerfect' (click)='showTables[i].conditionalPerfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].conditionalPerfect' (click)='showTables[i].conditionalPerfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].conditionalPerfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].conditional && showTables[i].conditionalPerfect'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>olisin</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>en olisi</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>olisit</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>et olisi</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>olisi</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>ei olisi</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olisimme</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>emme olisi</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olisitte</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>ette olisi</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olisivat</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>eivät olisi</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>olisi</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>ei olisi</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--IMPERATIVE-->
+  <thead *ngIf='showTables[i].personalForms' class='mood'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'imperative' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].imperative' (click)='showTables[i].imperative = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].imperative' (click)='showTables[i].imperative = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--PRESENT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].imperative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'present' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].imperativePresent' (click)='showTables[i].imperativePresent = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].imperativePresent' (click)='showTables[i].imperativePresent = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].imperativePresent'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].imperative && showTables[i].imperativePresent'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.singular2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.singular2'>
+          <i>älä</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.singular3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.negative1'>
+          <i>älköön</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.plural1'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.negative1'>
+          <i>älkäämme</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.plural2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.negative1'>
+          <i>älkää</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.plural3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.negative1'>
+          <i>älkööt</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.passive'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.imperative.present.passiveNegative'>
+          <i>älköön</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--PERFECT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].imperative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'perfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].imperativePerfect' (click)='showTables[i].imperativePerfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].imperativePerfect' (click)='showTables[i].imperativePerfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].imperativePerfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].imperative && showTables[i].imperativePerfect'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>ole</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>älä ole</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>olkoon</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>älköön olko</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olkaamme</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>älkäämme olko</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olkaa</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>älkää olko</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>olkoot</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>älkööt olko</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>olkoon</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>älköön olko</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--POTENTIAL-->
+  <thead *ngIf='showTables[i].personalForms' class='mood'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'potential' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].potential' (click)='showTables[i].potential = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].potential' (click)='showTables[i].potential = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--PRESENT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].potential'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'present' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].potentialPresent' (click)='showTables[i].potentialPresent = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].potentialPresent' (click)='showTables[i].potentialPresent = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].potentialPresent'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].potential && showTables[i].potentialPresent'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.singular1'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.negative1'>
+          <i>en</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.singular2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.negative1'>
+          <i>et</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.singular3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.negative1'>
+          <i>ei</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.plural1'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.negative1'>
+          <i>emme</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.plural2'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.negative1'>
+          <i>ette</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.plural3'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.negative1'>
+          <i>eivät</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.passive'>
+          {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.potential.present.passiveNegative'>
+          <i>ei</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--PERFECT-->
+  <thead *ngIf='showTables[i].personalForms && showTables[i].potential'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'perfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].potentialPerfect' (click)='showTables[i].potentialPerfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].potentialPerfect' (click)='showTables[i].potentialPerfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].potentialPerfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].personalForms && showTables[i].potential && showTables[i].potentialPerfect'>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>lienen</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>en liene</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>lienet</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>et liene</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>liene</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative1'>
+          <i>ei liene</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>lienemme</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>emme liene</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>lienette</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>ette liene</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>lienevät</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.negative2'>
+          <i>eivät liene</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8'>{{'passive' | i18n}}</th>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>liene</i> {{verb}}
+        </div>
+      </td>
+      <td class='f-3-8'>
+        <div *ngFor='let verb of conjugation.moods.indicative.past.passiveNegative'>
+          <i>ei liene</i> {{verb}}
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <!--NOMINAL FORMS-->
+  <thead class='forms'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h4>{{'nominalForms' | i18n}}</h4>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].nominalForms' (click)='showTables[i].nominalForms = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].nominalForms' (click)='showTables[i].nominalForms = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--INFINITIVES-->
+  <thead *ngIf='showTables[i].nominalForms'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'infinitives' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].infinitives' (click)='showTables[i].infinitives = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].infinitives' (click)='showTables[i].infinitives = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].nominalForms && showTables[i].infinitives'>
+      <th class='f-2-8'></th>
+      <th class='f-3-8'>{{'active' | i18n}}</th>
+      <th class='f-3-8'>{{'passive' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].nominalForms && showTables[i].infinitives'>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'1st' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.first'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'long1st' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.firstLong'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'2ndInessive' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.secondInessiveActive'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.secondInessivePassive'>
+            {{verb}}
+          </div>
+        </td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'2ndInstructive' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.secondInstructive'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'3rdInessive' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.thirdInessive'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'3rdElative' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.thirdElative'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'3rdIllative' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.thirdIllative'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'3rdAdessive' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.thirdAdessive'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'3rdAbessive' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.thirdAbessive'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'3rdInstructive' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.thirdInstructiveActive'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.thirdInstructivePassive'>
+            {{verb}}
+          </div>
+        </td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'4thNominative' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.fourthNominative'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'4thPartitive' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.fourthPartitive'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'5th' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.infinitives.fifth'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+  </tbody>
+  <!--PARTICIPLES-->
+  <thead *ngIf='showTables[i].nominalForms'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'participles' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTables[i].participles' (click)='showTables[i].participles = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTables[i].participles' (click)='showTables[i].participles = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTables[i].nominalForms && showTables[i].participles'>
+      <th class='f-2-8'></th>
+      <th class='f-3-8'>{{'active' | i18n}}</th>
+      <th class='f-3-8'>{{'passive' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTables[i].nominalForms && showTables[i].participles'>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'1st' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.participles.presentActive'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.participles.presentPassive'>
+            {{verb}}
+          </div>
+        </td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'2nd' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.participles.pastActive'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.participles.pastPassive'>
+            {{verb}}
+          </div>
+        </td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'agent' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.participles.agent'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+        <th class='f-2-8'>
+          {{'negativeAgent' | i18n}}
+        </th>
+        <td class='f-3-8'>
+          <div *ngFor='let verb of conjugation.nominalForms.participles.negative'>
+            {{verb}}
+          </div>
+        </td>
+        <td class='f-3-8'></td>
+    </tr>
+  </tbody>
+</table>

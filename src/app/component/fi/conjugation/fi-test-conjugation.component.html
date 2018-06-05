@@ -1,0 +1,1743 @@
+<div class='grid h-between v-center'>
+  <div class='grid v-center title'>
+    <h3>{{'conjugate' | i18n: word}}</h3>
+    <a target='_blank' href='https://en.wiktionary.org/wiki/{{word}}#Finnish'>
+      <i class='fa fa-external-link'></i>
+    </a>
+  </div>
+  <div id='actions'>
+    <button (click)='reset()' title='{{ "reset" | i18n }}' class='icon'>
+        <i class='fa fa-repeat'></i>
+    </button>
+    <button (click)='check()' title='{{ "check" | i18n }}' class='icon'>
+        <i class='fa fa-check-square-o'></i>
+    </button>
+  </div>
+</div>
+<table>
+  <!--PERSONAL FORM-->
+  <thead class='forms'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h4>{{'personalForms' | i18n}}</h4>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.personalForms' (click)='showTable.personalForms = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.personalForms' (click)='showTable.personalForms = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--INDICATIVE-->
+  <thead *ngIf='showTable.personalForms' class='mood'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'indicative' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.indicative' (click)='showTable.indicative = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.indicative' (click)='showTable.indicative = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--PRESENT-->
+  <thead *ngIf='showTable.personalForms && showTable.indicative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'present' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.indicativePresent' (click)='showTable.indicativePresent = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.indicativePresent' (click)='showTable.indicativePresent = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.indicativePresent'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.indicative && showTable.indicativePresent'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.singular1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.singular1 === true ? "red" : conjugationErrors.moods.indicative.present.singular1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='1'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>en</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.negative1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.negative1 === true ? "red" : conjugationErrors.moods.indicative.present.negative1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='2'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.singular2 === true ? "red" : conjugationErrors.moods.indicative.present.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='1'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>et</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.negative2 === true ? "red" : conjugationErrors.moods.indicative.present.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='2'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.singular3 === true ? "red" : conjugationErrors.moods.indicative.present.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='1'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.negative3 === true ? "red" : conjugationErrors.moods.indicative.present.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='2'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.plural1 === true ? "red" : conjugationErrors.moods.indicative.present.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='1'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>emme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.negative4 === true ? "red" : conjugationErrors.moods.indicative.present.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='2'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.plural2 === true ? "red" : conjugationErrors.moods.indicative.present.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='1'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ette</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.negative5 === true ? "red" : conjugationErrors.moods.indicative.present.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='2'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.plural3 === true ? "red" : conjugationErrors.moods.indicative.present.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='1'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>eivät</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.negative6 === true ? "red" : conjugationErrors.moods.indicative.present.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='2'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.passive === true ? "red" : conjugationErrors.moods.indicative.present.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='1'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.present.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.negative6 === true ? "red" : conjugationErrors.moods.indicative.present.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='2'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--PERFECT-->
+  <thead *ngIf='showTable.personalForms && showTable.indicative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'perfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.indicativePerfect' (click)='showTable.indicativePerfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.indicativePerfect' (click)='showTable.indicativePerfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.indicativePerfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.indicative && showTable.indicativePerfect'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olen</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.singular1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.singular1 === true ? "red" : conjugationErrors.moods.indicative.perfect.singular1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='3'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>en&nbsp;ole</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.negative1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.negative1 === true ? "red" : conjugationErrors.moods.indicative.perfect.negative1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='4'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olet</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.singular2 === true ? "red" : conjugationErrors.moods.indicative.perfect.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='3'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>et&nbsp;ole</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.negative2 === true ? "red" : conjugationErrors.moods.indicative.perfect.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='4'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>on</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.singular3 === true ? "red" : conjugationErrors.moods.indicative.perfect.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='3'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei&nbsp;ole</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.negative3 === true ? "red" : conjugationErrors.moods.indicative.perfect.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='4'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olemme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.plural1 === true ? "red" : conjugationErrors.moods.indicative.perfect.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='3'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>emme&nbsp;ole</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.negative4 === true ? "red" : conjugationErrors.moods.indicative.perfect.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='4'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olette</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.plural2 === true ? "red" : conjugationErrors.moods.indicative.perfect.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='3'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ette&nbsp;ole</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.negative5 === true ? "red" : conjugationErrors.moods.indicative.perfect.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='4'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ovat</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.plural3 === true ? "red" : conjugationErrors.moods.indicative.perfect.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='3'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>eivät&nbsp;ole</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.negative6 === true ? "red" : conjugationErrors.moods.indicative.perfect.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='4'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>on</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.passive === true ? "red" : conjugationErrors.moods.indicative.perfect.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='3'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei&nbsp;ole</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.perfect.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.perfect.passiveNegative === true ? "red" : conjugationErrors.moods.indicative.perfect.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='4'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--IMPERFECT-->
+  <thead *ngIf='showTable.personalForms && showTable.indicative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'imperfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.indicativeImperfect' (click)='showTable.indicativeImperfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.indicativeImperfect' (click)='showTable.indicativeImperfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.indicativeImperfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.indicative && showTable.indicativeImperfect'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.singular1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.singular1 === true ? "red" : conjugationErrors.moods.indicative.past.singular1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='5'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>en</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.negative1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.negative1 === true ? "red" : conjugationErrors.moods.indicative.past.negative1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='6'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.singular2 === true ? "red" : conjugationErrors.moods.indicative.past.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='5'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>et</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.negative2 === true ? "red" : conjugationErrors.moods.indicative.past.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='6'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.singular3 === true ? "red" : conjugationErrors.moods.indicative.past.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='5'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.negative3 === true ? "red" : conjugationErrors.moods.indicative.past.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='6'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.plural1 === true ? "red" : conjugationErrors.moods.indicative.past.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='5'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>emme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.negative4 === true ? "red" : conjugationErrors.moods.indicative.past.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='6'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.plural2 === true ? "red" : conjugationErrors.moods.indicative.past.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='5'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ette</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.negative5 === true ? "red" : conjugationErrors.moods.indicative.past.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='6'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.plural3 === true ? "red" : conjugationErrors.moods.indicative.past.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='5'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>eivät</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.negative6 === true ? "red" : conjugationErrors.moods.indicative.past.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='6'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.passive === true ? "red" : conjugationErrors.moods.indicative.past.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='5'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.past.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.past.passiveNegative === true ? "red" : conjugationErrors.moods.indicative.past.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='6'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--PLUPERFECT-->
+  <thead *ngIf='showTable.personalForms && showTable.indicative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'pluperfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.indicativePluperfect' (click)='showTable.indicativePluperfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.indicativePluperfect' (click)='showTable.indicativePluperfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.indicativePluperfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.indicative && showTable.indicativePluperfect'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olin</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.singular1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.singular1 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.singular1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='7'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>en&nbsp;ollut</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.negative1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.negative1 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.negative1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='8'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olit</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.singular2 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='7'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>et&nbsp;ollut</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.negative2 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='8'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>oli</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.singular3 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='7'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei&nbsp;ollut</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.negative3 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='8'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olimme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.plural1 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='7'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>emme&nbsp;olleet</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.negative4 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='8'/>
+      </td>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olitte</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.plural2 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='7'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ette&nbsp;olleet</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.negative5 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='8'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olivat</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.plural3 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='7'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>eivät&nbsp;olleet</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.negative6 === true ? "red" : conjugationErrors.moods.indicative.pluperfect.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='8'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>oli</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.passive === true ? "red" : conjugationErrors.moods.indicative.pluperfect.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='7'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei&nbsp;ollut</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.indicative.pluperfect.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.pluperfect.passiveNegative === true ? "red" : conjugationErrors.moods.indicative.pluperfect.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='8'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--CONDITIONAL-->
+  <thead *ngIf='showTable.personalForms' class='mood'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'conditional' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.conditional' (click)='showTable.conditional = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.conditional' (click)='showTable.conditional = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--PRESENT-->
+  <thead *ngIf='showTable.personalForms && showTable.conditional'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'present' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.conditionalPresent' (click)='showTable.conditionalPresent = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.conditionalPresent' (click)='showTable.conditionalPresent = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.conditionalPresent'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.conditional && showTable.conditionalPresent'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.singular1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.singular1 === true ? "red" : conjugationErrors.moods.conditional.present.singular1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='9'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>en</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.negative1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.negative1 === true ? "red" : conjugationErrors.moods.conditional.present.negative1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='10'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.singular2 === true ? "red" : conjugationErrors.moods.conditional.present.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='9'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>et</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.negative2 === true ? "red" : conjugationErrors.moods.conditional.present.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='10'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.singular3 === true ? "red" : conjugationErrors.moods.conditional.present.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='9'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.negative3 === true ? "red" : conjugationErrors.moods.conditional.present.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='10'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.plural1 === true ? "red" : conjugationErrors.moods.conditional.present.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='9'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>emme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.negative4 === true ? "red" : conjugationErrors.moods.conditional.present.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='10'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.plural2 === true ? "red" : conjugationErrors.moods.conditional.present.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='9'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ette</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.negative5 === true ? "red" : conjugationErrors.moods.conditional.present.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='10'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.plural3 === true ? "red" : conjugationErrors.moods.conditional.present.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='9'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>eivät</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.negative6 === true ? "red" : conjugationErrors.moods.conditional.present.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='10'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.passive === true ? "red" : conjugationErrors.moods.conditional.present.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='9'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.present.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.present.negative6 === true ? "red" : conjugationErrors.moods.conditional.present.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='10'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--PERFECT-->
+  <thead *ngIf='showTable.personalForms && showTable.conditional'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'perfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.conditionalPerfect' (click)='showTable.conditionalPerfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.conditionalPerfect' (click)='showTable.conditionalPerfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.conditionalPerfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.conditional && showTable.conditionalPerfect'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olisin</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.singular1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.singular1 === true ? "red" : conjugationErrors.moods.conditional.perfect.singular1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='11'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>en&nbsp;olisi</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.negative1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.negative1 === true ? "red" : conjugationErrors.moods.conditional.perfect.negative1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='12'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olisit</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.singular2 === true ? "red" : conjugationErrors.moods.conditional.perfect.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='11'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>et&nbsp;olisi</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.negative2 === true ? "red" : conjugationErrors.moods.conditional.perfect.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='12'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olisi</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.singular3 === true ? "red" : conjugationErrors.moods.conditional.perfect.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='11'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei&nbsp;olisi</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.negative3 === true ? "red" : conjugationErrors.moods.conditional.perfect.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='12'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olisimme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.plural1 === true ? "red" : conjugationErrors.moods.conditional.perfect.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='11'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>emme&nbsp;olisi</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.negative4 === true ? "red" : conjugationErrors.moods.conditional.perfect.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='12'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olisitte</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.plural2 === true ? "red" : conjugationErrors.moods.conditional.perfect.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='11'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ette&nbsp;olisi</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.negative5 === true ? "red" : conjugationErrors.moods.conditional.perfect.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='12'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olisivat</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.plural3 === true ? "red" : conjugationErrors.moods.conditional.perfect.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='11'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>eivät&nbsp;olisi</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.negative6 === true ? "red" : conjugationErrors.moods.conditional.perfect.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='12'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olisi</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.passive === true ? "red" : conjugationErrors.moods.conditional.perfect.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='11'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei&nbsp;olisi</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.conditional.perfect.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.conditional.perfect.passiveNegative === true ? "red" : conjugationErrors.moods.conditional.perfect.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='12'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--IMPERATIVE-->
+  <thead *ngIf='showTable.personalForms' class='mood'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'imperative' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.imperative' (click)='showTable.imperative = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.imperative' (click)='showTable.imperative = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--PRESENT-->
+  <thead *ngIf='showTable.personalForms && showTable.imperative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'present' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.imperativePresent' (click)='showTable.imperativePresent = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.imperativePresent' (click)='showTable.imperativePresent = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.imperativePresent'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.imperative && showTable.imperativePresent'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.singular2 === true ? "red" : conjugationErrors.moods.imperative.present.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='13'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älä</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.negative2 === true ? "red" : conjugationErrors.moods.imperative.present.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='14'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.singular3 === true ? "red" : conjugationErrors.moods.imperative.present.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='13'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älköön</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.negative3 === true ? "red" : conjugationErrors.moods.imperative.present.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='14'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.plural1 === true ? "red" : conjugationErrors.moods.imperative.present.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='13'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älkäämme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.negative4 === true ? "red" : conjugationErrors.moods.imperative.present.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='14'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.plural2 === true ? "red" : conjugationErrors.moods.imperative.present.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='13'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älkää</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.negative5 === true ? "red" : conjugationErrors.moods.imperative.present.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='14'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.plural3 === true ? "red" : conjugationErrors.moods.imperative.present.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='13'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älkööt</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.negative6 === true ? "red" : conjugationErrors.moods.imperative.present.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='14'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.passive === true ? "red" : conjugationErrors.moods.imperative.present.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='13'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älköön</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.present.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.present.passiveNegative === true ? "red" : conjugationErrors.moods.imperative.present.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='14'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--PERFECT-->
+  <thead *ngIf='showTable.personalForms && showTable.imperative'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'perfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.imperativePerfect' (click)='showTable.imperativePerfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.imperativePerfect' (click)='showTable.imperativePerfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.imperativePerfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.imperative && showTable.imperativePerfect'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ole</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.singular2 === true ? "red" : conjugationErrors.moods.imperative.perfect.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='15'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älä&nbsp;ole</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.negative2 === true ? "red" : conjugationErrors.moods.imperative.perfect.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='16'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olkoon</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.singular3 === true ? "red" : conjugationErrors.moods.imperative.perfect.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='15'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älköön&nbsp;olko</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.negative3 === true ? "red" : conjugationErrors.moods.imperative.perfect.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='16'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olkaamme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.plural1 === true ? "red" : conjugationErrors.moods.imperative.perfect.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='15'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älkäämme&nbsp;olko</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.negative4 === true ? "red" : conjugationErrors.moods.imperative.perfect.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='16'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olkaa</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.plural2 === true ? "red" : conjugationErrors.moods.imperative.perfect.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='15'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älkää&nbsp;olko</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.negative5 === true ? "red" : conjugationErrors.moods.imperative.perfect.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='16'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olkoot</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.plural3 === true ? "red" : conjugationErrors.moods.imperative.perfect.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='15'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älkööt&nbsp;olko</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.negative6 === true ? "red" : conjugationErrors.moods.imperative.perfect.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='16'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>olkoon</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.passive === true ? "red" : conjugationErrors.moods.imperative.perfect.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='15'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>älköön&nbsp;olko</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.imperative.perfect.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.imperative.perfect.passiveNegative === true ? "red" : conjugationErrors.moods.imperative.perfect.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='16'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--POTENTIAL-->
+  <thead *ngIf='showTable.personalForms' class='mood'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'potential' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.potential' (click)='showTable.potential = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.potential' (click)='showTable.potential = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--PRESENT-->
+  <thead *ngIf='showTable.personalForms && showTable.potential'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'present' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.potentialPresent' (click)='showTable.potentialPresent = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.potentialPresent' (click)='showTable.potentialPresent = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.potentialPresent'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.potential && showTable.potentialPresent'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.singular1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.singular1 === true ? "red" : conjugationErrors.moods.potential.present.singular1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='17'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>en</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.negative1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.negative1 === true ? "red" : conjugationErrors.moods.potential.present.negative1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='18'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.singular2 === true ? "red" : conjugationErrors.moods.potential.present.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='17'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>et</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.negative2 === true ? "red" : conjugationErrors.moods.potential.present.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='18'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.singular3 === true ? "red" : conjugationErrors.moods.potential.present.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='17'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.negative3 === true ? "red" : conjugationErrors.moods.potential.present.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='18'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.plural1 === true ? "red" : conjugationErrors.moods.potential.present.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='17'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>emme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.negative4 === true ? "red" : conjugationErrors.moods.potential.present.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='18'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.plural2 === true ? "red" : conjugationErrors.moods.potential.present.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='17'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ette</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.negative5 === true ? "red" : conjugationErrors.moods.potential.present.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='18'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.plural3 === true ? "red" : conjugationErrors.moods.potential.present.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='17'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>eivät</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.negative6 === true ? "red" : conjugationErrors.moods.potential.present.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='18'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.passive === true ? "red" : conjugationErrors.moods.potential.present.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='17'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.present.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.negative6 === true ? "red" : conjugationErrors.moods.potential.present.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='18'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--PERFECT-->
+  <thead *ngIf='showTable.personalForms && showTable.potential'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h6>{{'perfect' | i18n}}</h6>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.potentialPerfect' (click)='showTable.potentialPerfect = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.potentialPerfect' (click)='showTable.potentialPerfect = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.potentialPerfect'>
+      <th class='f-2-8'>{{'person' | i18n}}</th>
+      <th class='f-3-8'>{{'positive' | i18n}}</th>
+      <th class='f-3-8'>{{'negative' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.personalForms && showTable.potential && showTable.potentialPerfect'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>minä</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>lienen</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.singular1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.singular1 === true ? "red" : conjugationErrors.moods.potential.perfect.singular1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='19'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>en&nbsp;liene</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.negative1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.negative1 === true ? "red" : conjugationErrors.moods.potential.perfect.negative1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='20'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>sinä</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>lienet</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.singular2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.singular2 === true ? "red" : conjugationErrors.moods.potential.perfect.singular2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='19'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>et&nbsp;liene</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.negative2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.negative2 === true ? "red" : conjugationErrors.moods.potential.perfect.negative2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='20'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>hän/se</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>lienee</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.singular3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.singular3 === true ? "red" : conjugationErrors.moods.potential.perfect.singular3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='19'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei&nbsp;liene</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.negative3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.negative3 === true ? "red" : conjugationErrors.moods.potential.perfect.negative3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='20'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>me</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>lienemme</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.plural1'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.plural1 === true ? "red" : conjugationErrors.moods.potential.perfect.plural1 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='19'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>emme&nbsp;liene</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.negative4'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.negative4 === true ? "red" : conjugationErrors.moods.potential.perfect.negative4 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='20'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>te</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>lienette</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.plural2'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.plural2 === true ? "red" : conjugationErrors.moods.potential.perfect.plural2 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='19'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ette&nbsp;liene</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.negative5'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.negative5 === true ? "red" : conjugationErrors.moods.potential.perfect.negative5 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='20'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        <i>he/ne</i>
+      </th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>lienevät</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.plural3'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.plural3 === true ? "red" : conjugationErrors.moods.potential.perfect.plural3 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='19'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>eivät&nbsp;liene</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.negative6'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.negative6 === true ? "red" : conjugationErrors.moods.potential.perfect.negative6 === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='20'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>{{'passive' | i18n}}</th>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>lienee</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.passive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.passive === true ? "red" : conjugationErrors.moods.potential.perfect.passive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='19'/>
+      </td>
+      <td class='f-3-8 grid no-wrap v-center'>
+        <i>ei&nbsp;liene</i>&nbsp;
+        <input [(ngModel)]='conjugationToCheck.moods.potential.perfect.passiveNegative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.perfect.passiveNegative === true ? "red" : conjugationErrors.moods.potential.perfect.passiveNegative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='20'/>
+      </td>
+    </tr>
+  </tbody>
+  <!--NOMINAL FORMS-->
+  <thead class='forms'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h4>{{'nominalForms' | i18n}}</h4>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.nominalForms' (click)='showTable.nominalForms = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.nominalForms' (click)='showTable.nominalForms = true'></i>
+      </th>
+    </tr>
+  </thead>
+  <!--INFINITIVES-->
+  <thead *ngIf='showTable.nominalForms'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'infinitives' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.infinitives' (click)='showTable.infinitives = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.infinitives' (click)='showTable.infinitives = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.nominalForms && showTable.infinitives'>
+      <th class='f-2-8'></th>
+      <th class='f-3-8'>{{'active' | i18n}}</th>
+      <th class='f-3-8'>{{'passive' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.nominalForms && showTable.infinitives'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'1st' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.first'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.first === true ? "red" : conjugationErrors.nominalForms.infinitives.first === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'long1st' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.firstLong'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.firstLong === true ? "red" : conjugationErrors.nominalForms.infinitives.firstLong === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'2ndInessive' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.secondInessiveActive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.secondInessiveActive === true ? "red" : conjugationErrors.nominalForms.infinitives.secondInessiveActive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.secondInessivePassive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.secondInessivePassive === true ? "red" : conjugationErrors.nominalForms.infinitives.secondInessivePassive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'2ndInstructive' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.secondInstructive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.secondInstructive === true ? "red" : conjugationErrors.nominalForms.infinitives.secondInstructive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'3rdInessive' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.thirdInessive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.thirdInessive === true ? "red" : conjugationErrors.nominalForms.infinitives.thirdInessive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'3rdElative' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.thirdElative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.thirdElative === true ? "red" : conjugationErrors.nominalForms.infinitives.thirdElative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'3rdIllative' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.thirdIllative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.thirdIllative === true ? "red" : conjugationErrors.nominalForms.infinitives.thirdIllative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'3rdAdessive' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.thirdAdessive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.thirdAdessive === true ? "red" : conjugationErrors.nominalForms.infinitives.thirdAdessive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'3rdAbessive' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.thirdAbessive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.thirdAbessive === true ? "red" : conjugationErrors.nominalForms.infinitives.thirdAbessive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'3rdInstructive' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.thirdInstructiveActive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.thirdInstructiveActive === true ? "red" : conjugationErrors.nominalForms.infinitives.thirdInstructiveActive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.thirdInstructivePassive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.thirdInstructivePassive === true ? "red" : conjugationErrors.nominalForms.infinitives.thirdInstructivePassive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'4thNominative' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.fourthNominative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.fourthNominative === true ? "red" : conjugationErrors.nominalForms.infinitives.fourthNominative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'4thPartitive' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.fourthPartitive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.fourthPartitive === true ? "red" : conjugationErrors.nominalForms.infinitives.fourthPartitive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'5th' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.infinitives.fifth'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.infinitives.fifth === true ? "red" : conjugationErrors.nominalForms.infinitives.fifth === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+  </tbody>
+  <!--PARTICIPLES-->
+  <thead *ngIf='showTable.nominalForms'>
+    <tr class='grid'>
+      <th class='f-1-1 grid h-between' colspan='3'>
+        <h5>{{'participles' | i18n}}</h5>
+        <i class='fa fa-eye hide-section-icon' *ngIf='showTable.participles' (click)='showTable.participles = false'></i>
+        <i class='fa fa-eye-slash hide-section-icon' *ngIf='!showTable.participles' (click)='showTable.participles = true'></i>
+      </th>
+    </tr>
+    <tr class='grid' *ngIf='showTable.nominalForms && showTable.participles'>
+      <th class='f-2-8'></th>
+      <th class='f-3-8'>{{'active' | i18n}}</th>
+      <th class='f-3-8'>{{'passive' | i18n}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf='showTable.nominalForms && showTable.participles'>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'1st' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.participles.presentActive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.participles.presentActive === true ? "red" : conjugationErrors.nominalForms.participles.presentActive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.participles.presentPassive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.participles.presentPassive === true ? "red" : conjugationErrors.nominalForms.participles.presentPassive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'2nd' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.participles.pastActive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.participles.pastActive === true ? "red" : conjugationErrors.nominalForms.participles.pastActive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.participles.pastPassive'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.participles.pastPassive === true ? "red" : conjugationErrors.nominalForms.participles.pastPassive === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'agent' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.participles.agent'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.participles.agent === true ? "red" : conjugationErrors.nominalForms.participles.agent === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+    <tr class='grid'>
+      <th class='f-2-8 grid v-center'>
+        {{'negativeAgent' | i18n}}
+      </th>
+      <td class='f-3-8 grid v-center'>
+        <input [(ngModel)]='conjugationToCheck.nominalForms.participles.negative'
+          [ngClass]='(conjugationErrors ? conjugationErrors.nominalForms.participles.negative === true ? "red" : conjugationErrors.nominalForms.participles.negative === false ? "green" : "" : "")'
+          (keydown)='$event.key == "Enter" ? check() : null'
+          tabindex='21'/>
+      </td>
+      <td class='f-3-8'></td>
+    </tr>
+  </tbody>
+</table>

@@ -12,14 +12,20 @@ import { DataRouterService } from './service/data-router.service';
 import { I18nModule } from './module/i18n/i18n';
 import { UiModule } from './module/ui/ui';
 import { FiDeclensionService } from './service/fi-declension.service';
-import { FiSearchDeclensionComponent } from './component/fi/fi-search-declension.component';
-import { FiTestDeclensionComponent } from './component/fi/fi-test-declension.component';
+import { FiConjugationService } from './service/fi-conjugation.service';
+import { FiSearchDeclensionComponent } from './component/fi/declension/fi-search-declension.component';
+import { FiTestDeclensionComponent } from './component/fi/declension/fi-test-declension.component';
+import { FiSearchConjugationComponent } from './component/fi/conjugation/fi-search-conjugation.component';
+import { FiTestConjugationComponent } from './component/fi/conjugation/fi-test-conjugation.component';
+import { UtilsService } from './service/utils.service';
 
 @NgModule({
   declarations: [
     OppiComponent,
     FiSearchDeclensionComponent,
-    FiTestDeclensionComponent
+    FiTestDeclensionComponent,
+    FiSearchConjugationComponent,
+    FiTestConjugationComponent
   ],
   imports: [
     BrowserModule,
@@ -31,10 +37,12 @@ import { FiTestDeclensionComponent } from './component/fi/fi-test-declension.com
     I18nModule.forRoot('assets/i18n/', 'en', {'en': 'English', 'es': 'español', 'fi': 'suomi', 'pt': 'português', 'gl': 'galego'})
   ],
   providers: [
+    UtilsService,
     WordInfoService,
     {provide: APP_INITIALIZER, useFactory: initWordInfoService, deps: [WordInfoService], multi: true},
     DataRouterService,
-    FiDeclensionService
+    FiDeclensionService,
+    FiConjugationService
   ],
   bootstrap: [OppiComponent]
 })

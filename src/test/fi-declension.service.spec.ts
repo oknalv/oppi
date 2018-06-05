@@ -2,27 +2,13 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER } from '@angular/core';
 
-import { FiDeclensionService, InvalidWordInfoError } from '../app/service/fi-declension.service';
+import { FiDeclensionService } from '../app/service/fi-declension.service';
+import { InvalidWordDataError } from '../app/service/fi-inflection.service';
 import { WordInfoService } from '../app/service/word-info.service';
-import { Declension } from '../app/model/declension';
+import { FiDeclension } from '../app/model/fi-inflection';
 import { HttpClient } from 'selenium-webdriver/http';
-import { FiDeclensionWordInfo } from '../app/model/fi-declension-word-info';
-import { WordInfoServiceMock } from './mock/word-info.service.mock';
-
-function deleteDB(): Promise<any> {
-  return new Promise<any>((resolve, reject) => {
-    let idbConnection: IDBOpenDBRequest = window.indexedDB.deleteDatabase('words');
-    idbConnection.onsuccess = () => {
-      resolve();
-    },
-    idbConnection.onerror = () => {
-      reject();
-    }
-  });
-}
-
-let originalTimeout: number = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
+import { WordDataContainer, FiNominalData } from '../app/model/word-data';
+import { NominalWordInfoServiceMock } from './mock/word-info.service.mock';
 
 describe('FiDeclensionService', () => {
 
@@ -31,7 +17,7 @@ describe('FiDeclensionService', () => {
       imports: [HttpClientModule],
       providers: [
         FiDeclensionService,
-        {provide: WordInfoService , useClass: WordInfoServiceMock}
+        {provide: WordInfoService , useClass: NominalWordInfoServiceMock}
       ]
     });
   });
@@ -41,8 +27,8 @@ describe('FiDeclensionService', () => {
   }));
 
   it('should decline type 1 (valo)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('valo');
     declensions[0].singular.genitive.push('valon');
     declensions[0].singular.partitive.push('valoa');
@@ -73,7 +59,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('valoitta');
     declensions[0].plural.comitative.push('valoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('riekko');
     declensions[1].singular.genitive.push('riekon');
     declensions[1].singular.partitive.push('riekkoa');
@@ -104,7 +90,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('riekoitta');
     declensions[1].plural.comitative.push('riekkoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('kippo');
     declensions[2].singular.genitive.push('kipon');
     declensions[2].singular.partitive.push('kippoa');
@@ -135,7 +121,7 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('kipoitta');
     declensions[2].plural.comitative.push('kippoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[3].singular.nominative.push('katto');
     declensions[3].singular.genitive.push('katon');
     declensions[3].singular.partitive.push('kattoa');
@@ -166,7 +152,7 @@ describe('FiDeclensionService', () => {
     declensions[3].plural.abessive.push('katoitta');
     declensions[3].plural.comitative.push('kattoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[4].singular.nominative.push('jako');
     declensions[4].singular.genitive.push('jaon');
     declensions[4].singular.partitive.push('jakoa');
@@ -197,7 +183,7 @@ describe('FiDeclensionService', () => {
     declensions[4].plural.abessive.push('jaoitta');
     declensions[4].plural.comitative.push('jakoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[5].singular.nominative.push('orpo');
     declensions[5].singular.genitive.push('orvon');
     declensions[5].singular.partitive.push('orpoa');
@@ -228,7 +214,7 @@ describe('FiDeclensionService', () => {
     declensions[5].plural.abessive.push('orvoitta');
     declensions[5].plural.comitative.push('orpoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[6].singular.nominative.push('katu');
     declensions[6].singular.genitive.push('kadun');
     declensions[6].singular.partitive.push('katua');
@@ -259,7 +245,7 @@ describe('FiDeclensionService', () => {
     declensions[6].plural.abessive.push('kaduitta');
     declensions[6].plural.comitative.push('katuineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[7].singular.nominative.push('sanko');
     declensions[7].singular.genitive.push('sangon');
     declensions[7].singular.partitive.push('sankoa');
@@ -290,7 +276,7 @@ describe('FiDeclensionService', () => {
     declensions[7].plural.abessive.push('sangoitta');
     declensions[7].plural.comitative.push('sankoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[8].singular.nominative.push('ampu');
     declensions[8].singular.genitive.push('ampun');
     declensions[8].singular.partitive.push('ampua');
@@ -321,7 +307,7 @@ describe('FiDeclensionService', () => {
     declensions[8].plural.abessive.push('ampuitta');
     declensions[8].plural.comitative.push('ampuineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[9].singular.nominative.push('kuultu');
     declensions[9].singular.genitive.push('kuullun');
     declensions[9].singular.partitive.push('kuultua');
@@ -352,7 +338,7 @@ describe('FiDeclensionService', () => {
     declensions[9].plural.abessive.push('kuulluitta');
     declensions[9].plural.comitative.push('kuultuineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[10].singular.nominative.push('lento');
     declensions[10].singular.genitive.push('lennon');
     declensions[10].singular.partitive.push('lentoa');
@@ -383,7 +369,7 @@ describe('FiDeclensionService', () => {
     declensions[10].plural.abessive.push('lennoitta');
     declensions[10].plural.comitative.push('lentoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[11].singular.nominative.push('saarto');
     declensions[11].singular.genitive.push('saarron');
     declensions[11].singular.partitive.push('saartoa');
@@ -414,7 +400,7 @@ describe('FiDeclensionService', () => {
     declensions[11].plural.abessive.push('saarroitta');
     declensions[11].plural.comitative.push('saartoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[12].singular.nominative.push('hylky');
     declensions[12].singular.genitive.push('hylyn');
     declensions[12].singular.partitive.push('hylkyä');
@@ -445,7 +431,7 @@ describe('FiDeclensionService', () => {
     declensions[12].plural.abessive.push('hylyittä');
     declensions[12].plural.comitative.push('hylkyineen');
     //alternative
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[13].singular.nominative.push('hylky');
     declensions[13].singular.genitive.push('hyljyn');
     declensions[13].singular.partitive.push('hylkyä');
@@ -476,7 +462,7 @@ describe('FiDeclensionService', () => {
     declensions[13].plural.abessive.push('hyljyittä');
     declensions[13].plural.comitative.push('hylkyineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[14].singular.nominative.push('luku');
     declensions[14].singular.genitive.push('luvun');
     declensions[14].singular.partitive.push('lukua');
@@ -507,7 +493,7 @@ describe('FiDeclensionService', () => {
     declensions[14].plural.abessive.push('luvuitta');
     declensions[14].plural.comitative.push('lukuineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[15].singular.nominative.push('sampo');
     declensions[15].singular.genitive.push('sammon');
     declensions[15].singular.partitive.push('sampoa');
@@ -538,7 +524,7 @@ describe('FiDeclensionService', () => {
     declensions[15].plural.abessive.push('sammoitta');
     declensions[15].plural.comitative.push('sampoineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[16].singular.nominative.push('lyhennetty');
     declensions[16].singular.genitive.push('lyhenneyyn');
     declensions[16].singular.partitive.push('lyhennettyä');
@@ -569,59 +555,59 @@ describe('FiDeclensionService', () => {
     declensions[16].plural.abessive.push('lyhenneyyittä');
     declensions[16].plural.comitative.push('lyhennettyineen');
     
-    wordInfoService.getWordInfo('valo').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
-    }).toPromise();
-    wordInfoService.getWordInfo('riekko').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('valo').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('kippo').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('riekko').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('katto').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[3]]);
+    wordInfoService.getWordInfo('kippo').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
-    wordInfoService.getWordInfo('jako').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[4]]);
+    wordInfoService.getWordInfo('katto').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[3]]);
     });
-    wordInfoService.getWordInfo('orpo').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[5]]);
+    wordInfoService.getWordInfo('jako').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[4]]);
     });
-    wordInfoService.getWordInfo('katu').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[6]]);
+    wordInfoService.getWordInfo('orpo').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[5]]);
     });
-    wordInfoService.getWordInfo('sanko').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[7]]);
+    wordInfoService.getWordInfo('katu').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[6]]);
     });
-    wordInfoService.getWordInfo('ampu').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[8]]);
+    wordInfoService.getWordInfo('sanko').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[7]]);
     });
-    wordInfoService.getWordInfo('kuultu').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[9]]);
+    wordInfoService.getWordInfo('ampu').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[8]]);
     });
-    wordInfoService.getWordInfo('lento').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[10]]);
+    wordInfoService.getWordInfo('kuultu').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[9]]);
     });
-    wordInfoService.getWordInfo('saarto').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[11]]);
+    wordInfoService.getWordInfo('lento').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[10]]);
     });
-    wordInfoService.getWordInfo('hylky').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[12], declensions[13]]);
+    wordInfoService.getWordInfo('saarto').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[11]]);
     });
-    wordInfoService.getWordInfo('luku').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[14]]);
+    wordInfoService.getWordInfo('hylky').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[12], declensions[13]]);
     });
-    wordInfoService.getWordInfo('sampo').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[15]]);
+    wordInfoService.getWordInfo('luku').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[14]]);
     });
-    wordInfoService.getWordInfo('lyhennetty').map((wordInfo: FiDeclensionWordInfo) => {
-       expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[16]]);
+    wordInfoService.getWordInfo('sampo').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[15]]);
+    });
+    wordInfoService.getWordInfo('lyhennetty').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[16]]);
     });
   }));
 
   it('should decline type 2 (palvelu)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('palvelu');
     declensions[0].singular.genitive.push('palvelun');
     declensions[0].singular.partitive.push('palvelua');
@@ -652,15 +638,15 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('palveluitta');
     declensions[0].plural.comitative.push('palveluineen');
 
-    wordInfoService.getWordInfo('palvelu').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual(declensions);
-    }).toPromise();
+    wordInfoService.getWordInfo('palvelu').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual(declensions);
+    });
 
   }));
 
   it('should decline type 3 (valtio)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('valtio');
     declensions[0].singular.genitive.push('valtion');
     declensions[0].singular.partitive.push('valtiota');
@@ -691,15 +677,15 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('valtioitta');
     declensions[0].plural.comitative.push('valtioineen');
 
-    wordInfoService.getWordInfo('valtio').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual(declensions);
+    wordInfoService.getWordInfo('valtio').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual(declensions);
     });
 
   }));
 
   it('should decline type 4 (laatikko)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('laatikko');
     declensions[0].singular.genitive.push('laatikon');
     declensions[0].singular.partitive.push('laatikkoa');
@@ -730,15 +716,15 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('laatikoitta');
     declensions[0].plural.comitative.push('laatikkoineen');
 
-    wordInfoService.getWordInfo('laatikko').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual(declensions);
+    wordInfoService.getWordInfo('laatikko').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual(declensions);
     });
 
   }));
 
   it('should decline type 5 (risti)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('risti');
     declensions[0].singular.genitive.push('ristin');
     declensions[0].singular.partitive.push('ristiä');
@@ -769,7 +755,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('risteittä');
     declensions[0].plural.comitative.push('risteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('tukki');
     declensions[1].singular.genitive.push('tukin');
     declensions[1].singular.partitive.push('tukkia');
@@ -800,7 +786,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('tukeitta');
     declensions[1].plural.comitative.push('tukkeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('nuppi');
     declensions[2].singular.genitive.push('nupin');
     declensions[2].singular.partitive.push('nuppia');
@@ -831,7 +817,7 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('nupeitta');
     declensions[2].plural.comitative.push('nuppeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[3].singular.nominative.push('niitti');
     declensions[3].singular.genitive.push('niitin');
     declensions[3].singular.partitive.push('niittiä');
@@ -862,7 +848,7 @@ describe('FiDeclensionService', () => {
     declensions[3].plural.abessive.push('niiteittä');
     declensions[3].plural.comitative.push('niitteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[4].singular.nominative.push('hupi');
     declensions[4].singular.genitive.push('huvin');
     declensions[4].singular.partitive.push('hupia');
@@ -893,7 +879,7 @@ describe('FiDeclensionService', () => {
     declensions[4].plural.abessive.push('huveitta');
     declensions[4].plural.comitative.push('hupeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[5].singular.nominative.push('koti');
     declensions[5].singular.genitive.push('kodin');
     declensions[5].singular.partitive.push('kotia');
@@ -924,7 +910,7 @@ describe('FiDeclensionService', () => {
     declensions[5].plural.abessive.push('kodeitta');
     declensions[5].plural.comitative.push('koteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[6].singular.nominative.push('vanki');
     declensions[6].singular.genitive.push('vangin');
     declensions[6].singular.partitive.push('vankia');
@@ -955,7 +941,7 @@ describe('FiDeclensionService', () => {
     declensions[6].plural.abessive.push('vangeitta');
     declensions[6].plural.comitative.push('vankeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[7].singular.nominative.push('pelti');
     declensions[7].singular.genitive.push('pellin');
     declensions[7].singular.partitive.push('peltiä');
@@ -986,7 +972,7 @@ describe('FiDeclensionService', () => {
     declensions[7].plural.abessive.push('pelleittä');
     declensions[7].plural.comitative.push('pelteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[8].singular.nominative.push('tunti');
     declensions[8].singular.genitive.push('tunnin');
     declensions[8].singular.partitive.push('tuntia');
@@ -1017,7 +1003,7 @@ describe('FiDeclensionService', () => {
     declensions[8].plural.abessive.push('tunneitta');
     declensions[8].plural.comitative.push('tunteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[9].singular.nominative.push('kaarti');
     declensions[9].singular.genitive.push('kaartin');
     declensions[9].singular.partitive.push('kaartia');
@@ -1048,7 +1034,7 @@ describe('FiDeclensionService', () => {
     declensions[9].plural.abessive.push('kaarteitta');
     declensions[9].plural.comitative.push('kaarteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[10].singular.nominative.push('kalsium');
     declensions[10].singular.genitive.push('kalsiumin');
     declensions[10].singular.partitive.push('kalsiumia');
@@ -1079,7 +1065,7 @@ describe('FiDeclensionService', () => {
     declensions[10].plural.abessive.push('kalsiumeitta');
     declensions[10].plural.comitative.push('kalsiumeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[11].singular.nominative.push('preesens');
     declensions[11].singular.genitive.push('preesensin');
     declensions[11].singular.partitive.push('preesensiä');
@@ -1110,7 +1096,7 @@ describe('FiDeclensionService', () => {
     declensions[11].plural.abessive.push('preesenseittä');
     declensions[11].plural.comitative.push('preesenseineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[12].singular.nominative.push('amerikanbandoggi');
     declensions[12].singular.genitive.push('amerikanbandoggin');
     declensions[12].singular.partitive.push('amerikanbandoggia');
@@ -1140,7 +1126,7 @@ describe('FiDeclensionService', () => {
     declensions[12].plural.instructive.push('amerikanbandoggein');
     declensions[12].plural.abessive.push('amerikanbandoggeitta');
     declensions[12].plural.comitative.push('amerikanbandoggeineen');
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[13].singular.nominative.push('amerikanbandoggi');
     declensions[13].singular.genitive.push('amerikanbandogin');
     declensions[13].singular.partitive.push('amerikanbandoggia');
@@ -1171,50 +1157,50 @@ describe('FiDeclensionService', () => {
     declensions[13].plural.abessive.push('amerikanbandogeitta');
     declensions[13].plural.comitative.push('amerikanbandoggeineen');
 
-    wordInfoService.getWordInfo('risti').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('risti').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('tukki').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('tukki').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('nuppi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('nuppi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
-    wordInfoService.getWordInfo('niitti').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[3]]);
+    wordInfoService.getWordInfo('niitti').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[3]]);
     });
-    wordInfoService.getWordInfo('hupi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[4]]);
+    wordInfoService.getWordInfo('hupi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[4]]);
     });
-    wordInfoService.getWordInfo('koti').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[5]]);
+    wordInfoService.getWordInfo('koti').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[5]]);
     });
-    wordInfoService.getWordInfo('vanki').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[6]]);
+    wordInfoService.getWordInfo('vanki').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[6]]);
     });
-    wordInfoService.getWordInfo('pelti').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[7]]);
+    wordInfoService.getWordInfo('pelti').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[7]]);
     });
-    wordInfoService.getWordInfo('tunti').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[8]]);
+    wordInfoService.getWordInfo('tunti').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[8]]);
     });
-    wordInfoService.getWordInfo('kaarti').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[9]]);
+    wordInfoService.getWordInfo('kaarti').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[9]]);
     });
-    wordInfoService.getWordInfo('kalsium').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[10]]);
+    wordInfoService.getWordInfo('kalsium').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[10]]);
     });
-    wordInfoService.getWordInfo('preesens').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[11]]);
+    wordInfoService.getWordInfo('preesens').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[11]]);
     });
-    wordInfoService.getWordInfo('amerikanbandoggi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[12], declensions[13]]);
+    wordInfoService.getWordInfo('amerikanbandoggi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[12], declensions[13]]);
     });
   }));
 
   it('should decline type 6 (paperi)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('paperi');
     declensions[0].singular.genitive.push('paperin');
     declensions[0].singular.partitive.push('paperia');
@@ -1245,7 +1231,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('papereitta');
     declensions[0].plural.comitative.push('papereineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('cover');
     declensions[1].singular.genitive.push('coverin');
     declensions[1].singular.partitive.push('coveria');
@@ -1276,17 +1262,17 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('covereitta');
     declensions[1].plural.comitative.push('covereineen');
     
-    wordInfoService.getWordInfo('paperi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('paperi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('cover').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('cover').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
   }));
 
   it('should decline type 7 (ovi)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('ovi');
     declensions[0].singular.genitive.push('oven');
     declensions[0].singular.partitive.push('ovea');
@@ -1317,7 +1303,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('ovitta');
     declensions[0].plural.comitative.push('ovineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('typpi');
     declensions[1].singular.genitive.push('typen');
     declensions[1].singular.partitive.push('typpeä');
@@ -1348,7 +1334,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('typittä');
     declensions[1].plural.comitative.push('typpineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('joki');
     declensions[2].singular.genitive.push('joen');
     declensions[2].singular.partitive.push('jokea');
@@ -1379,7 +1365,7 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('joitta');
     declensions[2].plural.comitative.push('jokineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[3].singular.nominative.push('korpi');
     declensions[3].singular.genitive.push('korven');
     declensions[3].singular.partitive.push('korpea');
@@ -1410,7 +1396,7 @@ describe('FiDeclensionService', () => {
     declensions[3].plural.abessive.push('korvitta');
     declensions[3].plural.comitative.push('korpineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[4].singular.nominative.push('lahti');
     declensions[4].singular.genitive.push('lahden');
     declensions[4].singular.partitive.push('lahtea');
@@ -1441,7 +1427,7 @@ describe('FiDeclensionService', () => {
     declensions[4].plural.abessive.push('lahditta');
     declensions[4].plural.comitative.push('lahtineen');
     //declension type 5
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[5].singular.nominative.push('lahti');
     declensions[5].singular.genitive.push('lahdin');
     declensions[5].singular.partitive.push('lahtia');
@@ -1472,7 +1458,7 @@ describe('FiDeclensionService', () => {
     declensions[5].plural.abessive.push('lahdeitta');
     declensions[5].plural.comitative.push('lahteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[6].singular.nominative.push('onki');
     declensions[6].singular.genitive.push('ongen');
     declensions[6].singular.partitive.push('onkea');
@@ -1503,7 +1489,7 @@ describe('FiDeclensionService', () => {
     declensions[6].plural.abessive.push('ongitta');
     declensions[6].plural.comitative.push('onkineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[7].singular.nominative.push('sampi');
     declensions[7].singular.genitive.push('sammen');
     declensions[7].singular.partitive.push('sampea');
@@ -1534,7 +1520,7 @@ describe('FiDeclensionService', () => {
     declensions[7].plural.abessive.push('sammitta');
     declensions[7].plural.comitative.push('sampineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[8].singular.nominative.push('arki');
     declensions[8].singular.genitive.push('arjen');
     declensions[8].singular.partitive.push('arkea');
@@ -1565,35 +1551,35 @@ describe('FiDeclensionService', () => {
     declensions[8].plural.abessive.push('arjitta');
     declensions[8].plural.comitative.push('arkineen');
     
-    wordInfoService.getWordInfo('ovi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('ovi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('typpi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('typpi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('joki').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('joki').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
-    wordInfoService.getWordInfo('korpi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[3]]);
+    wordInfoService.getWordInfo('korpi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[3]]);
     });
-    wordInfoService.getWordInfo('lahti').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[5], declensions[4]]);
+    wordInfoService.getWordInfo('lahti').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[5], declensions[4]]);
     });
-    wordInfoService.getWordInfo('onki').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[6]]);
+    wordInfoService.getWordInfo('onki').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[6]]);
     });
-    wordInfoService.getWordInfo('sampi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[7]]);
+    wordInfoService.getWordInfo('sampi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[7]]);
     });
-    wordInfoService.getWordInfo('arki').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[8]]);
+    wordInfoService.getWordInfo('arki').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[8]]);
     });
   }));
 
   it('should decline type 8 (nalle)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('nalle');
     declensions[0].singular.genitive.push('nallen');
     declensions[0].singular.partitive.push('nallea');
@@ -1624,7 +1610,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('nalleitta');
     declensions[0].plural.comitative.push('nalleineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('nukke');
     declensions[1].singular.genitive.push('nuken');
     declensions[1].singular.partitive.push('nukkea');
@@ -1655,7 +1641,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('nukeitta');
     declensions[1].plural.comitative.push('nukkeineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('ope');
     declensions[2].singular.genitive.push('open');
     declensions[2].singular.partitive.push('opea');
@@ -1686,20 +1672,20 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('opeitta');
     declensions[2].plural.comitative.push('opeineen');
     
-    wordInfoService.getWordInfo('nalle').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('nalle').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('nukke').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('nukke').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('ope').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('ope').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
   }));
 
   it('should decline type 9 (kala)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('kala');
     declensions[0].singular.genitive.push('kalan');
     declensions[0].singular.partitive.push('kalaa');
@@ -1730,7 +1716,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('kaloitta');
     declensions[0].plural.comitative.push('kaloineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('markka');
     declensions[1].singular.genitive.push('markan');
     declensions[1].singular.partitive.push('markkaa');
@@ -1761,7 +1747,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('markoitta');
     declensions[1].plural.comitative.push('markkoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('kauppa');
     declensions[2].singular.genitive.push('kaupan');
     declensions[2].singular.partitive.push('kauppaa');
@@ -1792,7 +1778,7 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('kaupoitta');
     declensions[2].plural.comitative.push('kauppoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[3].singular.nominative.push('mitta');
     declensions[3].singular.genitive.push('mitan');
     declensions[3].singular.partitive.push('mittaa');
@@ -1823,7 +1809,7 @@ describe('FiDeclensionService', () => {
     declensions[3].plural.abessive.push('mitoitta');
     declensions[3].plural.comitative.push('mittoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[4].singular.nominative.push('lika');
     declensions[4].singular.genitive.push('lian');
     declensions[4].singular.partitive.push('likaa');
@@ -1854,7 +1840,7 @@ describe('FiDeclensionService', () => {
     declensions[4].plural.abessive.push('lioitta');
     declensions[4].plural.comitative.push('likoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[5].singular.nominative.push('halpa');
     declensions[5].singular.genitive.push('halvan');
     declensions[5].singular.partitive.push('halpaa');
@@ -1885,7 +1871,7 @@ describe('FiDeclensionService', () => {
     declensions[5].plural.abessive.push('halvoitta');
     declensions[5].plural.comitative.push('halpoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[6].singular.nominative.push('rauta');
     declensions[6].singular.genitive.push('raudan');
     declensions[6].singular.partitive.push('rautaa');
@@ -1916,7 +1902,7 @@ describe('FiDeclensionService', () => {
     declensions[6].plural.abessive.push('raudoitta');
     declensions[6].plural.comitative.push('rautoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[7].singular.nominative.push('lanka');
     declensions[7].singular.genitive.push('langan');
     declensions[7].singular.partitive.push('lankaa');
@@ -1947,7 +1933,7 @@ describe('FiDeclensionService', () => {
     declensions[7].plural.abessive.push('langoitta');
     declensions[7].plural.comitative.push('lankoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[8].singular.nominative.push('kampa');
     declensions[8].singular.genitive.push('kamman');
     declensions[8].singular.partitive.push('kampaa');
@@ -1978,7 +1964,7 @@ describe('FiDeclensionService', () => {
     declensions[8].plural.abessive.push('kammoitta');
     declensions[8].plural.comitative.push('kampoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[9].singular.nominative.push('ilta');
     declensions[9].singular.genitive.push('illan');
     declensions[9].singular.partitive.push('iltaa');
@@ -2009,7 +1995,7 @@ describe('FiDeclensionService', () => {
     declensions[9].plural.abessive.push('illoitta');
     declensions[9].plural.comitative.push('iltoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[10].singular.nominative.push('ranta');
     declensions[10].singular.genitive.push('rannan');
     declensions[10].singular.partitive.push('rantaa');
@@ -2040,7 +2026,7 @@ describe('FiDeclensionService', () => {
     declensions[10].plural.abessive.push('rannoitta');
     declensions[10].plural.comitative.push('rantoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[11].singular.nominative.push('parta');
     declensions[11].singular.genitive.push('parran');
     declensions[11].singular.partitive.push('partaa');
@@ -2071,7 +2057,7 @@ describe('FiDeclensionService', () => {
     declensions[11].plural.abessive.push('parroitta');
     declensions[11].plural.comitative.push('partoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[12].singular.nominative.push('Vedda');
     declensions[12].singular.genitive.push('Vedan');
     declensions[12].singular.partitive.push('Veddaa');
@@ -2102,7 +2088,7 @@ describe('FiDeclensionService', () => {
     declensions[12].plural.abessive.push('Vedoitta');
     declensions[12].plural.comitative.push('Veddoineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[13].singular.nominative.push('uppovaaka');
     declensions[13].singular.genitive.push('uppovaa\'an');
     declensions[13].singular.partitive.push('uppovaakaa');
@@ -2133,53 +2119,53 @@ describe('FiDeclensionService', () => {
     declensions[13].plural.abessive.push('uppovaa\'oitta');
     declensions[13].plural.comitative.push('uppovaakoineen');
     
-    wordInfoService.getWordInfo('kala').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('kala').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('markka').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('markka').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('kauppa').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('kauppa').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
-    wordInfoService.getWordInfo('mitta').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[3]]);
+    wordInfoService.getWordInfo('mitta').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[3]]);
     });
-    wordInfoService.getWordInfo('lika').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[4]]);
+    wordInfoService.getWordInfo('lika').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[4]]);
     });
-    wordInfoService.getWordInfo('halpa').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[5]]);
+    wordInfoService.getWordInfo('halpa').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[5]]);
     });
-    wordInfoService.getWordInfo('rauta').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[6]]);
+    wordInfoService.getWordInfo('rauta').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[6]]);
     });
-    wordInfoService.getWordInfo('lanka').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[7]]);
+    wordInfoService.getWordInfo('lanka').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[7]]);
     });
-    wordInfoService.getWordInfo('kampa').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[8]]);
+    wordInfoService.getWordInfo('kampa').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[8]]);
     });
-    wordInfoService.getWordInfo('ilta').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[9]]);
+    wordInfoService.getWordInfo('ilta').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[9]]);
     });
-    wordInfoService.getWordInfo('ranta').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[10]]);
+    wordInfoService.getWordInfo('ranta').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[10]]);
     });
-    wordInfoService.getWordInfo('parta').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[11]]);
+    wordInfoService.getWordInfo('parta').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[11]]);
     });
-    wordInfoService.getWordInfo('Vedda').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[12]]);
+    wordInfoService.getWordInfo('Vedda').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[12]]);
     });
-    wordInfoService.getWordInfo('uppovaaka').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[13]]);
+    wordInfoService.getWordInfo('uppovaaka').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[13]]);
     });
   }));
 
   it('should decline type 10 (koira)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('koira');
     declensions[0].singular.genitive.push('koiran');
     declensions[0].singular.partitive.push('koiraa');
@@ -2210,7 +2196,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('koiritta');
     declensions[0].plural.comitative.push('koirineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('seitsemän');
     declensions[1].singular.genitive.push('seitsemän');
     declensions[1].singular.partitive.push('seitsemää');
@@ -2241,7 +2227,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('seitsemittä');
     declensions[1].plural.comitative.push('seitsemineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('kahdeksan');
     declensions[2].singular.genitive.push('kahdeksan');
     declensions[2].singular.partitive.push('kahdeksaa');
@@ -2272,7 +2258,7 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('kahdeksitta');
     declensions[2].plural.comitative.push('kahdeksineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[3].singular.nominative.push('yhdeksän');
     declensions[3].singular.genitive.push('yhdeksän');
     declensions[3].singular.partitive.push('yhdeksää');
@@ -2303,7 +2289,7 @@ describe('FiDeclensionService', () => {
     declensions[3].plural.abessive.push('yhdeksittä');
     declensions[3].plural.comitative.push('yhdeksineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[4].singular.nominative.push('kukka');
     declensions[4].singular.genitive.push('kukan');
     declensions[4].singular.partitive.push('kukkaa');
@@ -2334,7 +2320,7 @@ describe('FiDeclensionService', () => {
     declensions[4].plural.abessive.push('kukitta');
     declensions[4].plural.comitative.push('kukkineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[5].singular.nominative.push('noppa');
     declensions[5].singular.genitive.push('nopan');
     declensions[5].singular.partitive.push('noppaa');
@@ -2365,7 +2351,7 @@ describe('FiDeclensionService', () => {
     declensions[5].plural.abessive.push('nopitta');
     declensions[5].plural.comitative.push('noppineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[6].singular.nominative.push('rotta');
     declensions[6].singular.genitive.push('rotan');
     declensions[6].singular.partitive.push('rottaa');
@@ -2396,7 +2382,7 @@ describe('FiDeclensionService', () => {
     declensions[6].plural.abessive.push('rotitta');
     declensions[6].plural.comitative.push('rottineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[7].singular.nominative.push('sulka');
     declensions[7].singular.genitive.push('sulan');
     declensions[7].singular.partitive.push('sulkaa');
@@ -2427,7 +2413,7 @@ describe('FiDeclensionService', () => {
     declensions[7].plural.abessive.push('sulitta');
     declensions[7].plural.comitative.push('sulkineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[8].singular.nominative.push('leipä');
     declensions[8].singular.genitive.push('leivän');
     declensions[8].singular.partitive.push('leipää');
@@ -2458,7 +2444,7 @@ describe('FiDeclensionService', () => {
     declensions[8].plural.abessive.push('leivittä');
     declensions[8].plural.comitative.push('leipineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[9].singular.nominative.push('sota');
     declensions[9].singular.genitive.push('sodan');
     declensions[9].singular.partitive.push('sotaa');
@@ -2489,7 +2475,7 @@ describe('FiDeclensionService', () => {
     declensions[9].plural.abessive.push('soditta');
     declensions[9].plural.comitative.push('sotineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[10].singular.nominative.push('kenkä');
     declensions[10].singular.genitive.push('kengän');
     declensions[10].singular.partitive.push('kenkää');
@@ -2520,7 +2506,7 @@ describe('FiDeclensionService', () => {
     declensions[10].plural.abessive.push('kengittä');
     declensions[10].plural.comitative.push('kenkineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[11].singular.nominative.push('sompa');
     declensions[11].singular.genitive.push('somman');
     declensions[11].singular.partitive.push('sompaa');
@@ -2551,7 +2537,7 @@ describe('FiDeclensionService', () => {
     declensions[11].plural.abessive.push('sommitta');
     declensions[11].plural.comitative.push('sompineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[12].singular.nominative.push('kulta');
     declensions[12].singular.genitive.push('kullan');
     declensions[12].singular.partitive.push('kultaa');
@@ -2582,7 +2568,7 @@ describe('FiDeclensionService', () => {
     declensions[12].plural.abessive.push('kullitta');
     declensions[12].plural.comitative.push('kultineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[13].singular.nominative.push('kunta');
     declensions[13].singular.genitive.push('kunnan');
     declensions[13].singular.partitive.push('kuntaa');
@@ -2613,7 +2599,7 @@ describe('FiDeclensionService', () => {
     declensions[13].plural.abessive.push('kunnitta');
     declensions[13].plural.comitative.push('kuntineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[14].singular.nominative.push('turta');
     declensions[14].singular.genitive.push('turran');
     declensions[14].singular.partitive.push('turtaa');
@@ -2644,7 +2630,7 @@ describe('FiDeclensionService', () => {
     declensions[14].plural.abessive.push('turritta');
     declensions[14].plural.comitative.push('turtineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[15].singular.nominative.push('ylkä');
     declensions[15].singular.genitive.push('yljän');
     declensions[15].singular.partitive.push('ylkää');
@@ -2675,7 +2661,7 @@ describe('FiDeclensionService', () => {
     declensions[15].plural.abessive.push('yljittä');
     declensions[15].plural.comitative.push('ylkineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[16].singular.nominative.push('poika');
     declensions[16].singular.genitive.push('pojan');
     declensions[16].singular.partitive.push('poikaa');
@@ -2706,7 +2692,7 @@ describe('FiDeclensionService', () => {
     declensions[16].plural.abessive.push('pojitta');
     declensions[16].plural.comitative.push('poikineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[17].singular.nominative.push('ruoka');
     declensions[17].singular.genitive.push('ruoan');
     declensions[17].singular.partitive.push('ruokaa');
@@ -2736,7 +2722,7 @@ describe('FiDeclensionService', () => {
     declensions[17].plural.instructive.push('ruoin');
     declensions[17].plural.abessive.push('ruoitta');
     declensions[17].plural.comitative.push('ruokineen');
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[18].singular.nominative.push('ruoka');
     declensions[18].singular.genitive.push('ruuan');
     declensions[18].singular.partitive.push('ruokaa');
@@ -2767,65 +2753,65 @@ describe('FiDeclensionService', () => {
     declensions[18].plural.abessive.push('ruuitta');
     declensions[18].plural.comitative.push('ruokineen');
     
-    wordInfoService.getWordInfo('koira').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('koira').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('seitsemän').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('seitsemän').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('kahdeksan').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('kahdeksan').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
-    wordInfoService.getWordInfo('yhdeksän').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[3]]);
+    wordInfoService.getWordInfo('yhdeksän').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[3]]);
     });
-    wordInfoService.getWordInfo('kukka').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[4]]);
+    wordInfoService.getWordInfo('kukka').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[4]]);
     });
-    wordInfoService.getWordInfo('noppa').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[5]]);
+    wordInfoService.getWordInfo('noppa').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[5]]);
     });
-    wordInfoService.getWordInfo('rotta').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[6]]);
+    wordInfoService.getWordInfo('rotta').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[6]]);
     });
-    wordInfoService.getWordInfo('sulka').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[7]]);
+    wordInfoService.getWordInfo('sulka').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[7]]);
     });
-    wordInfoService.getWordInfo('leipä').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[8]]);
+    wordInfoService.getWordInfo('leipä').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[8]]);
     });
-    wordInfoService.getWordInfo('sota').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[9]]);
+    wordInfoService.getWordInfo('sota').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[9]]);
     });
-    wordInfoService.getWordInfo('kenkä').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[10]]);
+    wordInfoService.getWordInfo('kenkä').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[10]]);
     });
-    wordInfoService.getWordInfo('sompa').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[11]]);
+    wordInfoService.getWordInfo('sompa').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[11]]);
     });
-    wordInfoService.getWordInfo('kulta').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[12]]);
+    wordInfoService.getWordInfo('kulta').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[12]]);
     });
-    wordInfoService.getWordInfo('kunta').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[13]]);
+    wordInfoService.getWordInfo('kunta').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[13]]);
     });
-    wordInfoService.getWordInfo('turta').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[14]]);
+    wordInfoService.getWordInfo('turta').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[14]]);
     });
-    wordInfoService.getWordInfo('ylkä').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[15]]);
+    wordInfoService.getWordInfo('ylkä').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[15]]);
     });
-    wordInfoService.getWordInfo('poika').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[16]]);
+    wordInfoService.getWordInfo('poika').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[16]]);
     });
-    wordInfoService.getWordInfo('ruoka').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[17], declensions[18]]);
+    wordInfoService.getWordInfo('ruoka').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[17], declensions[18]]);
     });
   }));
 
   it('should decline type 11 (omena)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('omena');
     declensions[0].singular.genitive.push('omenan');
     declensions[0].singular.partitive.push('omenaa');
@@ -2856,7 +2842,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive = ['omenitta', 'omenoitta'].sort();
     declensions[0].plural.comitative = ['omenineen', 'omenoineen'].sort();
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('päärynä');
     declensions[1].singular.genitive.push('päärynän');
     declensions[1].singular.partitive.push('päärynää');
@@ -2887,17 +2873,17 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive = ['päärynittä', 'päärynöittä'].sort();
     declensions[1].plural.comitative = ['päärynineen', 'päärynöineen'].sort();
 
-    wordInfoService.getWordInfo('omena').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('omena').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('päärynä').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('päärynä').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
   }));
 
   it('should decline type 12 (kulkija)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('kulkija');
     declensions[0].singular.genitive.push('kulkijan');
     declensions[0].singular.partitive.push('kulkijaa');
@@ -2928,14 +2914,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('kulkijoitta');
     declensions[0].plural.comitative.push('kulkijoineen');
 
-    wordInfoService.getWordInfo('kulkija').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('kulkija').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 13 (katiska)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('katiska');
     declensions[0].singular.genitive.push('katiskan');
     declensions[0].singular.partitive.push('katiskaa');
@@ -2966,14 +2952,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('katiskoitta');
     declensions[0].plural.comitative.push('katiskoineen');
 
-    wordInfoService.getWordInfo('katiska').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('katiska').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 14 (solakka)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('solakka');
     declensions[0].singular.genitive.push('solakan');
     declensions[0].singular.partitive.push('solakkaa');
@@ -3004,14 +2990,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('solakoitta');
     declensions[0].plural.comitative.push('solakkoineen');
 
-    wordInfoService.getWordInfo('solakka').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('solakka').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 15 (korkea)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('korkea');
     declensions[0].singular.genitive.push('korkean');
     declensions[0].singular.partitive = ['korkeaa', 'korkeata'].sort();
@@ -3043,7 +3029,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.comitative.push('korkeineen');
 
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('tärkeä');
     declensions[1].singular.genitive.push('tärkeän');
     declensions[1].singular.partitive = ['tärkeää', 'tärkeätä'].sort();
@@ -3074,7 +3060,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('tärkeittä');
     declensions[1].plural.comitative.push('tärkeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('ainoa');
     declensions[2].singular.genitive.push('ainoan');
     declensions[2].singular.partitive = ['ainoaa', 'ainoata'].sort();
@@ -3105,20 +3091,20 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('ainoitta');
     declensions[2].plural.comitative.push('ainoineen');
 
-    wordInfoService.getWordInfo('korkea').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('korkea').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('tärkeä').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('tärkeä').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('ainoa').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('ainoa').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
   }));
 
   it('should decline type 16 (vanhempi)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('vanhempi');
     declensions[0].singular.genitive.push('vanhemman');
     declensions[0].singular.partitive.push('vanhempaa');
@@ -3149,14 +3135,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('vanhemmitta');
     declensions[0].plural.comitative.push('vanhempineen');
 
-    wordInfoService.getWordInfo('vanhempi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('vanhempi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 17 (vapaa)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('vapaa');
     declensions[0].singular.genitive.push('vapaan');
     declensions[0].singular.partitive.push('vapaata');
@@ -3187,14 +3173,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('vapaitta');
     declensions[0].plural.comitative.push('vapaineen');
 
-    wordInfoService.getWordInfo('vapaa').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('vapaa').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 18 (maa)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('maa');
     declensions[0].singular.genitive.push('maan');
     declensions[0].singular.partitive.push('maata');
@@ -3225,7 +3211,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('maitta');
     declensions[0].plural.comitative.push('maineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('pii');
     declensions[1].singular.genitive.push('piin');
     declensions[1].singular.partitive.push('piitä');
@@ -3256,7 +3242,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('piittä');
     declensions[1].plural.comitative.push('piineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('voi');
     declensions[2].singular.genitive.push('voin');
     declensions[2].singular.partitive.push('voita');
@@ -3287,7 +3273,7 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('voitta');
     declensions[2].plural.comitative.push('voineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[3].singular.nominative.push('yy');
     declensions[3].singular.genitive.push('yyn');
     declensions[3].singular.partitive.push('yytä');
@@ -3318,23 +3304,23 @@ describe('FiDeclensionService', () => {
     declensions[3].plural.abessive.push('yittä');
     declensions[3].plural.comitative.push('yineen');
 
-    wordInfoService.getWordInfo('maa').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('maa').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('pii').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('pii').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('voi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('voi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
-    wordInfoService.getWordInfo('yy').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[3]]);
+    wordInfoService.getWordInfo('yy').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[3]]);
     });
   }));
 
   it('should decline type 19 (suo)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('suo');
     declensions[0].singular.genitive.push('suon');
     declensions[0].singular.partitive.push('suota');
@@ -3365,7 +3351,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('soitta');
     declensions[0].plural.comitative.push('soineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('yö');
     declensions[1].singular.genitive.push('yön');
     declensions[1].singular.partitive.push('yötä');
@@ -3396,17 +3382,17 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('öittä');
     declensions[1].plural.comitative.push('öineen');
 
-    wordInfoService.getWordInfo('suo').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('suo').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('yö').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('yö').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
   }));
 
   it('should decline type 20 (filee)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('filee');
     declensions[0].singular.genitive.push('fileen');
     declensions[0].singular.partitive.push('fileetä');
@@ -3437,14 +3423,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('fileittä');
     declensions[0].plural.comitative.push('fileineen');
 
-    wordInfoService.getWordInfo('filee').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('filee').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 21 (rosé)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('rosé');
     declensions[0].singular.genitive.push('rosén');
     declensions[0].singular.partitive.push('roséta');
@@ -3475,7 +3461,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('roséitta');
     declensions[0].plural.comitative.push('roséineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('cowboy');
     declensions[1].singular.genitive.push('cowboyn');
     declensions[1].singular.partitive.push('cowboyta');
@@ -3506,17 +3492,17 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('cowboyitta');
     declensions[1].plural.comitative.push('cowboyineen');
 
-    wordInfoService.getWordInfo('rosé').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('rosé').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('cowboy').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('cowboy').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
   }));
 
   it('should decline type 22 (parfait)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('parfait');
     declensions[0].singular.genitive.push('parfait\'n');
     declensions[0].singular.partitive.push('parfait\'ta');
@@ -3547,14 +3533,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('parfait\'itta');
     declensions[0].plural.comitative.push('parfait\'ineen');
 
-    wordInfoService.getWordInfo('parfait').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('parfait').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 23 (tiili)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('tiili');
     declensions[0].singular.genitive.push('tiilen');
     declensions[0].singular.partitive.push('tiiltä');
@@ -3585,7 +3571,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('tiilittä');
     declensions[0].plural.comitative.push('tiilineen');
     //declension type 26
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('tiili');
     declensions[1].singular.genitive.push('tiilen');
     declensions[1].singular.partitive.push('tiiltä');
@@ -3615,14 +3601,14 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.instructive.push('tiilin');
     declensions[1].plural.abessive.push('tiilittä');
     declensions[1].plural.comitative.push('tiilineen');
-    wordInfoService.getWordInfo('tiili').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0], declensions[1]]);
+    wordInfoService.getWordInfo('tiili').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0], declensions[1]]);
     });
   }));
 
   it('should decline type 24 (uni)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('uni');
     declensions[0].singular.genitive.push('unen');
     declensions[0].singular.partitive.push('unta');
@@ -3653,14 +3639,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('unitta');
     declensions[0].plural.comitative.push('unineen');
 
-    wordInfoService.getWordInfo('uni').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('uni').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 25 (toimi)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('toimi');
     declensions[0].singular.genitive.push('toimen');
     declensions[0].singular.partitive = ['toimea','tointa'].sort();
@@ -3691,14 +3677,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('toimitta');
     declensions[0].plural.comitative.push('toimineen');
 
-    wordInfoService.getWordInfo('toimi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('toimi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 26 (pieni)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('pieni');
     declensions[0].singular.genitive.push('pienen');
     declensions[0].singular.partitive.push('pientä');
@@ -3729,14 +3715,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('pienittä');
     declensions[0].plural.comitative.push('pienineen');
 
-    wordInfoService.getWordInfo('pieni').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('pieni').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 27 (käsi)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('käsi');
     declensions[0].singular.genitive.push('käden');
     declensions[0].singular.partitive.push('kättä');
@@ -3767,14 +3753,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('käsittä');
     declensions[0].plural.comitative.push('käsineen');
 
-    wordInfoService.getWordInfo('käsi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('käsi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 28 (korsi)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('korsi');
     declensions[0].singular.genitive.push('korren');
     declensions[0].singular.partitive.push('kortta');
@@ -3805,14 +3791,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('korsitta');
     declensions[0].plural.comitative.push('korsineen');
 
-    wordInfoService.getWordInfo('korsi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('korsi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 29 (lapsi)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('lapsi');
     declensions[0].singular.genitive.push('lapsen');
     declensions[0].singular.partitive.push('lasta');
@@ -3843,7 +3829,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('lapsitta');
     declensions[0].plural.comitative.push('lapsineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('uksi');
     declensions[1].singular.genitive.push('uksen');
     declensions[1].singular.partitive.push('usta');
@@ -3873,7 +3859,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.instructive.push('uksin');
     declensions[1].plural.abessive.push('uksitta');
     declensions[1].plural.comitative.push('uksineen');
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     //declension type 7
     declensions[2].singular.nominative.push('uksi');
     declensions[2].singular.genitive.push('uksen');
@@ -3905,17 +3891,17 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('uksitta');
     declensions[2].plural.comitative.push('uksineen');
 
-    wordInfoService.getWordInfo('lapsi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('lapsi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('uksi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2], declensions[1]]);
+    wordInfoService.getWordInfo('uksi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2], declensions[1]]);
     });
   }));
 
   it('should decline type 30 (veitsi)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('veitsi');
     declensions[0].singular.genitive.push('veitsen');
     declensions[0].singular.partitive.push('veistä');
@@ -3946,14 +3932,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('veitsittä');
     declensions[0].plural.comitative.push('veitsineen');
 
-    wordInfoService.getWordInfo('veitsi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('veitsi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 31 (kaksi)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('kaksi');
     declensions[0].singular.genitive.push('kahden');
     declensions[0].singular.partitive.push('kahta');
@@ -3984,14 +3970,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('kaksitta');
     declensions[0].plural.comitative.push('kaksineen');
 
-    wordInfoService.getWordInfo('kaksi').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('kaksi').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 32 (sisar)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('sisar');
     declensions[0].singular.genitive.push('sisaren');
     declensions[0].singular.partitive.push('sisarta');
@@ -4022,7 +4008,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('sisaritta');
     declensions[0].plural.comitative.push('sisarineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('tatar');
     declensions[1].singular.genitive.push('tattaren');
     declensions[1].singular.partitive.push('tatarta');
@@ -4053,7 +4039,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('tattaritta');
     declensions[1].plural.comitative.push('tattarineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('ien');
     declensions[2].singular.genitive.push('ikenen');
     declensions[2].singular.partitive.push('ientä');
@@ -4084,20 +4070,20 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('ikenittä');
     declensions[2].plural.comitative.push('ikenineen');
 
-    wordInfoService.getWordInfo('sisar').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('sisar').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('tatar').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('tatar').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('ien').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('ien').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
   }));
 
   it('should decline type 33 (kytkin)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('kytkin');
     declensions[0].singular.genitive.push('kytkimen');
     declensions[0].singular.partitive.push('kytkintä');
@@ -4128,7 +4114,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('kytkimittä');
     declensions[0].plural.comitative.push('kytkimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('suutin');
     declensions[1].singular.genitive.push('suuttimen');
     declensions[1].singular.partitive.push('suutinta');
@@ -4159,7 +4145,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('suuttimitta');
     declensions[1].plural.comitative.push('suuttimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('puin');
     declensions[2].singular.genitive.push('pukimen');
     declensions[2].singular.partitive.push('puinta');
@@ -4190,7 +4176,7 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('pukimitta');
     declensions[2].plural.comitative.push('pukimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[3].singular.nominative.push('kaavin');
     declensions[3].singular.genitive.push('kaavimen');
     declensions[3].singular.partitive.push('kaavinta');
@@ -4221,7 +4207,7 @@ describe('FiDeclensionService', () => {
     declensions[3].plural.abessive.push('kaavimitta');
     declensions[3].plural.comitative.push('kaavimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[4].singular.nominative.push('laidun');
     declensions[4].singular.genitive.push('laitumen');
     declensions[4].singular.partitive.push('laidunta');
@@ -4252,7 +4238,7 @@ describe('FiDeclensionService', () => {
     declensions[4].plural.abessive.push('laitumitta');
     declensions[4].plural.comitative.push('laitumineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[5].singular.nominative.push('puhallin');
     declensions[5].singular.genitive.push('puhaltimen');
     declensions[5].singular.partitive.push('puhallinta');
@@ -4283,7 +4269,7 @@ describe('FiDeclensionService', () => {
     declensions[5].plural.abessive.push('puhaltimitta');
     declensions[5].plural.comitative.push('puhaltimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[6].singular.nominative.push('muunnin');
     declensions[6].singular.genitive.push('muuntimen');
     declensions[6].singular.partitive.push('muunninta');
@@ -4314,7 +4300,7 @@ describe('FiDeclensionService', () => {
     declensions[6].plural.abessive.push('muuntimitta');
     declensions[6].plural.comitative.push('muuntimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[7].singular.nominative.push('kerroin');
     declensions[7].singular.genitive.push('kertoimen');
     declensions[7].singular.partitive.push('kerrointa');
@@ -4345,7 +4331,7 @@ describe('FiDeclensionService', () => {
     declensions[7].plural.abessive.push('kertoimitta');
     declensions[7].plural.comitative.push('kertoimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[8].singular.nominative.push('ahdin');
     declensions[8].singular.genitive.push('ahtimen');
     declensions[8].singular.partitive.push('ahdinta');
@@ -4376,7 +4362,7 @@ describe('FiDeclensionService', () => {
     declensions[8].plural.abessive.push('ahtimitta');
     declensions[8].plural.comitative.push('ahtimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[9].singular.nominative.push('istuin');
     declensions[9].singular.genitive.push('istuimen');
     declensions[9].singular.partitive.push('istuinta');
@@ -4407,7 +4393,7 @@ describe('FiDeclensionService', () => {
     declensions[9].plural.abessive.push('istuimitta');
     declensions[9].plural.comitative.push('istuimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[10].singular.nominative.push('poljin');
     declensions[10].singular.genitive.push('polkimen');
     declensions[10].singular.partitive.push('poljinta');
@@ -4438,7 +4424,7 @@ describe('FiDeclensionService', () => {
     declensions[10].plural.abessive.push('polkimitta');
     declensions[10].plural.comitative.push('polkimineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[11].singular.nominative.push('särvin');
     declensions[11].singular.genitive.push('särpimen');
     declensions[11].singular.partitive.push('särvintä');
@@ -4469,47 +4455,47 @@ describe('FiDeclensionService', () => {
     declensions[11].plural.abessive.push('särpimittä');
     declensions[11].plural.comitative.push('särpimineen');
 
-    wordInfoService.getWordInfo('kytkin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('kytkin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('suutin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('suutin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('puin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('puin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
-    wordInfoService.getWordInfo('kaavin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[3]]);
+    wordInfoService.getWordInfo('kaavin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[3]]);
     });
-    wordInfoService.getWordInfo('laidun').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[4]]);
+    wordInfoService.getWordInfo('laidun').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[4]]);
     });
-    wordInfoService.getWordInfo('puhallin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[5]]);
+    wordInfoService.getWordInfo('puhallin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[5]]);
     });
-    wordInfoService.getWordInfo('muunnin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[6]]);
+    wordInfoService.getWordInfo('muunnin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[6]]);
     });
-    wordInfoService.getWordInfo('kerroin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[7]]);
+    wordInfoService.getWordInfo('kerroin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[7]]);
     });
-    wordInfoService.getWordInfo('ahdin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[8]]);
+    wordInfoService.getWordInfo('ahdin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[8]]);
     });
-    wordInfoService.getWordInfo('istuin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[9]]);
+    wordInfoService.getWordInfo('istuin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[9]]);
     });
-    wordInfoService.getWordInfo('poljin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[10]]);
+    wordInfoService.getWordInfo('poljin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[10]]);
     });
-    wordInfoService.getWordInfo('särvin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[11]]);
+    wordInfoService.getWordInfo('särvin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[11]]);
     });
   }));
 
   it('should decline type 34 (onneton)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('onneton');
     declensions[0].singular.genitive.push('onnettoman');
     declensions[0].singular.partitive.push('onnetonta');
@@ -4540,14 +4526,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('onnettomitta');
     declensions[0].plural.comitative.push('onnettomineen');
 
-    wordInfoService.getWordInfo('onneton').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('onneton').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 35 (lämmin)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('lämmin');
     declensions[0].singular.genitive.push('lämpimän');
     declensions[0].singular.partitive.push('lämmintä');
@@ -4578,14 +4564,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('lämpimittä');
     declensions[0].plural.comitative.push('lämpimineen');
 
-    wordInfoService.getWordInfo('lämmin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('lämmin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 36 (sisin)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('sisin');
     declensions[0].singular.genitive.push('sisimmän');
     declensions[0].singular.partitive.push('sisintä');
@@ -4616,14 +4602,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('sisimmittä');
     declensions[0].plural.comitative.push('sisimpineen');
 
-    wordInfoService.getWordInfo('sisin').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('sisin').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 37 (vasen)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('vasen');
     declensions[0].singular.genitive.push('vasemman');
     declensions[0].singular.partitive = ['vasenta', 'vasempaa'].sort();
@@ -4654,14 +4640,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('vasemmitta');
     declensions[0].plural.comitative.push('vasempineen');
 
-    wordInfoService.getWordInfo('vasen').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('vasen').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 38 (nainen)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('nainen');
     declensions[0].singular.genitive.push('naisen');
     declensions[0].singular.partitive.push('naista');
@@ -4692,14 +4678,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('naisitta');
     declensions[0].plural.comitative.push('naisineen');
 
-    wordInfoService.getWordInfo('nainen').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('nainen').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 39 (vastaus)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('vastaus');
     declensions[0].singular.genitive.push('vastauksen');
     declensions[0].singular.partitive.push('vastausta');
@@ -4730,14 +4716,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('vastauksitta');
     declensions[0].plural.comitative.push('vastauksineen');
 
-    wordInfoService.getWordInfo('vastaus').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('vastaus').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 40 (kalleus)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('kalleus');
     declensions[0].singular.genitive.push('kalleuden');
     declensions[0].singular.partitive.push('kalleutta');
@@ -4768,14 +4754,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('kalleuksitta');
     declensions[0].plural.comitative.push('kalleuksineen');
 
-    wordInfoService.getWordInfo('kalleus').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('kalleus').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 41 (vieras)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('vieras');
     declensions[0].singular.genitive.push('vieraan');
     declensions[0].singular.partitive.push('vierasta');
@@ -4806,7 +4792,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('vieraitta');
     declensions[0].plural.comitative.push('vieraineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('maukas');
     declensions[1].singular.genitive.push('maukkaan');
     declensions[1].singular.partitive.push('maukasta');
@@ -4837,7 +4823,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('maukkaitta');
     declensions[1].plural.comitative.push('maukkaineen');
     
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('lipas');
     declensions[2].singular.genitive.push('lippaan');
     declensions[2].singular.partitive.push('lipasta');
@@ -4868,7 +4854,7 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('lippaitta');
     declensions[2].plural.comitative.push('lippaineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[3].singular.nominative.push('ratas');
     declensions[3].singular.genitive.push('rattaan');
     declensions[3].singular.partitive.push('ratasta');
@@ -4899,7 +4885,7 @@ describe('FiDeclensionService', () => {
     declensions[3].plural.abessive.push('rattaitta');
     declensions[3].plural.comitative.push('rattaineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[4].singular.nominative.push('varas');
     declensions[4].singular.genitive.push('varkaan');
     declensions[4].singular.partitive.push('varasta');
@@ -4930,7 +4916,7 @@ describe('FiDeclensionService', () => {
     declensions[4].plural.abessive.push('varkaitta');
     declensions[4].plural.comitative.push('varkaineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[5].singular.nominative.push('varvas');
     declensions[5].singular.genitive.push('varpaan');
     declensions[5].singular.partitive.push('varvasta');
@@ -4961,7 +4947,7 @@ describe('FiDeclensionService', () => {
     declensions[5].plural.abessive.push('varpaitta');
     declensions[5].plural.comitative.push('varpaineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[6].singular.nominative.push('keidas');
     declensions[6].singular.genitive.push('keitaan');
     declensions[6].singular.partitive.push('keidasta');
@@ -4992,7 +4978,7 @@ describe('FiDeclensionService', () => {
     declensions[6].plural.abessive.push('keitaitta');
     declensions[6].plural.comitative.push('keitaineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[7].singular.nominative.push('kangas');
     declensions[7].singular.genitive.push('kankaan');
     declensions[7].singular.partitive.push('kangasta');
@@ -5023,7 +5009,7 @@ describe('FiDeclensionService', () => {
     declensions[7].plural.abessive.push('kankaitta');
     declensions[7].plural.comitative.push('kankaineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[8].singular.nominative.push('hammas');
     declensions[8].singular.genitive.push('hampaan');
     declensions[8].singular.partitive.push('hammasta');
@@ -5054,7 +5040,7 @@ describe('FiDeclensionService', () => {
     declensions[8].plural.abessive.push('hampaitta');
     declensions[8].plural.comitative.push('hampaineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[9].singular.nominative.push('allas');
     declensions[9].singular.genitive.push('altaan');
     declensions[9].singular.partitive.push('allasta');
@@ -5085,7 +5071,7 @@ describe('FiDeclensionService', () => {
     declensions[9].plural.abessive.push('altaitta');
     declensions[9].plural.comitative.push('altaineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[10].singular.nominative.push('rynnäs');
     declensions[10].singular.genitive.push('ryntään');
     declensions[10].singular.partitive.push('rynnästä');
@@ -5116,7 +5102,7 @@ describe('FiDeclensionService', () => {
     declensions[10].plural.abessive.push('ryntäittä');
     declensions[10].plural.comitative.push('ryntäineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[11].singular.nominative.push('parras');
     declensions[11].singular.genitive.push('partaan');
     declensions[11].singular.partitive.push('parrasta');
@@ -5147,7 +5133,7 @@ describe('FiDeclensionService', () => {
     declensions[11].plural.abessive.push('partaitta');
     declensions[11].plural.comitative.push('partaineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[12].singular.nominative.push('paras');
     declensions[12].singular.genitive.push('parhaan');
     declensions[12].singular.partitive.push('parasta');
@@ -5178,50 +5164,50 @@ describe('FiDeclensionService', () => {
     declensions[12].plural.abessive.push('parhaitta');
     declensions[12].plural.comitative.push('parhaineen');
     
-    wordInfoService.getWordInfo('vieras').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('vieras').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('maukas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('maukas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('lipas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('lipas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
-    wordInfoService.getWordInfo('ratas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[3]]);
+    wordInfoService.getWordInfo('ratas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[3]]);
     });
-    wordInfoService.getWordInfo('varas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[4]]);
+    wordInfoService.getWordInfo('varas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[4]]);
     });
-    wordInfoService.getWordInfo('varvas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[5]]);
+    wordInfoService.getWordInfo('varvas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[5]]);
     });
-    wordInfoService.getWordInfo('keidas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[6]]);
+    wordInfoService.getWordInfo('keidas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[6]]);
     });
-    wordInfoService.getWordInfo('kangas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[7]]);
+    wordInfoService.getWordInfo('kangas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[7]]);
     });
-    wordInfoService.getWordInfo('hammas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[8]]);
+    wordInfoService.getWordInfo('hammas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[8]]);
     });
-    wordInfoService.getWordInfo('allas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[9]]);
+    wordInfoService.getWordInfo('allas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[9]]);
     });
-    wordInfoService.getWordInfo('rynnäs').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[10]]);
+    wordInfoService.getWordInfo('rynnäs').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[10]]);
     });
-    wordInfoService.getWordInfo('parras').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[11]]);
+    wordInfoService.getWordInfo('parras').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[11]]);
     });
-    wordInfoService.getWordInfo('paras').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[12]]);
+    wordInfoService.getWordInfo('paras').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[12]]);
     });
   }));
 
   it('should decline type 42 (mies)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('mies');
     declensions[0].singular.genitive.push('miehen');
     declensions[0].singular.partitive.push('miestä');
@@ -5252,14 +5238,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('miehittä');
     declensions[0].plural.comitative.push('miehineen');
 
-    wordInfoService.getWordInfo('mies').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('mies').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 43 (ohut)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('ohut');
     declensions[0].singular.genitive.push('ohuen');
     declensions[0].singular.partitive.push('ohutta');
@@ -5290,7 +5276,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('ohuitta');
     declensions[0].plural.comitative.push('ohuineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('immyt');
     declensions[1].singular.genitive.push('impyen');
     declensions[1].singular.partitive.push('immyttä');
@@ -5321,7 +5307,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('impyittä');
     declensions[1].plural.comitative.push('impyineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('neiyt');
     declensions[2].singular.genitive.push('neityen');
     declensions[2].singular.partitive.push('neiyttä');
@@ -5352,20 +5338,20 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('neityittä');
     declensions[2].plural.comitative.push('neityineen');
 
-    wordInfoService.getWordInfo('ohut').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('ohut').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('immyt').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('immyt').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('neiyt').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('neiyt').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
   }));
 
   it('should decline type 44 (kevät)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('kevät');
     declensions[0].singular.genitive.push('kevään');
     declensions[0].singular.partitive.push('kevättä');
@@ -5396,14 +5382,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('keväittä');
     declensions[0].plural.comitative.push('keväineen');
 
-    wordInfoService.getWordInfo('kevät').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('kevät').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 45 (kahdeksas)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('kahdeksas');
     declensions[0].singular.genitive.push('kahdeksannen');
     declensions[0].singular.partitive.push('kahdeksatta');
@@ -5434,14 +5420,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('kahdeksansitta');
     declensions[0].plural.comitative.push('kahdeksansineen');
 
-    wordInfoService.getWordInfo('kahdeksas').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('kahdeksas').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 46 (tuhat)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('tuhat');
     declensions[0].singular.genitive.push('tuhannen');
     declensions[0].singular.partitive.push('tuhatta');
@@ -5472,14 +5458,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('tuhansitta');
     declensions[0].plural.comitative.push('tuhansineen');
 
-    wordInfoService.getWordInfo('tuhat').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('tuhat').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 47 (kuollut)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('kuollut');
     declensions[0].singular.genitive.push('kuolleen');
     declensions[0].singular.partitive.push('kuollutta');
@@ -5510,14 +5496,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('kuolleitta');
     declensions[0].plural.comitative.push('kuolleineen');
 
-    wordInfoService.getWordInfo('kuollut').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('kuollut').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline type 48 (hame)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('hame');
     declensions[0].singular.genitive.push('hameen');
     declensions[0].singular.partitive.push('hametta');
@@ -5548,7 +5534,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('hameitta');
     declensions[0].plural.comitative.push('hameineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('savuke');
     declensions[1].singular.genitive.push('savukkeen');
     declensions[1].singular.partitive.push('savuketta');
@@ -5579,7 +5565,7 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('savukkeitta');
     declensions[1].plural.comitative.push('savukkeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[2].singular.nominative.push('ape');
     declensions[2].singular.genitive.push('appeen');
     declensions[2].singular.partitive.push('apetta');
@@ -5610,7 +5596,7 @@ describe('FiDeclensionService', () => {
     declensions[2].plural.abessive.push('appeitta');
     declensions[2].plural.comitative.push('appeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[3].singular.nominative.push('peite');
     declensions[3].singular.genitive.push('peitteen');
     declensions[3].singular.partitive.push('peitettä');
@@ -5641,7 +5627,7 @@ describe('FiDeclensionService', () => {
     declensions[3].plural.abessive.push('peitteittä');
     declensions[3].plural.comitative.push('peitteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[4].singular.nominative.push('aie');
     declensions[4].singular.genitive.push('aikeen');
     declensions[4].singular.partitive.push('aietta');
@@ -5672,7 +5658,7 @@ describe('FiDeclensionService', () => {
     declensions[4].plural.abessive.push('aikeitta');
     declensions[4].plural.comitative.push('aikeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[5].singular.nominative.push('taive');
     declensions[5].singular.genitive.push('taipeen');
     declensions[5].singular.partitive.push('taivetta');
@@ -5703,7 +5689,7 @@ describe('FiDeclensionService', () => {
     declensions[5].plural.abessive.push('taipeitta');
     declensions[5].plural.comitative.push('taipeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[6].singular.nominative.push('sade');
     declensions[6].singular.genitive.push('sateen');
     declensions[6].singular.partitive.push('sadetta');
@@ -5734,7 +5720,7 @@ describe('FiDeclensionService', () => {
     declensions[6].plural.abessive.push('sateitta');
     declensions[6].plural.comitative.push('sateineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[7].singular.nominative.push('lumme');
     declensions[7].singular.genitive.push('lumpeen');
     declensions[7].singular.partitive.push('lummetta');
@@ -5765,7 +5751,7 @@ describe('FiDeclensionService', () => {
     declensions[7].plural.abessive.push('lumpeitta');
     declensions[7].plural.comitative.push('lumpeineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[8].singular.nominative.push('kimalle');
     declensions[8].singular.genitive.push('kimalteen');
     declensions[8].singular.partitive.push('kimalletta');
@@ -5796,7 +5782,7 @@ describe('FiDeclensionService', () => {
     declensions[8].plural.abessive.push('kimalteitta');
     declensions[8].plural.comitative.push('kimalteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[9].singular.nominative.push('vanne');
     declensions[9].singular.genitive.push('vanteen');
     declensions[9].singular.partitive.push('vannetta');
@@ -5827,7 +5813,7 @@ describe('FiDeclensionService', () => {
     declensions[9].plural.abessive.push('vanteitta');
     declensions[9].plural.comitative.push('vanteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[10].singular.nominative.push('aarre');
     declensions[10].singular.genitive.push('aarteen');
     declensions[10].singular.partitive.push('aarretta');
@@ -5858,7 +5844,7 @@ describe('FiDeclensionService', () => {
     declensions[10].plural.abessive.push('aarteitta');
     declensions[10].plural.comitative.push('aarteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[11].singular.nominative.push('lahje');
     declensions[11].singular.genitive.push('lahkeen');
     declensions[11].singular.partitive.push('lahjetta');
@@ -5889,47 +5875,47 @@ describe('FiDeclensionService', () => {
     declensions[11].plural.abessive.push('lahkeitta');
     declensions[11].plural.comitative.push('lahkeineen');
 
-    wordInfoService.getWordInfo('hame').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('hame').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('savuke').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('savuke').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
-    wordInfoService.getWordInfo('ape').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[2]]);
+    wordInfoService.getWordInfo('ape').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[2]]);
     });
-    wordInfoService.getWordInfo('peite').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[3]]);
+    wordInfoService.getWordInfo('peite').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[3]]);
     });
-    wordInfoService.getWordInfo('aie').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[4]]);
+    wordInfoService.getWordInfo('aie').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[4]]);
     });
-    wordInfoService.getWordInfo('taive').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[5]]);
+    wordInfoService.getWordInfo('taive').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[5]]);
     });
-    wordInfoService.getWordInfo('sade').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[6]]);
+    wordInfoService.getWordInfo('sade').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[6]]);
     });
-    wordInfoService.getWordInfo('lumme').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[7]]);
+    wordInfoService.getWordInfo('lumme').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[7]]);
     });
-    wordInfoService.getWordInfo('kimalle').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[8]]);
+    wordInfoService.getWordInfo('kimalle').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[8]]);
     });
-    wordInfoService.getWordInfo('vanne').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[9]]);
+    wordInfoService.getWordInfo('vanne').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[9]]);
     });
-    wordInfoService.getWordInfo('aarre').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[10]]);
+    wordInfoService.getWordInfo('aarre').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[10]]);
     });
-    wordInfoService.getWordInfo('lahje').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[11]]);
+    wordInfoService.getWordInfo('lahje').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[11]]);
     });
   }));
 
   it('should decline type 49 (askel)', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('askel');
     declensions[0].singular.genitive.push('askelen');
     declensions[0].singular.partitive.push('askelta');
@@ -5959,7 +5945,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.instructive.push('askelin');
     declensions[0].plural.abessive.push('askelitta');
     declensions[0].plural.comitative.push('askelineen');
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('askele');
     declensions[1].singular.genitive.push('askeleen');
     declensions[1].singular.partitive.push('askeletta');
@@ -5990,17 +5976,17 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('askeleitta');
     declensions[1].plural.comitative.push('askeleineen');
 
-    wordInfoService.getWordInfo('askel').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('askel').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('askele').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('askele').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
   }));
 
   it('should decline nominals ending in -toista', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('kaksitoista');
     declensions[0].singular.genitive.push('kahdentoista');
     declensions[0].singular.partitive.push('kahtatoista');
@@ -6031,14 +6017,14 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('kaksittatoista');
     declensions[0].plural.comitative.push('kaksinetoista');
 
-    wordInfoService.getWordInfo('kaksitoista').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('kaksitoista').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
   }));
 
   it('should decline compound nominals formed by nominals with different vowel harmony', inject([FiDeclensionService, WordInfoService], (fiDeclensionService: FiDeclensionService, wordInfoService: WordInfoService) => {
-    let declensions: Declension[] = [];
-    declensions.push(new Declension());
+    let declensions: FiDeclension[] = [];
+    declensions.push(new FiDeclension());
     declensions[0].singular.nominative.push('isoäiti');
     declensions[0].singular.genitive.push('isoäidin');
     declensions[0].singular.partitive.push('isoäitiä');
@@ -6069,7 +6055,7 @@ describe('FiDeclensionService', () => {
     declensions[0].plural.abessive.push('isoäideittä');
     declensions[0].plural.comitative.push('isoäiteineen');
 
-    declensions.push(new Declension());
+    declensions.push(new FiDeclension());
     declensions[1].singular.nominative.push('yliopisto');
     declensions[1].singular.genitive.push('yliopiston');
     declensions[1].singular.partitive.push('yliopistoa');
@@ -6100,30 +6086,30 @@ describe('FiDeclensionService', () => {
     declensions[1].plural.abessive.push('yliopistoitta');
     declensions[1].plural.comitative.push('yliopistoineen');
 
-    wordInfoService.getWordInfo('isoäiti').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[0]]);
+    wordInfoService.getWordInfo('isoäiti').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[0]]);
     });
-    wordInfoService.getWordInfo('yliopisto').map((wordInfo: FiDeclensionWordInfo) => {
-      expect(fiDeclensionService.decline(wordInfo)).toEqual([declensions[1]]);
+    wordInfoService.getWordInfo('yliopisto').subscribe((wordDataContainer: WordDataContainer) => {
+      expect(fiDeclensionService.inflect(wordDataContainer.fiNominalData)).toEqual([declensions[1]]);
     });
   }));
 
   it('should throw error when word is null, undefined or is wrong formed', inject([FiDeclensionService], (fiDeclensionService: FiDeclensionService) => {
     expect(() => {
-      return fiDeclensionService.decline(null);
-    }).toThrow(new InvalidWordInfoError());
+      return fiDeclensionService.inflect(null);
+    }).toThrow(new InvalidWordDataError(null));
     expect(() => {
-      fiDeclensionService.decline(undefined);
-    }).toThrow(new InvalidWordInfoError());
+      fiDeclensionService.inflect(undefined);
+    }).toThrow(new InvalidWordDataError(undefined));
+    let wordDataContainer1: FiNominalData = new FiNominalData();
+    wordDataContainer1.word = null;
     expect(() => {
-      let wordInfo: FiDeclensionWordInfo = new FiDeclensionWordInfo();
-      wordInfo.word = null;
-      fiDeclensionService.decline(wordInfo);
-    }).toThrow(new InvalidWordInfoError());
+      fiDeclensionService.inflect(wordDataContainer1);
+    }).toThrow(new InvalidWordDataError(wordDataContainer1));
+    let wordDataContainer2: FiNominalData = new FiNominalData();
+    wordDataContainer2.word = 'talo';
     expect(() => {
-      let wordInfo: FiDeclensionWordInfo = new FiDeclensionWordInfo();
-      wordInfo.word = 'talo';
-      fiDeclensionService.decline(wordInfo);
-    }).toThrow(new InvalidWordInfoError());
+      fiDeclensionService.inflect(wordDataContainer2);
+    }).toThrow(new InvalidWordDataError(wordDataContainer2));
   }));
 });

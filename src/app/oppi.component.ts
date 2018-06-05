@@ -4,7 +4,7 @@ import { I18nService } from './module/i18n/i18n';
 import { ModalComponent, SideMenuComponent } from './module/ui/ui';
 import { WordInfoService } from './service/word-info.service';
 import { DataRouterService } from './service/data-router.service';
-import { FiDeclensionWordInfo } from './model/fi-declension-word-info';
+import { FiNominalData, FiWordData, WordDataContainer } from './model/word-data';
 
 @Component({
   selector: 'oppi',
@@ -54,20 +54,30 @@ export class OppiComponent implements OnInit, OnDestroy {
   searchWord(test?: boolean): void {
     this.wordToSearch = this.wordToSearch ? this.wordToSearch : '';
     let action: string = test ? 'test' : 'search';
-    this.wordInfoService.getWordInfo(this.wordToSearch).subscribe((wordData: FiDeclensionWordInfo) => {
-      this.wrongWord = null;
-      this.dataRouterService.navigate([action, wordData.word], wordData);
+    let language: string = 'fi';
+    this.wordInfoService.getWordInfo(this.wordToSearch).subscribe((wordDataContainer: WordDataContainer) => {
+      this.navigateWithWordDataContainer(wordDataContainer, language, action);
     }, (error) => {
       this.wrongWord = this.wordToSearch;
       this.dataRouterService.navigate(['/']);
     });
   }
 
+  private navigateWithWordDataContainer(wordDataContainer: WordDataContainer, language: string, action: string){
+    this.wrongWord = null;
+    if(wordDataContainer.fiNominalData){
+      this.wordToSearch = wordDataContainer.fiNominalData.word;
+      this.dataRouterService.navigate([language, 'declension', action, this.wordToSearch], wordDataContainer.fiNominalData);
+    } else {
+      this.wordToSearch = wordDataContainer.fiVerbData.word;
+      this.dataRouterService.navigate([language, 'conjugation', action, this.wordToSearch], wordDataContainer.fiVerbData);
+    }
+  }
+
   getRandomWord(): void {
-    this.wordInfoService.getRandomWord().subscribe((wordData: FiDeclensionWordInfo) => {
-      this.wrongWord = null;
-      this.wordToSearch = wordData.word;
-      this.dataRouterService.navigate(['test', wordData.word], wordData);
+    let language: string = 'fi';
+    this.wordInfoService.getRandomWord().subscribe((wordDataContainer: WordDataContainer) => {
+      this.navigateWithWordDataContainer(wordDataContainer, language, 'test');
     });
   }
 

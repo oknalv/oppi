@@ -1,103 +1,126 @@
 import { Injectable } from '@angular/core';
-import { Declension } from '../model/declension';
-import { FiDeclensionWordInfo } from '../model/fi-declension-word-info';
+import { FiDeclension } from '../model/fi-inflection';
+import { FiNominalData, FiWordType } from '../model/word-data';
 import { FiVowelHarmony } from '../model/fi-vowel-harmony';
+import { FiInflectionService, InvalidWordDataError } from './fi-inflection.service';
 
-export class InvalidWordInfoError implements Error {
-  name: string = 'InvalidWordInfoError';
-  message: string = 'Invalid word info';
-}
-
+/**
+ * The service which declines Finnish nominals.
+ */
 @Injectable()
-export class FiDeclensionService {
+export class FiDeclensionService extends FiInflectionService<FiNominalData, FiDeclension> {
 
   private endsInDiphthongAndDoubleVowelRegExp: RegExp = /^.*(aa|ee|ii|oo|uu|ää|öö|yy|ai|ei|oi|ui|yi|äi|öi|au|eu|iu|ou|ey|iy|äy|öy|ie|uo|yö)$/;
   private type22EndingRegExp: RegExp = /[aeiouäöyû]*.{2}$/;
   private vowels: string = 'aeiouäöy';
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
-  decline(wordInfo: FiDeclensionWordInfo): Declension[] {
+  /**
+   * Declines a Finnish nominal using the `fiNominalData` param.
+   * 
+   * @param fiNominalData A FiNominalData that contains the data which this method needs to decline a nominal.
+   * @returns The declension of the finnish nominal given in `fiNominalData`.
+   */
+  inflect(fiNominalData: FiNominalData): FiDeclension[] {
     try {
-      let noun: string = wordInfo.word;
-      if(noun.endsWith('toista')){
-        let fiDeclensionMetadata2: FiDeclensionWordInfo = {
-          id: wordInfo.id,
-          word: noun.split('toista')[0],
-          types: wordInfo.types,
-          vowelHarmony: wordInfo.vowelHarmony
+      let nominal: string = fiNominalData.word;
+      // If it is a numeral ending in 'toista', it declines only the non 'toista' part
+      if(nominal.endsWith('toista')){
+        let fiNominalData2: FiNominalData = {
+          ...fiNominalData,
+          word: nominal.split('toista')[0]
         };
-        return this.decline(fiDeclensionMetadata2).map((declension: Declension) => {
-          for(let key in declension.singular){
+        return this.inflect(fiNominalData2).map((fiDeclension: FiDeclension) => {
+          for(let key in fiDeclension.singular){
             if(key != 'instructive' && key != 'comitative'){
-              declension.singular[key] = declension.singular[key].map(function(word){
-                return word + 'toista';
-              }.bind(this))
+              fiDeclension.singular[key] = fiDeclension.singular[key].map((word) => word + 'toista');
             }
           };
-          for(let key in declension.plural){
+          for(let key in fiDeclension.plural){
             if(key != 'nominativeGenitive'){
               if(key == 'comitative'){
-                declension.plural[key] = declension.plural[key].map(function(word){
-                  return this.removeLastN(word, 2) + 'toista';
-                }.bind(this));
+                fiDeclension.plural[key] = fiDeclension.plural[key].map((word) => this.removeLastN(word, 2) + 'toista');
               } else {
-                declension.plural[key] = declension.plural[key].map(function(word){
-                  return word + 'toista';
-                }.bind(this));
+                fiDeclension.plural[key] = fiDeclension.plural[key].map((word) => word + 'toista');
               }
             }
           };
-          return declension;
+          return fiDeclension;
         });
       }
-      let declensions: Declension[] = [];
-      let wordTypes: object[] = wordInfo['types'];
-      let wordHarmonyVowels = wordInfo['vowelHarmony']
-      let a = wordHarmonyVowels[FiVowelHarmony.a];
-      let o = wordHarmonyVowels[FiVowelHarmony.o];
-      wordTypes.sort((a: object, b: object): number => a['type'] - b['type']);
+      let fiDeclensions: FiDeclension[] = [];
+      let wordTypes: FiWordType[] = fiNominalData.types;
+      let wordHarmonyVowels: string[] = fiNominalData.vowelHarmony;
+      let a: string = wordHarmonyVowels[FiVowelHarmony.a];
+      let o: string = wordHarmonyVowels[FiVowelHarmony.o];
+      wordTypes.sort((a: FiWordType, b: FiWordType): number => a.type - b.type);
       for(let type of wordTypes){
-        let wordType = type['type'];
+        let wordType: number = type.type;
         if(wordType == 49){
-            wordType = noun.endsWith('e') ? 48 : 32;
+            wordType = nominal.endsWith('e') ? 48 : 32;
         }
-        let wordGradation = type['gradation'];
-        let declension: Declension = new Declension();
-        let strongStem: string = this.getStrongStem(noun, a, wordType, wordGradation);
-        let weakStem: string = this.getWeakStem(strongStem, wordType, wordGradation);
-        this.declineSingular(noun, strongStem, weakStem, a, wordType, wordGradation, declension);
-        this.declinePlural(noun, strongStem, weakStem, a, o, wordType, wordGradation, declension);
-        declensions.push(declension);
+        let wordGradation: string = type.gradation;
+        let fiDeclension: FiDeclension = new FiDeclension();
+        let singularStrongStem: string = this.getSingularStrongStem(nominal, a, wordType, wordGradation);
+        let singularWeakStem: string = this.getSingularWeakStem(singularStrongStem, wordType, wordGradation);
+        this.declineSingular(nominal, singularStrongStem, singularWeakStem, a, wordType, fiDeclension);
+        this.declinePlural(nominal, singularStrongStem, singularWeakStem, a, o, wordType, fiDeclension);
+        fiDeclensions.push(fiDeclension);
       }
-      return declensions;
+      return fiDeclensions;
     } catch(e){
-      throw new InvalidWordInfoError();
+      throw new InvalidWordDataError(fiNominalData);
     }
   }
 
-  private declineSingular(noun: string, strongStem: string, weakStem:string, a: string, wordType: number, wordGradation: string, declension: Declension): void {
-    declension.singular.nominative.push(noun);
-    declension.singular.genitive.push(this.getSingularGenitive(strongStem, weakStem, wordType));
-    declension.singular.partitive = this.getSingularPartitives(noun, strongStem, a, wordType);
-    declension.singular.nominativeAccusative = declension.singular.nominative;
-    declension.singular.genitiveAccusative = declension.singular.genitive;
-    declension.singular.inessive.push(this.getSingularInessive(strongStem, weakStem, a, wordType));
-    declension.singular.elative.push(this.getSingularElative(strongStem, weakStem, a, wordType));
-    declension.singular.illative = this.getSingularIllatives(strongStem, wordType);
-    declension.singular.adessive.push(this.getSingularAdessive(weakStem, a));
-    declension.singular.ablative.push(this.getSingularAblative(weakStem, a));
-    declension.singular.allative.push(this.getSingularAllative(weakStem));
-    declension.singular.essive.push(this.getSingularEssive(strongStem, a));
-    declension.singular.translative.push(this.getSingularTranslative(weakStem));
-    declension.singular.abessive.push(this.getSingularAbessive(weakStem, a));
+  /**
+   * Declines the singular cases.
+   * 
+   * @param nominal The nominal to be declined.
+   * @param singularStrongStem The singular strong stem of the nominal.
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @param fiDeclension The object where the declensions are stored.
+   */
+  private declineSingular(nominal: string, singularStrongStem: string, singularWeakStem:string,
+      a: string, wordType: number, fiDeclension: FiDeclension): void {
+    fiDeclension.singular.nominative.push(nominal);
+    fiDeclension.singular.genitive.push(this.getSingularGenitive(singularWeakStem));
+    fiDeclension.singular.partitive = this.getSingularPartitives(nominal, singularStrongStem, a, wordType);
+    fiDeclension.singular.nominativeAccusative = fiDeclension.singular.nominative;
+    fiDeclension.singular.genitiveAccusative = fiDeclension.singular.genitive;
+    fiDeclension.singular.inessive.push(this.getSingularInessive(singularWeakStem, a));
+    fiDeclension.singular.elative.push(this.getSingularElative(singularWeakStem, a));
+    fiDeclension.singular.illative = this.getSingularIllatives(singularStrongStem, wordType);
+    fiDeclension.singular.adessive.push(this.getSingularAdessive(singularWeakStem, a));
+    fiDeclension.singular.ablative.push(this.getSingularAblative(singularWeakStem, a));
+    fiDeclension.singular.allative.push(this.getSingularAllative(singularWeakStem));
+    fiDeclension.singular.essive.push(this.getSingularEssive(singularStrongStem, a));
+    fiDeclension.singular.translative.push(this.getSingularTranslative(singularWeakStem));
+    fiDeclension.singular.abessive.push(this.getSingularAbessive(singularWeakStem, a));
   }
-
-  private declinePlural(noun: string, singularStrongStem: string, singularWeakStem: string, a: string, o: string, wordType: number, wordGradation: string, declension: Declension): void {
-    let pluralStrongStem: string = this.getPluralStrongStem(noun, singularStrongStem, o, wordType);
+  
+  /**
+   * Declines the plural cases.
+   * 
+   * @param nominal The nominal to be declined.
+   * @param singularStrongStem The singular strong stem of the nominal.
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param o The 'o' or 'ö' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @param declension The object where the declensions are stored.
+   */
+  private declinePlural(nominal: string, singularStrongStem: string, singularWeakStem: string,
+      a: string, o: string, wordType: number, declension: FiDeclension): void {
+    let pluralStrongStem: string = this.getPluralStrongStem(nominal, singularStrongStem, o, wordType);
     let pluralWeakStem: string = this.getPluralWeakStem(singularWeakStem, pluralStrongStem, o, wordType);
     declension.plural.nominative.push(this.getPluralNominative(singularWeakStem));
-    declension.plural.genitive = this.getPluralGenitives(noun, singularStrongStem, pluralStrongStem, pluralWeakStem, wordType);
+    declension.plural.genitive = this.getPluralGenitives(nominal, singularStrongStem, pluralStrongStem, pluralWeakStem, wordType);
     declension.plural.partitive = this.getPluralPartitives(singularStrongStem, pluralStrongStem, pluralWeakStem, a, wordType);
     declension.plural.nominativeAccusative = declension.plural.nominative;
     declension.plural.inessive = this.getPluralInessives(pluralWeakStem, a, wordType);
@@ -113,28 +136,42 @@ export class FiDeclensionService {
     declension.plural.comitative = this.getPluralComitatives(pluralStrongStem, wordType);
   }
 
-  private getSingularGenitive(strongStem: string, weakStem: string, wordType: number): string{
-    return weakStem + 'n';
+  /**
+   * Gets the singular genitive case using the singular weak stem.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @returns The singular genitive case.
+   */
+  private getSingularGenitive(singularWeakStem: string): string{
+    return singularWeakStem + 'n';
   }
 
-  private getSingularPartitives(noun: string, strongStem: string, a: string, wordType: number): string[] {
+  /**
+   * Gets the singular partitive cases using either the nominal or the singular strong stem, depending on the word type.
+   * @param nominal The nominal.
+   * @param singularStrongStem The singular strong stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The singular partitive cases.
+   */
+  private getSingularPartitives(nominal: string, singularStrongStem: string, a: string, wordType: number): string[] {
     let partitives: string[] = [];
     //stem
-    let stem = strongStem; //types 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 25, 26, 35
+    let stem = singularStrongStem; //types 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 25, 26, 35
     if([32, 33, 34, 35, 36, 37, 39, 41, 42, 43, 44, 46, 47].includes(wordType)){
-      stem = noun;
+      stem = nominal;
     }
     if([23, 24, 26, 27, 28, 31, 38, 40].includes(wordType)){
-      stem = this.removeLastN(strongStem, 1);
+      stem = this.removeLastN(singularStrongStem, 1);
     }
     if(wordType == 29 || wordType == 30){
-      stem = this.removeLastN(noun, 3) + 's';
+      stem = this.removeLastN(nominal, 3) + 's';
     }
     if(wordType == 45){
-      stem = this.removeLastN(noun, 1) + 't';
+      stem = this.removeLastN(nominal, 1) + 't';
     }
     if(wordType == 48){
-      stem = noun + 't';
+      stem = nominal + 't';
     }
     //partitives
     //types 3, 15, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27, 28, 29, 30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48
@@ -146,37 +183,58 @@ export class FiDeclensionService {
     }
     //partitives with different stems
     if(wordType == 25){
-      partitives.push(this.removeLastN(noun, 2) + 'nt' + a);
+      partitives.push(this.removeLastN(nominal, 2) + 'nt' + a);
     }
     if(wordType == 37){
-      partitives.push(strongStem + a);
+      partitives.push(singularStrongStem + a);
     }
     return partitives.sort();
   }
 
-  private getSingularInessive(strongStem: string, weakStem: string, a: string, wordType: number): string {
-    return weakStem + 'ss' + a;
+  /**
+   * Gets the singular inessive case using the singular weak stem and the 'a' or 'ä' ending.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @returns The singular inessive case.
+   */
+  private getSingularInessive(singularWeakStem: string, a: string): string {
+    return singularWeakStem + 'ss' + a;
   }
 
-  private getSingularElative(strongStem: string, weakStem: string, a: string, wordType: number): string {
-    return weakStem + 'st' + a;
+  /**
+   * Gets the singular elative case using the singular weak stem and the 'a' or 'ä' ending.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @returns The singular elative case.
+   */
+  private getSingularElative(singularWeakStem: string, a: string): string {
+    return singularWeakStem + 'st' + a;
   }
 
-  private getSingularIllatives(strongStem: string, wordType: number): string[] {
+  /**
+   * Gets the singular illative cases using the singular strong stem and the word type.
+   * 
+   * @param singularStrongStem The singular strong stem of the nominal.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The singular illative cases.
+   */
+  private getSingularIllatives(singularStrongStem: string, wordType: number): string[] {
     let illatives: string[] = [];
     //types 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 43, 45, 46
     if(!([17, 18, 19, 20, 21, 22, 41, 44, 47, 48].includes(wordType))){
-      illatives.push(strongStem + strongStem[strongStem.length -1] + 'n');
+      illatives.push(singularStrongStem + singularStrongStem[singularStrongStem.length -1] + 'n');
     } else {
       if([17, 20, 41, 44, 47, 48].includes(wordType)){
-        illatives.push(strongStem + 'seen');
+        illatives.push(singularStrongStem + 'seen');
       }
       if([18, 19, 20, 21, 22].includes(wordType)){
-        let vowel: string = strongStem[strongStem.length - 1];
+        let vowel: string = singularStrongStem[singularStrongStem.length - 1];
         //this is for loan words of type 21 and 22
         vowel = vowel == 'é' ? 'e' : vowel;
         if(wordType == 22){
-          let lastVowels: string = strongStem.match(this.type22EndingRegExp)[0];
+          let lastVowels: string = singularStrongStem.match(this.type22EndingRegExp)[0];
           lastVowels = lastVowels.substr(0, lastVowels.length - 2);
           vowel = lastVowels[lastVowels.length - 1];
           if(lastVowels == 'eau'){
@@ -189,41 +247,97 @@ export class FiDeclensionService {
             vowel = 'u';
           }
         }
-        illatives.push(strongStem + 'h' + vowel + 'n');
+        illatives.push(singularStrongStem + 'h' + vowel + 'n');
       }
     }
     return illatives.sort();
   }
 
-  private getSingularAdessive(weakStem: string, a: string): string {
-    return weakStem + 'll' + a;
+  /**
+   * Gets the singular adessive case using the singular weak stem and the 'a' or 'ä' ending.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @returns The singular adessive case.
+   */
+  private getSingularAdessive(singularWeakStem: string, a: string): string {
+    return singularWeakStem + 'll' + a;
   }
 
-  private getSingularAblative(weakStem: string, a: string): string {
-    return weakStem + 'lt' + a;
+  /**
+   * Gets the singular ablative case using the singular weak stem and the 'a' or 'ä' ending.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @returns The singular ablative case.
+   */
+  private getSingularAblative(singularWeakStem: string, a: string): string {
+    return singularWeakStem + 'lt' + a;
   }
 
-  private getSingularAllative(weakStem: string): string {
-    return weakStem + 'lle';
+  /**
+   * Gets the singular allative case using the singular weak stem.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @returns The singular allative case.
+   */
+  private getSingularAllative(singularWeakStem: string): string {
+    return singularWeakStem + 'lle';
   }
 
-  private getSingularEssive(strongStem: string, a: string): string {
-    return strongStem + 'n' + a;
+  /**
+   * Gets the singular essive case using the singular strong stem and the 'a' or 'ä' ending.
+   * 
+   * @param singularStrongStem The singular strong stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @returns The singular essive case.
+   */
+  private getSingularEssive(singularStrongStem: string, a: string): string {
+    return singularStrongStem + 'n' + a;
   }
 
-  private getSingularTranslative(weakStem: string): string {
-    return weakStem + 'ksi';
+  /**
+   * Gets the singular translative case using the singular weak stem.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @returns The singular translative case.
+   */
+  private getSingularTranslative(singularWeakStem: string): string {
+    return singularWeakStem + 'ksi';
   }
 
-  private getSingularAbessive(weakStem: string, a: string): string {
-    return weakStem + 'tt' + a;
+  /**
+   * Gets the singular abessive case using the singular weak stem and the 'a' or 'ä' ending.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @returns The singular abessive case.
+   */
+  private getSingularAbessive(singularWeakStem: string, a: string): string {
+    return singularWeakStem + 'tt' + a;
   }
 
-  private getPluralNominative(weakStem: string): string {
-    return weakStem + 't';
+  /**
+   * Gets the plural nominative case using the singular weak stem.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @returns The plural nominative case.
+   */
+  private getPluralNominative(singularWeakStem: string): string {
+    return singularWeakStem + 't';
   }
 
-  private getPluralGenitives(noun: string, singularStrongStem: string, pluralStrongStem: string, pluralWeakStem: string, wordType: number): string[] {
+  /**
+   * Gets the plural genitive cases using the nominal and different stems depending on the word type.
+   * 
+   * @param nominal The nominal.
+   * @param singularStrongStem The singular strong stem of the nominal.
+   * @param pluralStrongStem The plural strong stem of the nominal.
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural genitive cases.
+   */
+  private getPluralGenitives(nominal: string, singularStrongStem: string, pluralStrongStem: string, pluralWeakStem: string, wordType: number): string[] {
     let genitives: string[] = [];
     //stem
     let stem = pluralStrongStem;//2, 3, 6, 7, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
@@ -239,7 +353,7 @@ export class FiDeclensionService {
     }
     //genitives with different stems
     if([32, 33, 34, 36, 37, 39, 42].includes(wordType)){
-      genitives.push(noun + 'ten');
+      genitives.push(nominal + 'ten');
     }
     if([24, 26, 27, 28, 38].includes(wordType)){
       genitives.push(this.removeLastN(singularStrongStem, 1) + 'ten');
@@ -268,6 +382,16 @@ export class FiDeclensionService {
     return genitives.sort();
   }
 
+  /**
+   * Gets the plural partitive cases using different stems depending on the word type, and the 'a' or 'ä' vowel.
+   * 
+   * @param singularStrongStem The singular strong stem of the nominal.
+   * @param pluralStrongStem The plural strong stem of the nominal.
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @return The plural partitive cases.
+   */
   private getPluralPartitives(singularStrongStem: string, pluralStrongStem: string, pluralWeakStem: string, a: string, wordType: number): string[] {
     let partitives: string[] = [];
     //stem
@@ -292,27 +416,60 @@ export class FiDeclensionService {
     return partitives.sort();
   }
 
-  private getCommonPluralFormingCases(weakStem : string, ending: string, wordType: number){
-    let stem =  weakStem;
+  /**
+   * Gets the common transformation for the most of cases on plural form using the plural weak stem and the
+   * word type and adds the ending of the case given by the param `ending`.
+   * 
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param ending The ending of the case.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The corresponding plural cases.
+   */
+  private getCommonPluralFormingCases(pluralWeakStem : string, ending: string, wordType: number){
+    let stem =  pluralWeakStem;
     let cases: string [] = [stem + ending];
     if(wordType == 11){
-      cases.push(this.removeLastN(weakStem, 2) + 'i' + ending);
+      cases.push(this.removeLastN(pluralWeakStem, 2) + 'i' + ending);
     }
     return cases.sort();
   }
 
-  private getPluralInessives(weakStem: string, a: string, wordType: number): string[] {
-    return this.getCommonPluralFormingCases(weakStem, 'ss' + a, wordType);
+  /**
+   * Gets the plural inessive cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural inessive cases.
+   */
+  private getPluralInessives(pluralWeakStem: string, a: string, wordType: number): string[] {
+    return this.getCommonPluralFormingCases(pluralWeakStem, 'ss' + a, wordType);
   }
 
-  private getPluralElatives(weakStem: string, a: string, wordType: number): string[] {
-    return this.getCommonPluralFormingCases(weakStem, 'st' + a, wordType);
+  /**
+   * Gets the plural elative cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural elative cases.
+   */
+  private getPluralElatives(pluralWeakStem: string, a: string, wordType: number): string[] {
+    return this.getCommonPluralFormingCases(pluralWeakStem, 'st' + a, wordType);
   }
 
-  private getPluralIllatives(strongStem: string, weakStem: string, wordType: number): string[] {
+  /**
+   * Gets the plural illative cases using either the plural strong stem or the plural weak stem depending on the word type.
+   * 
+   * @param pluralStrongStem The plural strong stem of the nominal.
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural illative cases.
+   */
+  private getPluralIllatives(pluralStrongStem: string, pluralWeakStem: string, wordType: number): string[] {
     let illatives: string[] = [];
     //stem
-    let stem = strongStem;
+    let stem = pluralStrongStem;
     //illatives
     if([7, 10, 16, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 42, 45, 46].includes(wordType)){
       illatives.push(stem + 'in');
@@ -325,83 +482,146 @@ export class FiDeclensionService {
     }
     //illatives with different stems
     if(wordType == 4 || wordType == 14){
-      illatives.push(weakStem + 'hin');
+      illatives.push(pluralWeakStem + 'hin');
     }
     if(wordType == 11){
-      illatives.push(this.removeLastN(weakStem, 2) + 'iin');
+      illatives.push(this.removeLastN(pluralWeakStem, 2) + 'iin');
     }
     return illatives.sort();
   }
 
-  private getPluralAdessives(weakStem: string, a: string, wordType): string[] {
-    return this.getCommonPluralFormingCases(weakStem, 'll' + a, wordType);
+  /**
+   * Gets the plural adessive cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural adessive cases.
+   */
+  private getPluralAdessives(pluralWeakStem: string, a: string, wordType): string[] {
+    return this.getCommonPluralFormingCases(pluralWeakStem, 'll' + a, wordType);
   }
 
-  private getPluralAblatives(weakStem: string, a: string, wordType): string[] {
-    return this.getCommonPluralFormingCases(weakStem, 'lt' + a, wordType);
+  /**
+   * Gets the plural ablative cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural ablative cases.
+   */
+  private getPluralAblatives(pluralWeakStem: string, a: string, wordType): string[] {
+    return this.getCommonPluralFormingCases(pluralWeakStem, 'lt' + a, wordType);
   }
 
-  private getPluralAllatives(weakStem: string, wordType): string[] {
-    return this.getCommonPluralFormingCases(weakStem, 'lle', wordType);
+  /**
+   * Gets the plural allative cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural allative cases.
+   */
+  private getPluralAllatives(pluralWeakStem: string, wordType): string[] {
+    return this.getCommonPluralFormingCases(pluralWeakStem, 'lle', wordType);
   }
 
-  private getPluralEssives(strongStem: string, a: string, wordType): string[] {
-    return this.getCommonPluralFormingCases(strongStem, 'n' + a, wordType);
+  /**
+   * Gets the plural essive cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralStrongStem The plural strong stem of the nominal (it doens't use the weak stem as the other plural common forming methods).
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural essive cases.
+   */
+  private getPluralEssives(pluralStrongStem: string, a: string, wordType): string[] {
+    return this.getCommonPluralFormingCases(pluralStrongStem, 'n' + a, wordType);
   }
 
-  private getPluralTranslatives(weakStem: string, wordType): string[] {
-    return this.getCommonPluralFormingCases(weakStem, 'ksi', wordType);
+  /**
+   * Gets the plural translative cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural translative cases.
+   */
+  private getPluralTranslatives(pluralWeakStem: string, wordType): string[] {
+    return this.getCommonPluralFormingCases(pluralWeakStem, 'ksi', wordType);
   }
 
-  private getPluralAbessives(weakStem: string, a: string, wordType): string[] {
-    return this.getCommonPluralFormingCases(weakStem, 'tt' + a, wordType);
+  /**
+   * Gets the plural abessive cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural abessive cases.
+   */
+  private getPluralAbessives(pluralWeakStem: string, a: string, wordType): string[] {
+    return this.getCommonPluralFormingCases(pluralWeakStem, 'tt' + a, wordType);
   }
 
-  private getPluralInstructives(weakStem: string, wordType): string[] {
-    return this.getCommonPluralFormingCases(weakStem, 'n', wordType);
+  /**
+   * Gets the plural instructive cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralWeakStem The plural weak stem of the nominal.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural instructive cases.
+   */
+  private getPluralInstructives(pluralWeakStem: string, wordType): string[] {
+    return this.getCommonPluralFormingCases(pluralWeakStem, 'n', wordType);
   }
 
-  private getPluralComitatives(strongStem: string, wordType): string[] {
-    return this.getCommonPluralFormingCases(strongStem, 'neen', wordType);
+  /**
+   * Gets the plural comitative cases calling the `getCommonPluralFormingCases` method and adding its own ending.
+   * 
+   * @param pluralWeakStem The plural strong stem of the nominal (it doens't use the weak stem as the other plural common forming methods).
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural comitative cases.
+   */
+  private getPluralComitatives(pluralWeakStem: string, wordType): string[] {
+    return this.getCommonPluralFormingCases(pluralWeakStem, 'neen', wordType);
   }
 
-  private inverseGradate(noun: string, wordType: number, wordGradation: string): string {
-    let splitNumber: number = noun == 'kerroin' ? 3 : wordType == 48 ? 1:  2;
-    let nounStart: string = this.removeLastN(noun, splitNumber);
-    let nounEnd: string = this.getLastN(noun, splitNumber);
-    switch(wordGradation){
-      case 'tt-t': case 'kk-k': case 'pp-p':case 'rh-r':
-      return nounStart + wordGradation[1] + nounEnd;
-      case 'k-': case 't-':
-      return nounStart + wordGradation[0] + nounEnd;
-      case 'p-v': case 't-d': case 'k-j':
-      return this.removeLastN(nounStart, 1) + wordGradation[0] + nounEnd;
-      case 'lt-ll': case 'nt-nn': case 'rt-rr': case 'nk-ng': case 'mp-mm':
-      return this.removeLastN(nounStart, 1) + wordGradation[1] + nounEnd;
-
-    }
-    return noun;
+  /**
+   * Gets the inverse gradation of the nominal.
+   * 
+   * @param nominal The nominal.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @param wordGradation The gradation type.
+   * @returns The inverse gradation.
+   */
+  private inverseGradate(nominal: string, wordType: number, wordGradation: string): string {
+    let splitNumber: number = nominal == 'kerroin' ? 3 : wordType == 48 ? 1:  2;
+    let nominalBeginning: string = this.removeLastN(nominal, splitNumber);
+    let nominalEnd: string = this.getLastN(nominal, splitNumber);
+    return this.inverseGradateWordBeginning(nominalBeginning, wordGradation) + nominalEnd;
   }
 
-  private gradate(noun: string, wordGradation: string): string {
-    let nounStart: string = this.removeLastN(noun, 1);
-    let nounEnd: string = this.getLastN(noun, 1);
-    switch(wordGradation){
-      case 'kk-k': case 'pp-p': case 'tt-t': case 'k-': case 'dd-d': case 'gg-g':
-      return this.removeLastN(nounStart, 1) + nounEnd;
-      case 'p-v': case 't-d': case 'k-v': case 'k-j': case 'k-\'':
-      return this.removeLastN(nounStart, 1) + wordGradation[2] + nounEnd;
-      case 'mp-mm': case 'lt-ll': case 'nt-nn': case 'rt-rr': case 'nk-ng':
-      return this.removeLastN(nounStart, 1) + wordGradation[4] + nounEnd;
-      case 'ik-j': case 'ok-u': case 'tt-y':
-      return this.removeLastN(nounStart, 2) + wordGradation[3] + nounEnd;
-    }
-    return noun;
+  /**
+   * Gets the gradation of the nominal.
+   * 
+   * @param nominal The nominal.
+   * @param wordGradation The gradation type.
+   * @returns The gradation.
+   */
+  private gradate(nominal: string, wordGradation: string): string {
+    let nominalBeginning: string = this.removeLastN(nominal, 1);
+    let nominalEnd: string = this.getLastN(nominal, 1);
+    return this.gradateWordBeginning(nominalBeginning, wordGradation) + nominalEnd;
   }
 
-  private getStrongStem(noun: string, a: string, wordType: number, wordGradation: string): string {
+  /**
+   * Gets the singular strong stem.
+   * 
+   * @param nominal The nominal.
+   * @param a The 'a' or 'ä' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @param wordGradation The gradation type.
+   * @returns The singular strong stem.
+   */
+  private getSingularStrongStem(nominal: string, a: string, wordType: number, wordGradation: string): string {
     //stem
-    let stem: string = noun; //1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
+    let stem: string = nominal; //1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
     //inverse gradate
     if([32, 33, 41, 43, 48].includes(wordType) && wordGradation != null){
       stem = this.inverseGradate(stem, wordType, wordGradation);
@@ -413,7 +633,7 @@ export class FiDeclensionService {
     if([7, 23, 24, 25, 26, 29, 30, 43].includes(wordType)){
       return this.removeLastN(stem, 1) + 'e';
     }
-    if(wordType == 10 && noun.endsWith('n')){
+    if(wordType == 10 && nominal.endsWith('n')){
       return stem.substr(0, stem.length - 1);
     }
     if(wordType == 16){
@@ -467,13 +687,22 @@ export class FiDeclensionService {
     return stem;
   }
 
-  private getPluralStrongStem(noun: string, singularStrongStem: string, o: string, wordType: number): string {
+  /**
+   * Gets the plural strong stem.
+   * 
+   * @param nominal The nominal.
+   * @param singularStrongStem The singular strong stem of the nominal.
+   * @param o The 'o' or 'ö' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural strong stem.
+   */
+  private getPluralStrongStem(nominal: string, singularStrongStem: string, o: string, wordType: number): string {
     let stem = singularStrongStem;
     if([5, 6, 8].includes(wordType)){
       return this.removeLastN(stem, 1) + 'ei';
     }
     if([7, 23, 24, 25, 26, 27, 28, 29, 30, 31].includes(wordType)){
-      return noun;
+      return nominal;
     }
     if([9, 11, 12, 13, 14].includes(wordType)){
       return this.removeLastN(stem, 1) + o + 'i';
@@ -485,16 +714,24 @@ export class FiDeclensionService {
       return this.removeLastN(stem, 2) + stem[stem.length -1] + 'i';
     }
     if(wordType == 40){
-      return this.removeLastN(noun, 1) + 'ksi';
+      return this.removeLastN(nominal, 1) + 'ksi';
     }
     if(wordType == 45 || wordType == 46){
-      return this.removeLastN(noun, 1) + 'nsi';
+      return this.removeLastN(nominal, 1) + 'nsi';
     }
     return stem + 'i';
   }
 
-  private getWeakStem(strongStem: string, wordType: number, wordGradation: string): string {
-    let stem = strongStem;
+  /**
+   * Gets the singular weak stem.
+   * 
+   * @param singularStrongStem The singular strong stem of the nominal.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @param wordGradation The gradation type.
+   * @returns The singular weak stem.
+   */
+  private getSingularWeakStem(singularStrongStem: string, wordType: number, wordGradation: string): string {
+    let stem = singularStrongStem;
     if([1, 4, 5, 7, 8, 9, 10, 14, 16, 27, 28, 31, 36, 37, 40, 45, 46].includes(wordType) && wordGradation != null){
       stem = this.gradate(stem, wordGradation);
     }
@@ -505,6 +742,15 @@ export class FiDeclensionService {
 
   }
 
+  /**
+   * Gets the plural weak stem.
+   * 
+   * @param singularWeakStem The singular weak stem of the nominal.
+   * @param pluralStrongStem The plural strong stem of the nominal.
+   * @param o The 'o' or 'ö' vowel depending on its vowel harmony.
+   * @param wordType The type of the nominal (KOTUS: http://kaino.kotus.fi/sanat/nykysuomi/taivutustyypit.php).
+   * @returns The plural weak stem.
+   */
   private getPluralWeakStem(singularWeakStem: string, pluralStrongStem: string, o: string, wordType: number): string {
     let stem = singularWeakStem;
     //types 2, 3, 6, 11, 12, 13, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 38, 39, 40, 42, 43, 44, 45, 46, 47, 48
@@ -524,16 +770,11 @@ export class FiDeclensionService {
 
   }
 
-  private removeLastN = (noun: string, n: number): string => {
-    return noun.substr(0, noun.length - n);
-  }
-
-  private getLastN = (noun: string, n: number): string => {
-    return noun.substr(noun.length - n, noun.length);
-  }
-
-  private isVowel = (letter: string): boolean => {
-    return this.vowels.indexOf(letter) > -1;
-  }
+  /**
+   * Checks if the letter is a Finnish vowel.
+   * @param letter The letter to check.
+   * @return `true` if it is a Finnish vowel, `false` if not.
+   */
+  private isVowel = (letter: string): boolean => this.vowels.includes(letter);
 
 }

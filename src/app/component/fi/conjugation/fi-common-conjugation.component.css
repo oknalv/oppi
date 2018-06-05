@@ -1,0 +1,16 @@
+.hide-section-icon {
+    padding: 5px;
+    cursor: pointer;
+}
+
+thead.forms tr {
+    background-color: var(--green);
+}
+
+thead.mood tr {
+    background-color: var(--medium-green);
+}
+
+td i {
+    color: var(--dark-gray);
+}
