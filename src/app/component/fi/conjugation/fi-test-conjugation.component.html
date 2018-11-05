@@ -170,7 +170,7 @@
       <td class='f-3-8 grid no-wrap v-center'>
         <i>ei</i>&nbsp;
         <input [(ngModel)]='conjugationToCheck.moods.indicative.present.passiveNegative'
-          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.negative6 === true ? "red" : conjugationErrors.moods.indicative.present.passiveNegative === false ? "green" : "" : "")'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.indicative.present.passiveNegative === true ? "red" : conjugationErrors.moods.indicative.present.passiveNegative === false ? "green" : "" : "")'
           (keydown)='$event.key == "Enter" ? check() : null'
           tabindex='2'/>
       </td>
@@ -1318,7 +1318,7 @@
       <td class='f-3-8 grid no-wrap v-center'>
         <i>ei</i>&nbsp;
         <input [(ngModel)]='conjugationToCheck.moods.potential.present.passiveNegative'
-          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.negative6 === true ? "red" : conjugationErrors.moods.potential.present.passiveNegative === false ? "green" : "" : "")'
+          [ngClass]='(conjugationErrors ? conjugationErrors.moods.potential.present.passiveNegative === true ? "red" : conjugationErrors.moods.potential.present.passiveNegative === false ? "green" : "" : "")'
           (keydown)='$event.key == "Enter" ? check() : null'
           tabindex='18'/>
       </td>
