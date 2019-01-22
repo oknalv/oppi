@@ -80,32 +80,4 @@ export class OppiComponent implements OnInit, OnDestroy {
       this.navigateWithWordDataContainer(wordDataContainer, language, 'test');
     });
   }
-
-  clickBanner(event: MouseEvent): void {
-    let x: number = event.offsetX, y: number = event.offsetY;
-    switch(this.currentBanner){
-      case 0:
-      this.openBannerCounter++;
-      if(this.openBannerCounter < 3){
-        setTimeout(() => {
-          this.openBannerCounter = 0;
-        }, 500);
-      } else {
-        this.openBannerCounter = 0;
-        this.currentBanner++;
-      }
-      break;
-      case 1:
-      //oringin (152, 26), radius 15
-      let difference: number = Math.sqrt((152 - x) * (152 - x) + (26 - y) * (26 - y));
-      if( difference <= 15){
-        this.currentBanner++;
-        break;
-      }
-      default:
-      this.optionsMenu.hide();
-      break;
-    }
-  }
-
 }

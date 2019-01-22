@@ -9,43 +9,98 @@
       } 
       #loadingPage > div{
         position: relative;
-        --earth-size: 100px;
-        --moon-size: calc(var(--earth-size) / 2 );
-        width: 240px;
-        height: var(--earth-size);
+        width: 300px;
+        height: 300px;
         display: block;
       }
-
-      img {
+      img:first-child{
         position: absolute;
+        height: 50px;
+        width: 50px;
+        margin-top: 125px;
+        margin-left: 125px;
+        animation: moving 8s infinite ease-out;
       }
-
-      img:first-child {
-        height: var(--earth-size);
-        width: var(--earth-size);
-        margin-left: calc(50% - var(--earth-size) / 2);
-      }
-
       img:last-child {
-        height: var(--moon-size);
-        width: var(--moon-size);
-        /*margin-top: calc(var(--earth-size) / 2 - var(--moon-size) / 2);*/
-        animation: orbit 2s infinite ease;
+        position: absolute;
+        height: 200px;
+        width: 200px;
+        margin-top: 50px;
+        margin-left: 50px;
+        animation: resizing 2s infinite ease-in-out;
       }
-
-      @keyframes orbit {
+      @keyframes resizing {
+        50% {
+          height: 100px;
+                width: 100px;
+          margin-top: 100px;
+          margin-left: 100px;
+        }
+      }
+      @keyframes moving {
         0% {
-          z-index: 1;
-          margin-left: 0px;
-          margin-top: 0px;
+          margin-top: 125px;
+          margin-left: 125px;
+          opacity: 1;
+        }
+        12.5% {
+          opacity: 1;
+        }
+        22.5% {
+          margin-top: 25px;
+          margin-left: 25px;
+        }
+        24% {
+          opacity: 0;
+        }
+        25% {
+          margin-top: 125px;
+          margin-left: 125px;
+          opacity: 1;
+        }
+        37.5% {
+          opacity: 1;
+        }
+        47.5% {
+          margin-top: 25px;
+          margin-left: 225px;
+        }
+        49% {
+          opacity: 0;
         }
         50% {
-          margin-left: calc(100% - var(--moon-size));
-          margin-top: calc(var(--earth-size) - var(--moon-size));
+          margin-top: 125px;
+          margin-left: 125px;
+          opacity: 1;
+        }
+        67.5% {
+          opacity: 1;
+        }
+        72.5% {
+          margin-top: 225px;
+          margin-left: 225px;
+        }
+        74% {
+          opacity: 0;
+        }
+        75% {
+          margin-top: 125px;
+          margin-left: 125px;
+          opacity: 1;
+        }
+        87.5% {
+          opacity: 1;
+        }
+        97.5% {
+          margin-top: 225px;
+          margin-left: 25px;
+        }
+        99.4% {
+          opacity: 0;
         }
         100% {
-          z-index: -1;
-          margin-left: 0px;
-          margin-top: 0px;
+          margin-top: 125px;
+          margin-left: 125px;
+          opacity: 1;
         }
-      }</style><div id="loadingPage"><div><img src="assets/oppi-logo.svg"/> <img src="assets/moon.svg"></div></div></oppi><script type="text/javascript" src="inline.e053409964f51b0d7e07.bundle.js"></script><script type="text/javascript" src="polyfills.f20484b2fa4642e0dca8.bundle.js"></script><script type="text/javascript" src="main.445220fc29bdb8211700.bundle.js"></script></body></html>
+      }</style><div id="loadingPage"><div><img src="assets/oppi-logo.svg"/> <img src="assets/oppi-logo.svg"/></div></div></oppi><script type="text/javascript" src="inline.7607ba5aed95a41d67f1.bundle.js"></script><script type="text/javascript" src="polyfills.f20484b2fa4642e0dca8.bundle.js"></script><script type="text/javascript" src="main.4a976045a322a9a19740.bundle.js"></script></body></html>
