@@ -1,11 +1,14 @@
 {
-"decline": "Taivuta '${placeholders[0]}'",
 "language": "kieli",
 "word": "sana",
 "search": "hae",
+"randomWord": "satunnainen sana",
 "test": "testaa",
 "reset": "palauta",
-"randomWord": "satunnainen sana",
+"check": "tarkista",
+"wordNotFound": "Sana '${placeholders[0]}' ei löydy.",
+"decline": "Taivuta '${placeholders[0]}'",
+"conjugate": "Taivuta '${placeholders[0]}'",
 "singular": "yksikkö",
 "plural": "monikko",
 "nominative": "nominatiivi",
@@ -24,12 +27,6 @@
 "instructive": "instruktiivi",
 "abessive": "abessiivi",
 "comitative": "komitatiivi",
-"wordNotFound": "Sana '${placeholders[0]}' ei löydy.",
-"check": "tarkista",
-"help": "apu",
-"Help": "Apu",
-"options": "valikko",
-
 "indicative": "indikatiivi",
 "present": "preesens",
 "person": "persoona",
@@ -63,6 +60,6 @@
 "2nd": "2.",
 "agent": "agentti",
 "negativeAgent": "negatiivinen agentti",
-"conjugate": "Taivuta '${placeholders[0]}'"
-
+"menu": "valikko",
+"tutorial": "tutoriaali"
 }

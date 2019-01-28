@@ -7,6 +7,7 @@ import { TutorialSearchTestCommonComponent } from '../common/tutorial-search-tes
   styleUrls: [
     '../../home/home.component.css',
     '../../fi/common.component.css',
+    '../../fi/declension/fi-test-declension.component.css',
     '../common/tutorial-common.component.css',
     './tutorial-test.component.css'
   ]
