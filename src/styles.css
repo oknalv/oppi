@@ -12,10 +12,20 @@
     --body-width: 600px;
 }
 
+p {
+    text-align: justify;
+    text-indent: 2em;
+}
+
+html {
+    height: 100%;
+}
+
 body {
     padding: 5px;
     max-width: var(--body-width);
     margin: 0 auto;
+    height: 100%;
 }
 
 button, select, button *, select *  {
@@ -23,6 +33,10 @@ button, select, button *, select *  {
     --button-background-color: var(--green);
     --button-before-color: white;
     font-weight: bold;
+}
+
+button:disabled, button:disabled * {
+    --button-background-color: var(--light-green);
 }
 
 table {

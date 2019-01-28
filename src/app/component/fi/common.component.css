@@ -1,4 +1,4 @@
-.title > *:not(:last-child), #actions {
+.word-title > *:not(:last-child), #actions {
     margin: 5px;
 }
 

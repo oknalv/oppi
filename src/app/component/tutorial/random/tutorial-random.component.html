@@ -1,0 +1,22 @@
+<h1>{{ 'RandomWord' | i18n }}</h1>
+<div class='grid' id='search'>
+  <div class='grow-1' id='search-input'>
+    <i class='fa fa-close' *ngIf='wordToSearch'></i>
+    <input [value]='wordToSearch'
+      placeholder='{{ "word" | i18n }}'/>
+  </div>
+  <div>
+    <button class='icon' [attr.disabled]='disabledButtons ? "" : null'>
+      <i class='fa fa-file-text-o'></i>
+    </button>
+    <button class='icon {{ actionButton ? "action" : ""}}'>
+      <i class='fa fa-random'></i>
+    </button>
+    <button class='icon' [attr.disabled]='disabledButtons ? "" : null'>
+      <i class='fa fa-search'></i>
+    </button>
+  </div>
+</div>
+<p class='{{ showExplanation ? "" : "invisible" }}' id='explanation'>
+  {{ explanation ? (explanation | i18n) : '' }}
+</p>

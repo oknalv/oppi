@@ -1,0 +1,57 @@
+<header>
+  <div class='grid h-between title'>
+    <button (click)='menu.show()' title='{{ "menu" | i18n }}' class='icon' id='menuButton'>
+      <i class='fa fa-bars'></i>
+    </button>
+    <img src='assets/oppi.svg'>
+    <button class='icon'>
+      <i class='fa fa-bars'></i>
+    </button>
+  </div>
+  <div class='grid' id='search'>
+    <div class='grow-1' id='search-input'>
+      <i class='fa fa-close' *ngIf='wordToSearch' (click)='wordToSearch = ""; searchInput.focus(); searchWord()'></i>
+      <input [(ngModel)]='wordToSearch'
+        #searchInput
+        (keydown)='$event.key == "Enter" ? searchWord(!$event.ctrlKey) : null'
+        placeholder='{{ "word" | i18n }}'/>
+    </div>
+    <div>
+      <button (click)='searchWord(true)' title='{{ "test" | i18n }}' class='icon'>
+        <i class='fa fa-file-text-o'></i>
+      </button>
+      <button (click)='getRandomWord()' title='{{ "randomWord" | i18n }}' class='icon'>
+        <i class='fa fa-random'></i>
+      </button>
+      <button (click)='searchWord()' title='{{ "search" | i18n }}' class='icon'>
+        <i class='fa fa-search'></i>
+      </button>
+    </div>
+  </div>
+</header>
+<div>
+  <div *ngIf='wrongWord'>
+    {{ 'wordNotFound' | i18n: wrongWord }}
+  </div>
+  <router-outlet></router-outlet>
+</div>
+<side-menu #menu>
+  <div id='menu' class='grid vertical'>
+    <div>
+      <img [src]='"assets/banner.svg"'>
+    </div>
+    <div>
+      <language-changer></language-changer>
+    </div>
+    <div class='grow-1'>
+      <button title='{{ "tutorial" | i18n }}' class='icon' (click)='openTutorial()'>
+        <i class='fa fa-book'></i>&nbsp;{{ 'tutorial' | i18n }}
+      </button>
+    </div>
+    <div>
+      <button (click)='about()' title='{{ "about" | i18n }}' class='icon'>
+        <i class='fa fa-info-circle'></i>&nbsp;{{ 'about' | i18n }}
+      </button>
+    </div>
+  </div>
+</side-menu>

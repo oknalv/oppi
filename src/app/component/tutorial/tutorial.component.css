@@ -1,0 +1,47 @@
+:host {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+header, footer {
+  padding: 5px;
+}
+
+header > button {
+  --button-background-color: white;
+  font-weight: initial;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+header > button > i {
+  --color: var(--green);
+}
+
+section {
+  position: relative;
+}
+
+section > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+section > div:first-child {
+  padding: 10px;
+}
+
+footer > button {
+  font-size: 3rem;
+  --button-background-color: transparent;
+}
+
+footer > button.invisible {
+  visibility: hidden;
+}
+
+footer > button * {
+  --color: var(--green)
+}

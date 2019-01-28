@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { DataRouterService } from '../../service/data-router.service';
 import { ActivatedRoute, Params } from '@angular/router';
 

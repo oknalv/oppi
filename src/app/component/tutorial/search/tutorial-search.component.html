@@ -1,0 +1,79 @@
+<h1>{{ 'searching' | i18n }}</h1>
+<div class='grid' id='search'>
+  <div class='grow-1' id='search-input'>
+    <i class='fa fa-close' *ngIf='wordToSearch'></i>
+    <input [value]='wordToSearch'
+      class='{{ focusInput ? "focus" : ""}}'
+      placeholder='{{ "word" | i18n }}'/>
+  </div>
+  <div>
+    <button class='icon' [attr.disabled]='disabledButtons ? "" : null'>
+      <i class='fa fa-file-text-o'></i>
+    </button>
+    <button class='icon' [attr.disabled]='disabledButtons ? "" : null'>
+      <i class='fa fa-random'></i>
+    </button>
+    <button class='icon {{ actionButton ? "action" : ""}}'>
+      <i class='fa fa-search'></i>
+    </button>
+  </div>
+</div>
+<div class='{{ searchTable ? "": "invisible" }}' id="table">
+  <div class='grid v-center word-title'>
+    <h3>talo</h3>
+    <a>
+      <i class='fa fa-external-link'></i>
+    </a>
+  </div>
+  <table>
+    <thead>
+      <tr class='grid'>
+        <th class='f-2-8'></th>
+        <th class='f-3-8'>
+          {{ 'singular' | i18n }}
+        </th>
+        <th class='f-3-8'>
+          {{ 'plural' | i18n }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class='grid'>
+        <th class='f-2-8'>
+          {{ 'nominative' | i18n }}
+        </th>
+        <td class='f-3-8'>
+          talo
+        </td>
+        <td class='f-3-8'>
+          talot
+        </td>
+      </tr>
+      <tr class='grid'>
+        <th class='f-2-8'>
+          {{ 'genitive' | i18n }}
+        </th>
+        <td class='f-3-8'>
+          talon
+        </td>
+        <td class='f-3-8'>
+          talojen
+        </td>
+      </tr>
+      <tr class='grid'>
+        <th class='f-2-8'>
+          {{ 'partitive' | i18n }}
+        </th>
+        <td class='f-3-8'>
+          taloa
+        </td>
+        <td class='f-3-8'>
+          taloja
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p class='{{ showExplanation ? "" : "invisible" }}' id='explanation'>
+  {{ explanation ? (explanation | i18n) : '' }}
+</p>

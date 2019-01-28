@@ -1,0 +1,7 @@
+section:not(:last-child) {
+  margin-bottom: 50px
+}
+
+section > h1 {
+  margin-bottom: 10px;
+}

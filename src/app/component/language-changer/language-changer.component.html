@@ -1,0 +1,4 @@
+<label title='{{ "language" | i18n }}'><i class='fa fa-language'></i>&nbsp;{{ 'language' | i18n }}</label>
+<select [(ngModel)]='currentLanguageKey' (change)='changeLanguage()'>
+  <option *ngFor='let lang of languageKeys' value='{{lang}}'>{{languages[lang]}}</option>
+</select>

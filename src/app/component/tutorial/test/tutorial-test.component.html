@@ -1,0 +1,101 @@
+<h1>{{ 'testing' | i18n }}</h1>
+<div class='grid' id='search'>
+  <div class='grow-1' id='search-input'>
+    <i class='fa fa-close' *ngIf='wordToSearch'></i>
+    <input [value]='wordToSearch'
+      class='{{ focusInput ? "focus" : ""}}'
+      placeholder='{{ "word" | i18n }}'/>
+  </div>
+  <div>
+    <button class='icon {{ actionButton ? "action" : ""}}' [attr.disabled]='disabledAllButCheckButton || disabledAllButResetButton ? "" : null'>
+      <i class='fa fa-file-text-o'></i>
+    </button>
+    <button class='icon' [attr.disabled]='disabledButtons || disabledAllButCheckButton || disabledAllButResetButton ? "" : null'>
+      <i class='fa fa-random'></i>
+    </button>
+    <button class='icon' [attr.disabled]='disabledButtons || disabledAllButCheckButton || disabledAllButResetButton ? "" : null'>
+      <i class='fa fa-search'></i>
+    </button>
+  </div>
+</div>
+<div class='{{ searchTable ? "": "invisible" }}' id="table">
+  <div class='grid h-between v-center'>
+    <div class='grid v-center word-title'>
+      <h3>{{'decline' | i18n: 'talo'}}</h3>
+      <a>
+        <i class='fa fa-external-link'></i>
+      </a>
+    </div>
+    <div>
+      <button class='icon {{ actionResetButton ? "action" : ""}}' [attr.disabled]='disabledAllButCheckButton ? "" : null'>
+          <i class='fa fa-repeat'></i>
+      </button>
+      <button class='icon {{ actionCheckButton ? "action" : ""}}' [attr.disabled]='disabledAllButResetButton ? "" : null'>
+          <i class='fa fa-check-square-o'></i>
+      </button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr class='grid'>
+        <th class='f-1-2'>
+          {{ 'singular' | i18n }}
+        </th>
+        <th class='f-1-2'>
+          {{ 'plural' | i18n }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class='grid'>
+        <td class='f-1-2'>
+          <div>
+            <input
+              class='{{ nominativeSingularFocus ? "focus": "" }} {{ changeInputColors ? "green" : ""}}'
+              [value]='nominativeSingular'
+              placeholder='{{ "nominative" | i18n }}'/>
+          </div>
+        </td> 
+        <td class='f-1-2'>
+          <div>
+            <input
+              class='{{ nominativePluralFocus ? "focus": "" }} {{ changeInputColors ? "red" : ""}}'
+              [value]='nominativePlural'
+              placeholder='{{ "nominative" | i18n }}'/>
+          </div>
+        </td> 
+      </tr>
+      <tr class='grid'>
+        <td class='f-1-2'>
+          <div>
+            <input
+              placeholder='{{ "genitive" | i18n }}'/>
+          </div>
+        </td> 
+        <td class='f-1-2'>
+          <div>
+            <input
+              placeholder='{{ "genitive" | i18n }}'/>
+          </div>
+        </td> 
+      </tr>
+      <tr class='grid'>
+        <td class='f-1-2'>
+          <div>
+            <input
+              placeholder='{{ "partitive" | i18n }}'/>
+          </div>
+        </td> 
+        <td class='f-1-2'>
+          <div>
+            <input
+              placeholder='{{ "partitive" | i18n }}'/>
+          </div>
+        </td> 
+      </tr>
+    </tbody>
+  </table>
+</div>
+<p class='{{ showExplanation ? "" : "invisible" }}' id='explanation'>
+  {{ explanation ? (explanation | i18n) : '' }}
+</p>

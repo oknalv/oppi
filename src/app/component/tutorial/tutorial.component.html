@@ -1,0 +1,20 @@
+<header class='grid h-between v-center'>
+  <language-changer></language-changer>
+  <button (click)="exit()" title='{{ "exitTutorial" | i18n }}'>
+    <i class='fa fa-times'></i>
+  </button>
+</header>
+<section class='grow-1'>
+  <div class="grid v-center h-center">
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <div></div>
+</section>
+<footer class='grid h-around'>
+  <button *ngIf='isFirst' class='invisible'><i class='fa fa-arrow-left'></i></button>
+  <button *ngIf='!isFirst' (click)='previous()'><i class='fa fa-arrow-left'></i></button>
+  <button *ngIf='!isLast' (click)='next()'><i class='fa fa-arrow-right'></i></button>
+  <button *ngIf='isLast' (click)='exit()'><i class='fa fa-check-circle'></i></button>
+</footer>

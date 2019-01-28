@@ -1,0 +1,67 @@
+.big-icon {
+    font-size: 1.5em;
+}
+
+img {
+    max-height: 36px;
+}
+
+.title {
+    padding: 5px;
+}
+
+.title > button:last-child {
+    visibility: hidden;
+}
+
+#search {
+    margin: 10px 0 10px 0;
+}
+
+#search > div {
+    padding: 5px;
+}
+
+#menu {
+    height: 100%;
+}
+
+#menu > *:not(:first-child) {
+    padding: 5px;
+}
+
+#menu img {
+    max-height: 100%;
+    height: 100%;
+    width: 100%;
+}
+
+#menu button {
+    width: 100%;
+}
+
+#menuButton, #menuButton * {
+    --color: var(--green);
+    --button-background-color: white;
+}
+
+.title i::before {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+#search-input {
+    position: relative;
+}
+
+#search-input > i {
+    position: absolute;
+    padding: 6px 0px;
+    color: var(--dark-gray);
+    right: 1em;
+    cursor: pointer;
+}
+
+#search-input > i + input {
+    padding-right: calc(var(--input-left-right-padding) * 3 + 1px);
+}

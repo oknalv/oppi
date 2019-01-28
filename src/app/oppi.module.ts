@@ -18,14 +18,32 @@ import { FiTestDeclensionComponent } from './component/fi/declension/fi-test-dec
 import { FiSearchConjugationComponent } from './component/fi/conjugation/fi-search-conjugation.component';
 import { FiTestConjugationComponent } from './component/fi/conjugation/fi-test-conjugation.component';
 import { UtilsService } from './service/utils.service';
+import { TutorialComponent } from './component/tutorial/tutorial.component';
+import { HomeComponent } from './component/home/home.component';
+import { LanguageChangerComponent } from './component/language-changer/language-changer.component';
+import { TutorialStartComponent } from './component/tutorial/start/tutorial-start.component';
+import { TutorialSearchComponent } from './component/tutorial/search/tutorial-search.component';
+import { TutorialTestComponent } from './component/tutorial/test/tutorial-test.component';
+import { TutorialRandomComponent } from './component/tutorial/random/tutorial-random.component';
+import { TutorialInfoComponent } from './component/tutorial/info/tutorial-info.component';
+import { TutorialEndComponent } from './component/tutorial/end/tutorial-end.component';
 
 @NgModule({
   declarations: [
     OppiComponent,
+    HomeComponent,
+    LanguageChangerComponent,
     FiSearchDeclensionComponent,
     FiTestDeclensionComponent,
     FiSearchConjugationComponent,
-    FiTestConjugationComponent
+    FiTestConjugationComponent,
+    TutorialComponent,
+    TutorialStartComponent,
+    TutorialSearchComponent,
+    TutorialTestComponent,
+    TutorialRandomComponent,
+    TutorialInfoComponent,
+    TutorialEndComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +52,7 @@ import { UtilsService } from './service/utils.service';
     FormsModule,
     HttpClientModule,
     UiModule,
-    I18nModule.forRoot('assets/i18n/', 'en', {'en': 'English', 'es': 'español', 'fi': 'suomi', 'pt': 'português', 'gl': 'galego'})
+    I18nModule.forRoot('assets/i18n/', 'en', {'en': 'English', 'es': 'español', 'fi': 'suomi', 'fr': 'français', 'gl': 'galego', 'pt': 'português'})
   ],
   providers: [
     UtilsService,
