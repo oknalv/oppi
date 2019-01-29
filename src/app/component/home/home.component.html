@@ -43,7 +43,16 @@
     <div>
       <language-changer></language-changer>
     </div>
-    <div class='grow-1'>
+    <div id='randomWordOptions' class='grow-1'>
+      <div>{{ 'randomWordOptions' | i18n }}</div>
+      <div (click)='randomVerb = !randomVerb; checkRandomOptions(true)'>
+        <i class='fa fa{{ randomVerb ? "-check" : "" }}-square-o'></i>{{ 'includeVerbs' | i18n }}
+      </div>
+      <div (click)='randomNominal = !randomNominal; checkRandomOptions(false)'>
+        <i class='fa fa{{ randomNominal ? "-check" : "" }}-square-o'></i>{{ 'includeNominals' | i18n }}
+      </div>
+    </div>
+    <div>
       <button title='{{ "tutorial" | i18n }}' class='icon' (click)='openTutorial()'>
         <i class='fa fa-book'></i>&nbsp;{{ 'tutorial' | i18n }}
       </button>

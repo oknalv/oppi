@@ -64,7 +64,7 @@
 "tutorial": "tutorial",
 "skipTutorial": "sair do tutorial",
 "about": "sobre Oppi",
-"tutorialIntroduction": "Oppi é uma ferramenta para praticar a declinação e a conjugação da língua finesa. Seu funcionamento é simples, tem dois modos principais: pesquisa e teste.",
+"tutorialIntroduction": "Oppi é uma ferramenta para praticar a declinação e a conjugação da língua finesa. Seu funcionamento é simples, tem dois modos principais: pesquisa e teste. Deslize ou pressione as setas para mover-se dentro do tutorial ou pressiona a × do canto superior direito para sair dele.",
 "searching": "Pesquisa",
 "searchExplanation": "Escreva uma palavra no campo de pesquisa e pressione o botão de pesquisar (também pode pressionar Ctrl + ⏎ no teclado).",
 "searchTableExplanation": "Mostra a tabela de declinação ou de conjugação dessa palavra.",
@@ -81,5 +81,8 @@
 "onlyRegularAndNotKumajaaAndKaikaa": "Esta aplicação somente pode conjugar verbos regulares do finês com um tipo de conjugação diferente do tipo de kumajaa e do tipo de kaikaa.",
 "enjoyOppi": "Isto é tudo por enquanto. No futuro acrescentarei mais características. Espero que encontre útil esta aplicação.",
 "aboutText": "Ferramenta para aprender a declinar e conjugar en finês. Se tem alguma sugestão ou quere ajudar, contate-me no GitHub.",
-"viewOnGitHub": "Ver o projecto no GitHub"
+"viewOnGitHub": "Ver o projecto no GitHub",
+"randomWordOptions": "Opções de palavra aleatória",
+"includeVerbs": "incluir verbos",
+"includeNominals": "incluir nominais"
 }

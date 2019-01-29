@@ -80,3 +80,15 @@ modal-body button, modal-body button * {
     --color: black;
     --a-color: black;
 }
+
+#randomWordOptions > div:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+#randomWordOptions > div:not(:first-child) {
+    margin-left: 10px;
+}
+
+#randomWordOptions > div > i {
+    width: 30px;
+}

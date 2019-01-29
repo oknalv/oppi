@@ -226,7 +226,7 @@ export class WordInfoService{
    * Gets a FiVerbData object from the database by the given `verb` param.
    * 
    * @param verb The Finnish verb used to search in the database.
-   * @returns An observable that contains the FiNominalData object.
+   * @returns An observable that contains the FiVerbData object.
    */
   private getFiVerb(verb: string): Observable<FiVerbData> {
     return this.idbrequestToObservable(this.getObjectStore(this.fiVerbsObjectStoreName).index('word').get(verb));
@@ -235,10 +235,18 @@ export class WordInfoService{
   /**
    * Gets a WordDataContainer object with a random word from the database.
    * 
-   * @returns An observable that contains the FiNominalData object.
+   * @param types The types of word chosen to get a random word from.
+   * @returns An observable that contains the WordDataContainer object.
    */
-  getRandomWord(): Observable<WordDataContainer> {
-    let objectStoreNames: string[] = [this.fiNominalsObjectStoreName, this.fiVerbsObjectStoreName];
+  getRandomWord(types: string[]): Observable<WordDataContainer> {
+    let objectStoreNames: string[] = [];
+    if(types.includes('verb')){
+      objectStoreNames.push(this.fiVerbsObjectStoreName);
+    }
+    if(types.includes('nominal')){
+      objectStoreNames.push(this.fiNominalsObjectStoreName);
+    }
+    console.log(types);
     let randomNumber: number = Math.floor(Math.random() * objectStoreNames.length);
     let objectStoreName: string = objectStoreNames[randomNumber];
     let objectStore: IDBObjectStore = this.getObjectStore(objectStoreName);

@@ -64,7 +64,7 @@
   "tutorial": "tutoriel",
   "skipTutorial": "passer le tutoriel",
   "about": "à propos de Oppi",
-  "tutorialIntroduction": "Oppi est un outil pour pratiquer la déclinaison et la conjugaison en langue finnois. Son fonctionnement est simple, il a deux modes principaux: recherche et test.",
+  "tutorialIntroduction": "Oppi est un outil pour pratiquer la déclinaison et la conjugaison en langue finnois. Son fonctionnement est simple, il a deux modes principaux: recherche et test. Faites glisser ou appuyez sur les fèches pour vous déplacer dans le tutoriel ou appuyer sur le × dans le coin supérieur droit pour le passer.",
   "searching" : "Recherche",
   "searchExplanation": "Saisissez un mot dans le champ de recherche et appuyez sur le bouton de rechercher (vous pouvez appuyer sur Ctrl + ⏎ sur le clavier).",
   "searchTableExplanation": "Ça montre le tableau de déclinaison ou conjugaison de ce mot.",
@@ -81,5 +81,8 @@
   "onlyRegularAndNotKumajaaAndKaikaa": "Cette appli seulement peut conjuguer des verbes réguliers avec un type de conjugaison différent des types kumajaa et kaikaa.",
   "enjoyOppi": "C'est tout pour l'instant. Je essayerai d'ajouter plus de fonctionnalités dans l'avenir. J'espère que vous trouvez cette appli utile.",
   "aboutText": "Outil pour apprendre à décliner et conjuguer en finnois. Si vous avez des suggestions ou vous voulez aider, contactez moi sur GitHub.",
-  "viewOnGitHub": "Voir le projet sur GitHub"
+  "viewOnGitHub": "Voir le projet sur GitHub",
+  "randomWordOptions": "Options de mot aléatoire",
+  "includeVerbs": "inclure verbes",
+  "includeNominals": "inclure nominaux"
   }

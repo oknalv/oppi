@@ -1,6 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 
-import { I18nService } from '../../module/i18n/i18n';
 import { ModalComponent, SideMenuComponent } from '../../module/ui/ui';
 import { WordInfoService } from '../../service/word-info.service';
 import { DataRouterService } from '../../service/data-router.service';
@@ -11,16 +10,26 @@ import { WordDataContainer } from '../../model/word-data';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent{
+export class HomeComponent implements OnInit {
   @ViewChild(ModalComponent) aboutModal: ModalComponent;
   @ViewChild(SideMenuComponent) menu: SideMenuComponent;
   wrongWord: string = null;
   wordToSearch: string;
-  banners: string[];
-  currentBanner: number;
-  openBannerCounter: number;
+  randomVerb: boolean;
+  randomNominal: boolean;
 
   constructor(private wordInfoService: WordInfoService, private dataRouterService: DataRouterService){ }
+
+  ngOnInit(): void {
+    let randomVerb = localStorage.getItem('randomVerb');
+    let randomNominal = localStorage.getItem('randomNominal');
+    this.randomVerb = randomVerb == null ? true : randomVerb == 'true';
+    this.randomNominal = randomNominal == null ? true : randomNominal == 'true';
+    if(!this.randomNominal && !this.randomVerb){
+      this.randomNominal = true;
+      this.randomVerb = true;
+    }
+  }
 
   about = (): void => {
     this.aboutModal.show();
@@ -52,12 +61,33 @@ export class HomeComponent{
 
   getRandomWord(): void {
     let language: string = 'fi';
-    this.wordInfoService.getRandomWord().subscribe((wordDataContainer: WordDataContainer) => {
+    let types = [];
+    if(this.randomVerb){
+      types.push("verb");
+    }
+    if(this.randomNominal){
+      types.push("nominal");
+    }
+    this.wordInfoService.getRandomWord(types).subscribe((wordDataContainer: WordDataContainer) => {
       this.navigateWithWordDataContainer(wordDataContainer, language, 'test');
     });
   }
 
   openTutorial = (): void => {
     this.dataRouterService.navigate(["tutorial"]);
+  }
+
+  checkRandomOptions(verbClicked: boolean): void {
+    if(!this.randomNominal && !this.randomVerb){
+      if(verbClicked){
+        this.randomNominal = true;
+      }
+      else{
+        this.randomVerb = true;
+      }
+    }
+    localStorage.setItem('randomVerb', String(this.randomVerb));
+    localStorage.setItem('randomNominal', String(this.randomNominal));
+
   }
 }

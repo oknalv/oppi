@@ -14,7 +14,7 @@ export class TutorialComponent implements OnInit {
   movement: number = 0;
   private clicking: boolean = false;
   private clickBeginingX: number = null;
-  private animationTimeout: number = 250;
+  private animationTimeout: number = 125;
   hidePage: boolean = false;
 
   constructor( private dataRouterService: DataRouterService ){}
@@ -89,7 +89,7 @@ export class TutorialComponent implements OnInit {
   }
 
   mouseup(){
-    if(Math.abs(this.movement) >= window.innerWidth / 2){
+    if(Math.abs(this.movement) >= window.innerWidth / 3){
       if(this.movement > 0 && this.slideNumber > 0) {
         this.previous();
       }

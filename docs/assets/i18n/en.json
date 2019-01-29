@@ -64,7 +64,7 @@
 "tutorial": "tutorial",
 "skipTutorial": "skip tutorial",
 "about": "about Oppi",
-"tutorialIntroduction": "Oppi is a tool to practice declension and conjugation in Finnish language. Its working is simple, it has two main modes: searching and testing.",
+"tutorialIntroduction": "Oppi is a tool to practice declension and conjugation in Finnish language. Its working is simple, it has two main modes: searching and testing. Swipe or press the arrows to move inside the tutorial or press the × in the top right corner to skip it.",
 "searching" : "Searching",
 "searchExplanation": "Type a word in the search field and press the search button (you can also press Ctrl + ⏎ in the keyboard).",
 "searchTableExplanation": "It shows the declension or conjugation table of that word.",
@@ -81,5 +81,8 @@
 "onlyRegularAndNotKumajaaAndKaikaa": "This app can only conjugate Finnish regular verbs with a conjugation type different from kumajaa and kaikaa conjugation types.",
 "enjoyOppi": "This is all for now. I'll try to add more features in the future. I hope you find this app useful.",
 "aboutText": "Finnish declination and conjugation learning tool. If you have any suggestions or you want to help, please contact me on GitHub.",
-"viewOnGitHub": "View project on GitHub"
+"viewOnGitHub": "View project on GitHub",
+"randomWordOptions": "Random word options",
+"includeVerbs": "include verbs",
+"includeNominals": "include nominals"
 }
