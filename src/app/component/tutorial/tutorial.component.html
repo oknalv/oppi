@@ -5,16 +5,28 @@
   </button>
 </header>
 <section class='grow-1'>
-  <div class="grid v-center h-center">
-    <div>
+  <div class='grid v-center h-center' [ngStyle]='{"transform": "translateX(" + movement + "px)"}'>
+    <div [hidden]='hidePage'>
       <router-outlet></router-outlet>
     </div>
   </div>
-  <div></div>
+  <div
+    (mousemove)='move($event)' (touchmove)='move($event)'
+    (mousedown)='mousedown($event)' (touchstart)='mousedown($event)'
+    (mouseup)='mouseup()' (touchend)='mouseup()'
+  ></div>
 </section>
-<footer class='grid h-around'>
+<footer class='grid h-around v-center'>
   <button *ngIf='isFirst' class='invisible'><i class='fa fa-arrow-left'></i></button>
   <button *ngIf='!isFirst' (click)='previous()'><i class='fa fa-arrow-left'></i></button>
+  <div class='grid v-center'>
+    <i class='fa fa-circle {{ slideNumber == 0 ? "big" : ""}}'></i>
+    <i class='fa fa-circle {{ slideNumber == 1 ? "big" : ""}}'></i>
+    <i class='fa fa-circle {{ slideNumber == 2 ? "big" : ""}}'></i>
+    <i class='fa fa-circle {{ slideNumber == 3 ? "big" : ""}}'></i>
+    <i class='fa fa-circle {{ slideNumber == 4 ? "big" : ""}}'></i>
+    <i class='fa fa-circle {{ slideNumber == 5 ? "big" : ""}}'></i>
+  </div>
   <button *ngIf='!isLast' (click)='next()'><i class='fa fa-arrow-right'></i></button>
-  <button *ngIf='isLast' (click)='exit()'><i class='fa fa-check-circle'></i></button>
+  <button *ngIf='isLast' (click)='next()'><i class='fa fa-check-circle'></i></button>
 </footer>
