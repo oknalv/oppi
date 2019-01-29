@@ -79,7 +79,7 @@ tr, th {
 }
 
 a, a * {
-    color: var(--blue);
+    --a-color: var(--blue);
 }
 
 .side-menu-inner-container{

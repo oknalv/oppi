@@ -76,8 +76,10 @@
   "RandomWord": "Mot aléatoire",
   "randomExplanation": "Vous pouvez obtenir un mot aléatoire en appuyant sur le bouton de mot aléatoire. Ce mot peut être n'importe quel type de mot, mais vous pouvez limiter le type dans le menu.",
   "aboutFinnishDeclension": "À propos de la declinaison en finnois",
-  "onlyRegularAndNotNuoripari": "Cette appli seulement peut decliner des substantifs et des adjectifs réguliers avec un type de declinaison différent du type nouripari.",
+  "onlyRegularAndNotNuoripari": "Cette appli seulement peut décliner des substantifs et des adjectifs réguliers avec un type de declinaison différent du type nouripari.",
   "aboutFinnishConjugation": "À propos de la conjugaison en finnois",
   "onlyRegularAndNotKumajaaAndKaikaa": "Cette appli seulement peut conjuguer des verbes réguliers avec un type de conjugaison différent des types kumajaa et kaikaa.",
-  "enjoyOppi": "C'est tout pour l'instant. Je essayerai d'ajouter plus de fonctionnalités dans l'avenir. J'espère que vous trouvez cette appli utile."
+  "enjoyOppi": "C'est tout pour l'instant. Je essayerai d'ajouter plus de fonctionnalités dans l'avenir. J'espère que vous trouvez cette appli utile.",
+  "aboutText": "Outil pour apprendre à décliner et conjuguer en finnois. Si vous avez des suggestions ou vous voulez aider, contactez moi sur GitHub.",
+  "viewOnGitHub": "Voir le projet sur GitHub"
   }

@@ -12,7 +12,7 @@ import { WordDataContainer } from '../../model/word-data';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent{
-  @ViewChild(ModalComponent) helpModal: ModalComponent;
+  @ViewChild(ModalComponent) aboutModal: ModalComponent;
   @ViewChild(SideMenuComponent) menu: SideMenuComponent;
   wrongWord: string = null;
   wordToSearch: string;
@@ -23,8 +23,7 @@ export class HomeComponent{
   constructor(private wordInfoService: WordInfoService, private dataRouterService: DataRouterService){ }
 
   about = (): void => {
-    //TODO: about modal 
-    //this.helpModal.show();
+    this.aboutModal.show();
     this.menu.hide();
   }
 

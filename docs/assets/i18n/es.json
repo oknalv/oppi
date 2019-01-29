@@ -79,5 +79,7 @@
 "onlyRegularAndNotNuoripari": "Esta aplicación solamente puede declinar sustantivos y adjetivos regulares del finés con un tipo de declinación diferente del tipo de nuoripari.",
 "aboutFinnishConjugation": "Acerca de la conjugación en finés",
 "onlyRegularAndNotKumajaaAndKaikaa": "Esta aplicación solamente puede conjugar verbos regulares del finés con un tipo de declinación diferente del tipo de kumajaa y del tipo de kaikaa.",
-"enjoyOppi": "Esto es todo por ahora. En el futuro añadiré más características. Espero que encuentres útil esta aplicación."
+"enjoyOppi": "Esto es todo por ahora. En el futuro añadiré más características. Espero que encuentres útil esta aplicación.",
+"aboutText": "Herramienta para aprender a declinar y conjugar en finés. Si tienes alguna sugerencia o quieres ayudar, contáctame en GitHub.",
+"viewOnGitHub": "Ver el projecto en GitHub"
 }

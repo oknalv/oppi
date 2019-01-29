@@ -55,3 +55,22 @@
     </div>
   </div>
 </side-menu>
+<modal #aboutModal>
+  <modal-header>
+  </modal-header>
+  <modal-body>
+    <div class='grid h-center'>
+      <img src='assets/oppi.svg'>
+    </div>
+    <div>
+      <p>{{ 'aboutText' | i18n }}</p>
+    </div>
+    <div class='grid h-center'>
+      <a target='_blank' href='https://github.com/oknalv/oppi'>
+        <button>
+          <i class='fa fa-github'></i>&nbsp;{{ 'viewOnGitHub' |i18n }}
+        </button>
+      </a>
+    </div>
+  </modal-body>
+</modal>

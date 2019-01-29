@@ -79,5 +79,7 @@
 "onlyRegularAndNotNuoripari": "This app can only decline regular Finnish nouns and adjectives with a declension type different from nuoripari declension type.",
 "aboutFinnishConjugation": "About Finnish conjugation",
 "onlyRegularAndNotKumajaaAndKaikaa": "This app can only conjugate Finnish regular verbs with a conjugation type different from kumajaa and kaikaa conjugation types.",
-"enjoyOppi": "This is all for now. I'll try to add more features in the future. I hope you find this app useful."
+"enjoyOppi": "This is all for now. I'll try to add more features in the future. I hope you find this app useful.",
+"aboutText": "Finnish declination and conjugation learning tool. If you have any suggestions or you want to help, please contact me on GitHub.",
+"viewOnGitHub": "View project on GitHub"
 }
