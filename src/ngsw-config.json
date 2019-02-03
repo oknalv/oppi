@@ -14,7 +14,8 @@
       "versionedFiles": [
         "/*.bundle.css",
         "/*.bundle.js",
-        "/*.chunk.js"
+        "/*.chunk.js",
+        "/fontawesome-webfont.*"
       ]
     }
   }, {
@@ -23,8 +24,7 @@
     "updateMode": "prefetch",
     "resources": {
       "files": [
-        "/assets/**",
-        "/fontawesome-webfont.*"
+        "/assets/**"
       ]
     }
   }]
